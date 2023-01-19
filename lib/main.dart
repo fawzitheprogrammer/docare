@@ -4,6 +4,8 @@ import 'package:docare/public_packages.dart';
 import 'package:docare/screens/appointment_screen.dart';
 import 'package:docare/screens/fav_screen.dart';
 import 'package:docare/screens/home_screen.dart';
+import 'package:docare/screens/login_screen.dart';
+import 'package:docare/screens/onboarding_screens.dart';
 import 'package:docare/screens/profile_screen.dart';
 import 'package:docare/state_management/theme_provider.dart';
 import 'package:docare/theme/theme_style.dart';
@@ -46,7 +48,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: const AllScreens(),
+            home: LoginScreen(),
           );
         },
         designSize: const Size(393, 851),

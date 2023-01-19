@@ -1,5 +1,7 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/screens/home_screen.dart';
+import 'package:docare/screens/otp_verification_screen.dart';
 import 'package:keyboard_visibility_pro/keyboard_visibility_pro.dart';
 import 'package:docare/components/components_barrel.dart';
 
@@ -36,7 +38,7 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: BackgroundGrey2,
+      //backgroundColor: Theme.of(context).colorScheme.onPrimary,
       body: KeyboardVisibility(
         onChanged: (value) {
           if (value) {
@@ -87,7 +89,9 @@ class _LoginScreenState extends State<LoginScreen> {
                             text: 'DO',
                             style: GoogleFonts.ubuntu(
                                 fontSize: 48.sp,
-                                color: DarkGrey2,
+                                color: isActive
+                                    ? DarkGrey2
+                                    : Theme.of(context).colorScheme.onPrimary,
                                 fontWeight: FontWeight.w600),
                             children: [
                               TextSpan(
@@ -133,8 +137,11 @@ class _LoginScreenState extends State<LoginScreen> {
                               Container(
                                 height: 60.h,
                                 decoration: BoxDecoration(
-                                    color: BackgroundGrey1,
-                                    borderRadius: BorderRadius.circular(6.r)),
+                                  color: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  borderRadius: BorderRadius.circular(6.r),
+                                ),
                                 child: CountryCodePicker(
                                   initialSelection: 'IQ',
                                   showCountryOnly: false,
@@ -144,14 +151,18 @@ class _LoginScreenState extends State<LoginScreen> {
                                     checkBackgroundColor();
                                   },
                                   barrierColor: Colors.transparent,
-                                  backgroundColor: Colors.transparent,
+                                  backgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
                                   searchDecoration: InputDecoration(
-                                    prefixIcon:
-                                        const Icon(Icons.search_rounded),
+                                    prefixIcon: Icon(Icons.search_rounded,
+                                        color: Theme.of(context)
+                                            .colorScheme
+                                            .onPrimary),
                                     filled: true,
-                                    fillColor: isActive
-                                        ? BackgroundGrey2
-                                        : BackgroundGrey1,
+                                    fillColor: Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
                                     border: OutlineInputBorder(
                                       borderSide: const BorderSide(
                                           width: 0.0, style: BorderStyle.none),
@@ -168,17 +179,29 @@ class _LoginScreenState extends State<LoginScreen> {
                                     hintText: 'Search here...',
                                     hintStyle: GoogleFonts.poppins(
                                       fontSize: 14.sp,
-                                      color: DarkGrey2,
+                                      color: Theme.of(context)
+                                          .colorScheme
+                                          .onPrimary,
                                       //fontWeight: FontWeight.w500,
                                     ),
                                   ),
                                   textStyle: GoogleFonts.poppins(
                                     fontSize: 14.sp,
                                     //backgroundColor: MidGrey2,
-                                    color: DarkGrey2,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
                                     //fontWeight: FontWeight.w500,
                                   ),
                                   dialogSize: Size(400.w, 700.h),
+                                  dialogTextStyle: GoogleFonts.poppins(
+                                    fontSize: 14.sp,
+                                    color:
+                                        Theme.of(context).colorScheme.onPrimary,
+                                    //fontWeight: FontWeight.w500,
+                                  ),
+                                  dialogBackgroundColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
                                 ),
                               ),
                               SizedBox(
@@ -186,18 +209,20 @@ class _LoginScreenState extends State<LoginScreen> {
                               ),
                               Expanded(
                                 child: textField(
-                                    isActive: isActive,
-                                    onSubmitted: (value) {
-                                      isActive = false;
-                                      checkBackgroundColor();
-                                      setState(() {});
-                                    },
-                                    onTap: () {
-                                      isActive = true;
-                                      checkBackgroundColor();
-                                      setState(() {});
-                                    },
-                                    hintText: 'Phone number'),
+                                  context: context,
+                                  isActive: isActive,
+                                  onSubmitted: (value) {
+                                    isActive = false;
+                                    checkBackgroundColor();
+                                    setState(() {});
+                                  },
+                                  onTap: () {
+                                    isActive = true;
+                                    checkBackgroundColor();
+                                    setState(() {});
+                                  },
+                                  hintText: 'Phone number',
+                                ),
                               ),
                             ],
                           ),
@@ -209,7 +234,14 @@ class _LoginScreenState extends State<LoginScreen> {
                       SizedBox(
                         width: 314.w,
                         child: primaryButton(
-                          onPressed: () {},
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(
+                                builder: (context) => OTPVerification(),
+                              ),
+                            );
+                          },
                           label: 'LOGIN',
                           backgroundColor: Green,
                           size: Size(62.48.w, 60.h),

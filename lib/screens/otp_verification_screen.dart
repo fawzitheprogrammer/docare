@@ -1,4 +1,6 @@
+import 'package:docare/main.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/screens/home_screen.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import '../components/components_barrel.dart';
 
@@ -34,7 +36,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                 'A six digits code was sent to this number',
                 style: GoogleFonts.poppins(
                   fontSize: 14.sp,
-                  color: DarkGrey2,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   //fontWeight: FontWeight.bold,
                 ),
               ),
@@ -42,7 +44,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                 '0751 807 0601',
                 style: GoogleFonts.poppins(
                   fontSize: 14.sp,
-                  color: DarkGrey2,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
                 ),
               ),
@@ -50,16 +52,21 @@ class _OTPVerificationState extends State<OTPVerification> {
                 height: 64.h,
               ),
               OtpTextField(
+                onSubmit: (value) {
+                  Navigator.push(context,
+                      MaterialPageRoute(builder: (context) => AllScreens()));
+                },
                 numberOfFields: 6,
                 showFieldAsBox: true,
                 borderRadius: BorderRadius.circular(6.r),
                 fieldWidth: 54.13.w,
                 textStyle: GoogleFonts.poppins(
                   fontSize: 20.sp,
-                  color: DarkGrey2,
+                  color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.w500,
                 ),
                 focusedBorderColor: Green,
+                //borderColor: Theme.of(context).colorScheme.onPrimary,
               ),
               SizedBox(
                 height: 57.h,
@@ -71,7 +78,7 @@ class _OTPVerificationState extends State<OTPVerification> {
                     'Code not recived?',
                     style: GoogleFonts.poppins(
                       fontSize: 15.sp,
-                      color: DarkGrey2,
+                      color: Theme.of(context).colorScheme.onPrimary,
                     ),
                   ),
                   SizedBox(
@@ -81,8 +88,8 @@ class _OTPVerificationState extends State<OTPVerification> {
                     'Try again in 59s',
                     style: GoogleFonts.poppins(
                       fontSize: 15.sp,
-                      color: DarkGrey2,
-                      fontWeight: FontWeight.w500,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.bold,
                     ),
                   ),
                 ],

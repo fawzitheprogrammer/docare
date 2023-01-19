@@ -8,6 +8,7 @@ Widget textField({
   Function(String)? onSubmitted,
   required bool isActive,
   String? hintText,
+  required BuildContext context
 }) {
   return TextField(
     onTap: onTap,
@@ -19,7 +20,9 @@ Widget textField({
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: isActive ? BackgroundGrey2 : BackgroundGrey1,
+      fillColor: isActive ? BackgroundGrey2 : Theme.of(context)
+                                        .colorScheme
+                                        .primaryContainer,
       border: OutlineInputBorder(
         borderSide: const BorderSide(width: 0.0, style: BorderStyle.none),
         borderRadius: BorderRadius.circular(6.r),

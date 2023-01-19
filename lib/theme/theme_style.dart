@@ -78,10 +78,10 @@ class MyTheme {
     scaffoldBackgroundColor: Color(0xfff242124),
     colorScheme: ColorScheme.light(
       onPrimary: BackgroundGrey1,
-      primary: Color(
+      primary: const Color(
         0xfff242124,
       ),
-      primaryContainer: Colors.black12,
+      primaryContainer: Color.fromARGB(255, 31, 31, 31),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: Color(0xfff242124),
