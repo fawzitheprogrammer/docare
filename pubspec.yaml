@@ -51,6 +51,13 @@ dependencies:
   #intl: ^0.18.0
   #fl_country_code_picker: ^0.0.4
 
+dependency_overrides:
+ modal_bottom_sheet:
+    git:
+      url: https://github.com/danReynolds/modal_bottom_sheet.git
+      path: modal_bottom_sheet
+
+
 dev_dependencies:
   flutter_test:
     sdk: flutter

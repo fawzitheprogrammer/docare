@@ -1,6 +1,5 @@
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:docare/public_packages.dart';
-import 'package:docare/screens/home_screen.dart';
 import 'package:docare/screens/otp_verification_screen.dart';
 import 'package:keyboard_visibility_pro/keyboard_visibility_pro.dart';
 import 'package:docare/components/components_barrel.dart';
@@ -21,9 +20,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
   FocusNode foucsNode = FocusNode();
 
+
+
+  // 7510000000
   String countryCode = '+964';
 
-  String countryImage = 'iraq.svg';
+  // +964+075100000000 = +964075100000000
+
+  //String countryImage = 'iraq.svg';
 
   checkBackgroundColor() {
     if (isActive) {
@@ -42,6 +46,7 @@ class _LoginScreenState extends State<LoginScreen> {
       body: KeyboardVisibility(
         onChanged: (value) {
           if (value) {
+            // If keyboard is active, do nothing
           } else {
             isActive = false;
             checkBackgroundColor();
@@ -86,20 +91,21 @@ class _LoginScreenState extends State<LoginScreen> {
                     children: [
                       RichText(
                         text: TextSpan(
-                            text: 'DO',
-                            style: GoogleFonts.ubuntu(
-                                fontSize: 48.sp,
-                                color: isActive
-                                    ? DarkGrey2
-                                    : Theme.of(context).colorScheme.onPrimary,
-                                fontWeight: FontWeight.w600),
-                            children: [
-                              TextSpan(
-                                text: 'CARE',
-                                style: GoogleFonts.poppins(
-                                    fontSize: 48.sp, color: Green),
-                              ),
-                            ]),
+                          text: 'DO',
+                          style: GoogleFonts.ubuntu(
+                              fontSize: 48.sp,
+                              color: isActive
+                                  ? DarkGrey2
+                                  : Theme.of(context).colorScheme.onPrimary,
+                              fontWeight: FontWeight.w600),
+                          children: [
+                            TextSpan(
+                              text: 'CARE',
+                              style: GoogleFonts.poppins(
+                                  fontSize: 48.sp, color: Green),
+                            ),
+                          ],
+                        ),
                       ),
                       SizedBox(
                         height: 26.h,
@@ -150,7 +156,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   onChanged: (value) {
                                     checkBackgroundColor();
                                   },
-                                  barrierColor: Colors.transparent,
+                                  barrierColor: Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
                                   backgroundColor: Theme.of(context)
                                       .colorScheme
                                       .primaryContainer,
@@ -238,7 +246,7 @@ class _LoginScreenState extends State<LoginScreen> {
                             Navigator.push(
                               context,
                               MaterialPageRoute(
-                                builder: (context) => OTPVerification(),
+                                builder: (context) => const OTPVerification(),
                               ),
                             );
                           },

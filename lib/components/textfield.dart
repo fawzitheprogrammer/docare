@@ -3,13 +3,12 @@ import 'package:flutter/material.dart';
 
 import '../public_packages.dart';
 
-Widget textField({
-  Function()? onTap,
-  Function(String)? onSubmitted,
-  required bool isActive,
-  String? hintText,
-  required BuildContext context
-}) {
+Widget textField(
+    {Function()? onTap,
+    Function(String)? onSubmitted,
+    required bool isActive,
+    String? hintText,
+    required BuildContext context}) {
   return TextField(
     onTap: onTap,
     onSubmitted: onSubmitted,
@@ -20,9 +19,9 @@ Widget textField({
     ),
     decoration: InputDecoration(
       filled: true,
-      fillColor: isActive ? BackgroundGrey2 : Theme.of(context)
-                                        .colorScheme
-                                        .primaryContainer,
+      fillColor: isActive
+          ? BackgroundGrey2
+          : Theme.of(context).colorScheme.primaryContainer,
       border: OutlineInputBorder(
         borderSide: const BorderSide(width: 0.0, style: BorderStyle.none),
         borderRadius: BorderRadius.circular(6.r),
@@ -43,5 +42,6 @@ Widget textField({
       ),
     ),
     keyboardType: TextInputType.number,
+    cursorColor: Theme.of(context).colorScheme.onPrimary,
   );
 }

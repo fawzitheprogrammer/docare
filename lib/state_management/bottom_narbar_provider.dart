@@ -6,21 +6,21 @@ class BottomNavBar extends ChangeNotifier {
 
   int get currentIndex => index;
 
-  //PageController pageController = PageController();
+  PageController pageController = PageController();
 
-  //PageController get pageAnimater => pageAnimater;
+  PageController get pageAnimater => pageAnimater;
 
   void bottomNavIndex(int value) {
     index = value;
     notifyListeners();
   }
 
-  // void animateToPage(PageController controller) {
-  //   controller.animateToPage(
-  //     currentIndex,
-  //     duration: const Duration(milliseconds: 300),
-  //     curve: Curves.easeInOut,
-  //   );
-  //   notifyListeners();
-  // }
+  void animateToPage(PageController controller) {
+    controller.animateToPage(
+      currentIndex,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeInOut,
+    );
+    notifyListeners();
+  }
 }

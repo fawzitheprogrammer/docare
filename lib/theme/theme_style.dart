@@ -1,6 +1,5 @@
 import 'package:docare/components/colors.dart';
 import 'package:docare/public_packages.dart';
-import 'package:flutter/material.dart';
 
 // class Styles {
 //   static ThemeData themeData(bool isDarkTheme, BuildContext context) {
@@ -49,8 +48,8 @@ import 'package:flutter/material.dart';
 
 class MyTheme {
   static final lightTheme = ThemeData.light().copyWith(
-    // primaryColor: MidGrey2,
-    // primarySwatch: Green,
+    // primaryColor: Colors.blue,
+    //primarySwatch: Green,
     scaffoldBackgroundColor: BackgroundGrey2,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
       backgroundColor: BackgroundGrey2,
@@ -75,16 +74,16 @@ class MyTheme {
 
   static final darkTheme = ThemeData.dark().copyWith(
     primaryColor: Green,
-    scaffoldBackgroundColor: Color(0xfff242124),
+    scaffoldBackgroundColor: const Color(0xff242124),
     colorScheme: ColorScheme.light(
       onPrimary: BackgroundGrey1,
       primary: const Color(
-        0xfff242124,
+        0xff242124,
       ),
-      primaryContainer: Color.fromARGB(255, 31, 31, 31),
+      primaryContainer: const Color.fromARGB(255, 31, 31, 31),
     ),
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: Color(0xfff242124),
+      backgroundColor: const Color(0xff242124),
       selectedLabelStyle: GoogleFonts.poppins(
         fontSize: 12.sp,
         color: DarkGrey2,

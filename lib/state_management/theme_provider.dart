@@ -1,6 +1,4 @@
 import 'package:docare/public_packages.dart';
-import '../shared_preferences/theme_shared_preferences.dart';
-
 import 'package:flutter/material.dart';
 import 'package:flutter/scheduler.dart';
 

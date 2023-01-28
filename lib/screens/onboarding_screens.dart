@@ -2,7 +2,7 @@ import 'package:docare/components/components_barrel.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/login_screen.dart';
 
-import '../components/primary_button.dart';
+//import '../components/primary_button.dart';
 
 class OnboardingScreen extends StatefulWidget {
   const OnboardingScreen({super.key});
@@ -12,10 +12,13 @@ class OnboardingScreen extends StatefulWidget {
 }
 
 class _OnboardingScreenState extends State<OnboardingScreen> {
+  // Page index
   int selectedIndex = 0;
 
+  // a control that controls page transition
   PageController pageController = PageController();
 
+  //
   List<String> keys = [];
   List<String> values = [];
 
@@ -40,11 +43,15 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 controller: pageController,
                 onPageChanged: (value) {
                   selectedIndex = value;
+                  //debugPrint(selectedIndex.toString());
                   setState(() {});
                 },
                 scrollDirection: Axis.horizontal,
                 itemBuilder: (context, index) => buildOnScreenTextAndImage(
-                    vectorsPath[index], keys[index], values[index]),
+                  vectorsPath[index],
+                  keys[index],
+                  values[index],
+                ),
               ),
             ),
             SizedBox(
@@ -57,6 +64,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                 (index) => Padding(
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: CircleAvatar(
+                    // if(index==selectdIndex){RETURN }ELSE{}
                     backgroundColor:
                         index == selectedIndex ? Colors.white : Green40Percent,
                     radius: 5.r,
@@ -119,7 +127,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
   }
 
   Widget buildOnScreenTextAndImage(
-      String vectorPath, String header, String body) {
+    String vectorPath,
+    String header,
+    String body,
+  ) {
     return Column(
       mainAxisAlignment: MainAxisAlignment.center,
       children: [

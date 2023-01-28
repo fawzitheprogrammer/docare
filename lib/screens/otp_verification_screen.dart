@@ -1,6 +1,5 @@
 import 'package:docare/main.dart';
 import 'package:docare/public_packages.dart';
-import 'package:docare/screens/home_screen.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';
 import '../components/components_barrel.dart';
 
@@ -53,8 +52,10 @@ class _OTPVerificationState extends State<OTPVerification> {
               ),
               OtpTextField(
                 onSubmit: (value) {
-                  Navigator.push(context,
-                      MaterialPageRoute(builder: (context) => AllScreens()));
+                  Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                          builder: (context) => const AllScreens()));
                 },
                 numberOfFields: 6,
                 showFieldAsBox: true,

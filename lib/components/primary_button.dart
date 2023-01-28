@@ -1,16 +1,17 @@
 import 'package:docare/components/colors.dart';
 import 'package:docare/public_packages.dart';
 
-Widget primaryButton(
-    {required String label,
-    required Color backgroundColor,
-    required Size size,
-    Function()? onPressed,
-    double? shadow,
-    Color? shadowColor,
-    double? borderWidth,
-    Color? borderColor,
-    Color? textColor}) {
+Widget primaryButton({
+  required String label,
+  required Color backgroundColor,
+  required Size size,
+  Function()? onPressed,
+  double? shadow,
+  Color? shadowColor,
+  double? borderWidth,
+  Color? borderColor,
+  Color? textColor,
+}) {
   return TextButton(
     style: ButtonStyle(
         backgroundColor: MaterialStateProperty.all(backgroundColor),

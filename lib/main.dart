@@ -1,17 +1,8 @@
-import 'package:docare/components/assets_path.dart';
-import 'package:docare/components/colors.dart';
 import 'package:docare/public_packages.dart';
-import 'package:docare/screens/appointment_screen.dart';
-import 'package:docare/screens/fav_screen.dart';
-import 'package:docare/screens/home_screen.dart';
-import 'package:docare/screens/login_screen.dart';
-import 'package:docare/screens/onboarding_screens.dart';
-import 'package:docare/screens/profile_screen.dart';
-import 'package:docare/state_management/theme_provider.dart';
 import 'package:docare/theme/theme_style.dart';
-import 'package:flutter/services.dart';
-import 'package:provider/provider.dart';
-
+import 'package:docare/components/components_barrel.dart';
+import 'package:docare/screens/screens_barrel.dart';
+import 'package:docare/state_management/providers_barrel.dart';
 import 'state_management/bottom_narbar_provider.dart';
 
 void main() {
@@ -48,7 +39,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: LoginScreen(),
+            home: const OnboardingScreen(),
           );
         },
         designSize: const Size(393, 851),
@@ -68,8 +59,10 @@ class AllScreens extends StatelessWidget {
     final provider = Provider.of<BottomNavBar>(context, listen: false);
 
     return Scaffold(
-      body: IndexedStack(
-        index: currentIndex,
+      body: PageView(
+        //: currentIndex,
+        controller: provider.pageController,
+        physics: const NeverScrollableScrollPhysics(),
         children: const [
           HomeScreen(),
           AppointmentScreen(),
@@ -80,7 +73,7 @@ class AllScreens extends StatelessWidget {
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
           provider.bottomNavIndex(value);
-          //provider.animateToPage(provider.pageController);
+          provider.animateToPage(provider.pageController);
         },
         currentIndex: currentIndex,
         showSelectedLabels: true,
@@ -122,10 +115,11 @@ class AllScreens extends StatelessWidget {
     );
   }
 
-  navBarItem(
-      {required String label,
-      required String activeIconName,
-      required String inActiveIconName}) {
+  navBarItem({
+    required String label,
+    required String activeIconName,
+    required String inActiveIconName,
+  }) {
     return BottomNavigationBarItem(
       label: label,
       icon: Padding(

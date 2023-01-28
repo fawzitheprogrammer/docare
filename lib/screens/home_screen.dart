@@ -3,6 +3,15 @@ import 'package:docare/screens/doctor_info_screen.dart';
 
 import '../components/components_barrel.dart';
 
+List<String> category = [
+  'stomach.svg',
+  'heart.svg',
+  'tooth.svg',
+  'eye.svg',
+  'dermis.svg',
+  'kidneys.svg'
+];
+
 class HomeScreen extends StatelessWidget {
   const HomeScreen({super.key});
 
@@ -110,7 +119,70 @@ class HomeScreen extends StatelessWidget {
                     child: Column(
                       children: [
                         //buildLabel(label: 'Category'),
-                        buildLabel(label: 'Category', context: context),
+                        buildLabel(
+                          context: context,
+                          label: 'Category',
+                          onPressed: () {
+                            showBottomSheet(
+                              backgroundColor: Colors.black12,
+                              shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.only(
+                                  topLeft: Radius.circular(
+                                    (6.r),
+                                  ),
+                                  topRight: Radius.circular(
+                                    (6.r),
+                                  ),
+                                ),
+                              ),
+                              context: context,
+                              builder: (context) => Padding(
+                                padding: EdgeInsets.all(24.0.w),
+                                child: Container(
+                                  color: BackgroundGrey2,
+                                  padding: EdgeInsets.symmetric(
+                                      horizontal: 24.w, vertical: 24.0.h),
+                                  height: 720.h,
+                                  width: double.infinity,
+                                  child: GridView(
+                                    scrollDirection: Axis.vertical,
+                                    gridDelegate:
+                                        const SliverGridDelegateWithFixedCrossAxisCount(
+                                            crossAxisCount: 3),
+                                    children: List.generate(
+                                        category.length,
+                                        (index) => Padding(
+                                              padding:
+                                                  const EdgeInsets.all(4.0),
+                                              child: Container(
+                                                height: 50.h,
+                                                width: 80.w,
+                                                decoration: BoxDecoration(
+                                                    color: Theme.of(context)
+                                                        .colorScheme
+                                                        .primaryContainer,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            6.r)),
+                                                child: Center(
+                                                  child: SvgPicture.asset(
+                                                    getImage(
+                                                        folderName: 'category',
+                                                        fileName:
+                                                            category[index]),
+                                                    height: 50.h,
+                                                    color: Green,
+                                                    fit: BoxFit.cover,
+                                                  ),
+                                                ),
+                                              ),
+                                            )),
+                                  ),
+                                ),
+                              ),
+                            );
+                          },
+                        ),
                         buildCategory(),
                       ],
                     ),
@@ -118,7 +190,11 @@ class HomeScreen extends StatelessWidget {
                 ),
               ),
               SliverToBoxAdapter(
-                child: buildLabel(label: 'Find Doctors', context: context),
+                child: buildLabel(
+                  context: context,
+                  label: 'Find Doctors ',
+                  onPressed: () {},
+                ),
               ),
               SliverToBoxAdapter(
                 child: buildListOfDoctor(),
@@ -130,7 +206,11 @@ class HomeScreen extends StatelessWidget {
     );
   }
 
-  Widget buildLabel({required String label, required BuildContext context}) {
+  Widget buildLabel({
+    required BuildContext context,
+    required String label,
+    required Function()? onPressed,
+  }) {
     return Padding(
       padding: EdgeInsets.only(left: 18.w, top: 2.h, right: 10.w, bottom: 2.h),
       child: Row(
@@ -145,7 +225,7 @@ class HomeScreen extends StatelessWidget {
           ),
           const Spacer(),
           TextButton(
-            onPressed: () {},
+            onPressed: onPressed,
             child: Text(
               'See all',
               style: GoogleFonts.poppins(
@@ -161,15 +241,6 @@ class HomeScreen extends StatelessWidget {
   }
 
   Widget buildCategory() {
-    List<String> category = [
-      'stomach.svg',
-      'heart.svg',
-      'tooth.svg',
-      'eye.svg',
-      'dermis.svg',
-      'kidneys.svg'
-    ];
-
     return Padding(
       padding: EdgeInsets.symmetric(horizontal: 14.w),
       child: SizedBox(

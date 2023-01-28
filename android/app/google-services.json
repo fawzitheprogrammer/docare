@@ -1,41 +1,70 @@
 {
   "project_info": {
-    "project_number": "946607536086",
-    "project_id": "docare-15ec5",
-    "storage_bucket": "docare-15ec5.appspot.com"
+    "project_number": "958885717221",
+    "project_id": "docare-83a66",
+    "storage_bucket": "docare-83a66.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:946607536086:android:90b9ec64dccc6c2c075677",
+        "mobilesdk_app_id": "1:958885717221:android:89e9549316dda3d366e00c",
         "android_client_info": {
-          "package_name": "com.health.docare"
+          "package_name": "com.doctor.care"
         }
       },
       "oauth_client": [
         {
-          "client_id": "946607536086-4ll3ud8lc3000fjt3ub6h9utsco4pufi.apps.googleusercontent.com",
+          "client_id": "958885717221-sc6pn26spgicqu60mcuq7fc131qhjp6k.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "com.health.docare",
+            "package_name": "com.doctor.care",
             "certificate_hash": "13f9345f799940a80ce47f01ae94764afcfacf73"
           }
         },
         {
-          "client_id": "946607536086-m2n387uef4qf8d9h45t0r4ife6ovkret.apps.googleusercontent.com",
+          "client_id": "958885717221-tcnqameb66b4mqom5qlqdc1keca1a9uf.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyDFqQPhMDvfq7KoareHJHHLV5tyPCobB5s"
+          "current_key": "AIzaSyDB7me3GaCv2lUGnC3dj6tCaGnp7YqF1_A"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "946607536086-m2n387uef4qf8d9h45t0r4ife6ovkret.apps.googleusercontent.com",
+              "client_id": "958885717221-tcnqameb66b4mqom5qlqdc1keca1a9uf.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    },
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:958885717221:android:3c3d98e3e7faaf4366e00c",
+        "android_client_info": {
+          "package_name": "com.health.docare"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "958885717221-tcnqameb66b4mqom5qlqdc1keca1a9uf.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDB7me3GaCv2lUGnC3dj6tCaGnp7YqF1_A"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "958885717221-tcnqameb66b4mqom5qlqdc1keca1a9uf.apps.googleusercontent.com",
               "client_type": 3
             }
           ]
