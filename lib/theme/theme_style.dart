@@ -68,7 +68,7 @@ class MyTheme {
     colorScheme: ColorScheme.dark(
       onPrimary: DarkGrey2,
       primary: BackgroundGrey2,
-      primaryContainer: BackgroundGrey1.withAlpha(120),
+      primaryContainer: const Color.fromARGB(255, 236, 236, 236),
     ),
   );
 

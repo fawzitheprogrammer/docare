@@ -1,6 +1,9 @@
 import 'package:docare/components/components_barrel.dart';
+import 'package:docare/navigation/app_router.dart';
+import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/login_screen.dart';
+import 'package:docare/screens/screens_state_manager.dart';
 
 //import '../components/primary_button.dart';
 
@@ -24,6 +27,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
+
+    // One method to set [pageOrderId] and open another screen
+    appRouting() {
+      ScreenStateManager.setPageOrderID(1);
+      getPage(context, const LoginScreen());
+    }
+
     onboardingInfo.forEach(((key, value) {
       keys.add(key);
       values.add(value);
@@ -87,7 +97,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                           Size(154.98.w, 55.h),
                         ),
                       ),
-                      onPressed: () {},
+                      onPressed: () {
+                        appRouting();
+                      },
                       child: Text(
                         'Skip',
                         style: GoogleFonts.poppins(
@@ -102,15 +114,8 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         pageController.animateToPage(selectedIndex,
                             duration: const Duration(milliseconds: 800),
                             curve: Curves.easeInOut);
-                      } else {
-                        Navigator.push(
-                          context,
-                          MaterialPageRoute(
-                            builder: ((context) => const LoginScreen()),
-                          ),
-                        );
-                      }
-
+                      } else {}
+                      appRouting();
                       setState(() {});
                     },
                     label: 'NEXT',

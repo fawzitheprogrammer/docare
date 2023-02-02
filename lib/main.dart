@@ -1,24 +1,31 @@
+import 'package:docare/navigation/app_router.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/screens/screens_state_manager.dart';
 import 'package:docare/theme/theme_style.dart';
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/screens/screens_barrel.dart';
 import 'package:docare/state_management/providers_barrel.dart';
 import 'state_management/bottom_narbar_provider.dart';
 
-void main() {
+void main() async {
+
+   WidgetsFlutterBinding.ensureInitialized();
+
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
         statusBarColor: Green, systemNavigationBarColor: Green),
   );
+
+  await ScreenStateManager.init();
+
   runApp(MyApp());
 }
+
 //
 class MyApp extends StatelessWidget {
   // const MyApp({super.key});
-
   bool darkMode = false;
 
-  // getBool() async {
   @override
   Widget build(BuildContext context) {
     return MultiProvider(
@@ -29,6 +36,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ThemeProvider(),
         ),
+        
       ],
       child: ScreenUtilInit(
         builder: (context, child) {
@@ -39,7 +47,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: const OnboardingScreen(),
+            home: AppRouter.getPage(),
           );
         },
         designSize: const Size(393, 851),

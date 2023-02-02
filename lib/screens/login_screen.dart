@@ -20,8 +20,6 @@ class _LoginScreenState extends State<LoginScreen> {
 
   FocusNode foucsNode = FocusNode();
 
-
-
   // 7510000000
   String countryCode = '+964';
 
@@ -114,7 +112,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Welcome!',
                         style: GoogleFonts.poppins(
                           fontSize: 30.sp,
-                          color: DarkGrey2,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           fontWeight: FontWeight.w500,
                         ),
                       ),
@@ -125,7 +123,7 @@ class _LoginScreenState extends State<LoginScreen> {
                         'Type your number to sign-in or \n skip for now!',
                         style: GoogleFonts.poppins(
                           fontSize: 14.sp,
-                          color: DarkGrey2,
+                          color: Theme.of(context).colorScheme.onPrimary,
                           //fontWeight: FontWeight.w500,
                         ),
                         textAlign: TextAlign.center,

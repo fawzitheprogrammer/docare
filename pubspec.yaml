@@ -47,7 +47,7 @@ dependencies:
   intl: ^0.18.0
   firebase_auth: ^4.2.2
   firebase_core: ^2.4.1
-  shared_preferences: ^2.0.16
+  shared_preferences: ^2.0.17
   #intl: ^0.18.0
   #fl_country_code_picker: ^0.0.4
 

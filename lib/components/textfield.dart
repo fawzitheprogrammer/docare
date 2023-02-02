@@ -1,5 +1,4 @@
 import 'package:docare/components/components_barrel.dart';
-import 'package:flutter/material.dart';
 
 import '../public_packages.dart';
 
@@ -37,7 +36,7 @@ Widget textField(
       hintText: hintText,
       hintStyle: GoogleFonts.poppins(
         fontSize: 14.sp,
-        color: DarkGrey2,
+        color: Theme.of(context).colorScheme.onPrimary,
         //fontWeight: FontWeight.w500,
       ),
     ),

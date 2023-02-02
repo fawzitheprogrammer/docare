@@ -1,0 +1,56 @@
+Date : 2023-01-30 10:14:02
+Directory : g:\Local Disk F\Source Codes\Flutter\docare\lib
+Total : 25 files,  2081 codes, 245 comments, 165 blanks, all 2491 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |         25 |      2,081 |        245 |        165 |      2,491 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                             | files      | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                                |         25 |      2,081 |        245 |        165 |      2,491 |
+| . (Files)                                                                                        |          2 |        137 |          7 |         11 |        155 |
+| components                                                                                       |          7 |        177 |          7 |         33 |        217 |
+| models                                                                                           |          1 |          0 |         15 |          4 |         19 |
+| screens                                                                                          |          9 |      1,684 |        129 |         87 |      1,900 |
+| shared_preferences                                                                               |          1 |         12 |          0 |          4 |         16 |
+| state_management                                                                                 |          4 |         38 |         25 |         21 |         84 |
+| theme                                                                                            |          1 |         33 |         62 |          5 |        100 |
++--------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++--------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                         | language | code       | comment    | blank      | total      |
++--------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\assets_path.dart                      | Dart     |         14 |          3 |          6 |         23 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\colors.dart                           | Dart     |         37 |          0 |         16 |         53 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\components_barrel.dart                | Dart     |          7 |          1 |          2 |         10 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\primary_button.dart                   | Dart     |         39 |          0 |          2 |         41 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\secondary_button.dart                 | Dart     |         17 |          1 |          2 |         20 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\text.dart                             | Dart     |         20 |          0 |          2 |         22 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\components\textfield.dart                        | Dart     |         43 |          2 |          3 |         48 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\main.dart                                        | Dart     |        131 |          6 |          9 |        146 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\models\date_time.dart                            | Dart     |          0 |         15 |          4 |         19 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\public_packages.dart                             | Dart     |          6 |          1 |          2 |          9 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\appointment_screen.dart                  | Dart     |        191 |          5 |          5 |        201 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\doctor_info_screen.dart                  | Dart     |        418 |         64 |         33 |        515 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\fav_screen.dart                          | Dart     |         81 |          2 |          4 |         87 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\home_screen.dart                         | Dart     |        327 |         22 |          9 |        358 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\login_screen.dart                        | Dart     |        242 |         14 |         14 |        270 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\onboarding_screens.dart                  | Dart     |        143 |          7 |         11 |        161 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\otp_verification_screen.dart             | Dart     |         99 |          2 |          4 |        105 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\profile_screen.dart                      | Dart     |        177 |         13 |          7 |        197 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\screens_barrel.dart                      | Dart     |          6 |          0 |          0 |          6 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\shared_preferences\theme_shared_preferences.dart | Dart     |         12 |          0 |          4 |         16 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\bottom_narbar_provider.dart     | Dart     |         19 |          0 |          8 |         27 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\onboardingStateController.dart  | Dart     |          0 |         25 |          8 |         33 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\providers_barrel.dart           | Dart     |          1 |          0 |          1 |          2 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\theme_provider.dart             | Dart     |         18 |          0 |          4 |         22 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\theme\theme_style.dart                           | Dart     |         33 |         62 |          5 |        100 |
+| Total                                                                                            |          |      2,081 |        245 |        165 |      2,491 |
++--------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
