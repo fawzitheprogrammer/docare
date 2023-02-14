@@ -3,7 +3,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 class ScreenStateManager {
   // OnBoarding Screen shared preferences key
   static const String onBoardingScreenKey = 'OnBoardingScreen';
-  static const String loginScreenKey = 'LoginKey';
+  //static const String loginScreenKey = 'LoginKey';
 
   // An object of shared preferences
   static SharedPreferences? _preferences;

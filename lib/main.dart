@@ -1,29 +1,35 @@
-import 'package:docare/navigation/app_router.dart';
+import 'package:docare/screens/doctor_screens/appointment_screen.dart';
+import 'package:docare/screens/doctor_screens/doctor_profile_screen.dart';
+import 'package:docare/screens/user_screens/screen_tobe_shown.dart';
 import 'package:docare/public_packages.dart';
-import 'package:docare/screens/screens_state_manager.dart';
+import 'package:docare/shared_preferences/shared_pref_barrel.dart';
 import 'package:docare/theme/theme_style.dart';
 import 'package:docare/components/components_barrel.dart';
-import 'package:docare/screens/screens_barrel.dart';
 import 'package:docare/state_management/providers_barrel.dart';
-import 'state_management/bottom_narbar_provider.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'screens/user_screens/screens_barrel.dart';
+import 'state_management/doctor_info_screen.dart';
 
 void main() async {
+  WidgetsFlutterBinding.ensureInitialized();
 
-   WidgetsFlutterBinding.ensureInitialized();
+  Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
-        statusBarColor: Green, systemNavigationBarColor: Green),
+        statusBarColor: primaryGreen, systemNavigationBarColor: primaryGreen),
   );
 
   await ScreenStateManager.init();
+  await Role.init();
 
   runApp(MyApp());
 }
 
 //
+// ignore: must_be_immutable
 class MyApp extends StatelessWidget {
-  // const MyApp({super.key});
+  MyApp({super.key});
   bool darkMode = false;
 
   @override
@@ -36,7 +42,12 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => ThemeProvider(),
         ),
-        
+        ChangeNotifierProvider(
+          create: (context) => AuthProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => DoctorScreenInfoProvider(),
+        ),
       ],
       child: ScreenUtilInit(
         builder: (context, child) {
@@ -71,12 +82,14 @@ class AllScreens extends StatelessWidget {
         //: currentIndex,
         controller: provider.pageController,
         physics: const NeverScrollableScrollPhysics(),
-        children: const [
-          HomeScreen(),
-          AppointmentScreen(),
-          FavScreen(),
-          ProfileScreen()
-        ],
+        children: Role.getRole()
+            ? const [
+                HomeScreen(),
+                AppointmentScreen(),
+                FavScreen(),
+                ProfileScreen(),
+              ]
+            : const [DoctorAppointmentScreen(), DoctorProfileScreen()],
       ),
       bottomNavigationBar: BottomNavigationBar(
         onTap: (value) {
@@ -86,8 +99,8 @@ class AllScreens extends StatelessWidget {
         currentIndex: currentIndex,
         showSelectedLabels: true,
         showUnselectedLabels: true,
-        selectedItemColor: Green,
-        unselectedItemColor: MidGrey2,
+        selectedItemColor: primaryGreen,
+        unselectedItemColor: midGrey2,
         selectedLabelStyle: GoogleFonts.poppins(
           fontSize: 12.sp,
           color: Theme.of(context).colorScheme.onPrimary,
@@ -99,26 +112,39 @@ class AllScreens extends StatelessWidget {
           //fontWeight: FontWeight.w600,
         ),
         type: BottomNavigationBarType.fixed,
-        items: [
-          navBarItem(
-            label: 'Home',
-            activeIconName: 'home.svg',
-            inActiveIconName: 'home_filled.svg',
-          ),
-          navBarItem(
-              label: 'Booking',
-              activeIconName: 'calendar.svg',
-              inActiveIconName: 'calendar_filled.svg'),
-          navBarItem(
-              label: 'Favourite',
-              activeIconName: 'heart.svg',
-              inActiveIconName: 'heart_filled.svg'),
-          navBarItem(
-            label: 'Profile',
-            activeIconName: 'user_outlined.svg',
-            inActiveIconName: 'user_filled.svg',
-          ),
-        ],
+        items: Role.getRole()
+            ? [
+                navBarItem(
+                  label: 'Home',
+                  activeIconName: 'home.svg',
+                  inActiveIconName: 'home_filled.svg',
+                ),
+                navBarItem(
+                    label: 'Booking',
+                    activeIconName: 'calendar.svg',
+                    inActiveIconName: 'calendar_filled.svg'),
+                navBarItem(
+                    label: 'Favourite',
+                    activeIconName: 'heart.svg',
+                    inActiveIconName: 'heart_filled.svg'),
+                navBarItem(
+                  label: 'Profile',
+                  activeIconName: 'user_outlined.svg',
+                  inActiveIconName: 'user_filled.svg',
+                ),
+              ]
+            : [
+                navBarItem(
+                  label: 'Appointments',
+                  activeIconName: 'calendar.svg',
+                  inActiveIconName: 'calendar_filled.svg',
+                ),
+                navBarItem(
+                  label: 'Profile',
+                  activeIconName: 'user_outlined.svg',
+                  inActiveIconName: 'user_filled.svg',
+                ),
+              ],
       ),
     );
   }
@@ -136,7 +162,7 @@ class AllScreens extends StatelessWidget {
           getImage(folderName: 'icons', fileName: activeIconName),
           width: 24,
           height: 24,
-          color: MidGrey2.withAlpha(80),
+          color: midGrey2.withAlpha(80),
         ),
       ),
       activeIcon: Padding(
@@ -145,7 +171,7 @@ class AllScreens extends StatelessWidget {
           getImage(folderName: 'icons', fileName: inActiveIconName),
           width: 24,
           height: 24,
-          color: Green,
+          color: primaryGreen,
         ),
       ),
     );

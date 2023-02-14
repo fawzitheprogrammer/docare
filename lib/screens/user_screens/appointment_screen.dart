@@ -2,7 +2,6 @@ import 'package:docare/components/components_barrel.dart';
 import 'package:docare/public_packages.dart';
 import 'package:intl/intl.dart';
 
-import '../components/text.dart';
 
 class AppointmentScreen extends StatelessWidget {
   const AppointmentScreen({super.key});
@@ -90,7 +89,7 @@ class AppointmentScreen extends StatelessWidget {
                       width: double.infinity,
                       decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(6.r),
-                          color: Green40Percent.withAlpha(40)),
+                          color: primaryGreen40Percent.withAlpha(40)),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
@@ -104,7 +103,7 @@ class AppointmentScreen extends StatelessWidget {
                                       folderName: 'icons',
                                       fileName: 'calendar_filled.svg',
                                     ),
-                                    color: Green,
+                                    color: primaryGreen,
                                   ),
                                   SizedBox(
                                     width: 6.w,
@@ -116,13 +115,13 @@ class AppointmentScreen extends StatelessWidget {
                                         )
                                         .toString(),
                                     fontSize: 14.sp,
-                                    color: Green,
+                                    color: primaryGreen,
                                     fontWeight: FontWeight.w600,
                                   ),
                                   textLabel(
                                     text: ',Wed',
                                     fontSize: 14.sp,
-                                    color: Green,
+                                    color: primaryGreen,
                                     fontWeight: FontWeight.w600,
                                   ),
                                 ],
@@ -130,7 +129,7 @@ class AppointmentScreen extends StatelessWidget {
                               Container(
                                 height: 30.h,
                                 width: 1.5.h,
-                                color: Green.withAlpha(40),
+                                color: primaryGreen.withAlpha(40),
                               ),
                               Row(
                                 children: [
@@ -139,7 +138,7 @@ class AppointmentScreen extends StatelessWidget {
                                       folderName: 'icons',
                                       fileName: 'clock-five.svg',
                                     ),
-                                    color: Green,
+                                    color: primaryGreen,
                                   ),
                                   SizedBox(
                                     width: 6.w,
@@ -147,7 +146,7 @@ class AppointmentScreen extends StatelessWidget {
                                   textLabel(
                                       text: '9 AM - 9 PM',
                                       fontSize: 14.sp,
-                                      color: Green,
+                                      color: primaryGreen,
                                       fontWeight: FontWeight.w600),
                                 ],
                               )
@@ -164,10 +163,10 @@ class AppointmentScreen extends StatelessWidget {
                         Expanded(
                           child: primaryButton(
                             label: 'Reschedule',
-                            backgroundColor: Green,
+                            backgroundColor: primaryGreen,
                             size: Size(0, 70.h),
                             shadow: 2.0,
-                            shadowColor: Color(0xfff17cfb6).withAlpha(60),
+                            shadowColor: const Color(0xff17cfb6).withAlpha(60),
                             onPressed: () {},
                           ),
                         ),
@@ -183,9 +182,9 @@ class AppointmentScreen extends StatelessWidget {
                             //shadow: 2.0,
                             //shadowColor: Color(0xfff17cfb6).withAlpha(60),
                             onPressed: () {},
-                            borderColor: Green.withAlpha(40),
+                            borderColor: primaryGreen.withAlpha(40),
                             borderWidth: 2,
-                            textColor: Green,
+                            textColor: primaryGreen,
                           ),
                         )
                       ],

@@ -50,9 +50,9 @@ class MyTheme {
   static final lightTheme = ThemeData.light().copyWith(
     // primaryColor: Colors.blue,
     //primarySwatch: Green,
-    scaffoldBackgroundColor: BackgroundGrey2,
+    scaffoldBackgroundColor: backgroundGrey2,
     bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: BackgroundGrey2,
+      backgroundColor: backgroundGrey2,
       // selectedLabelStyle: GoogleFonts.poppins(
       //   fontSize: 12.sp,
       //   color: DarkGrey2,
@@ -64,19 +64,23 @@ class MyTheme {
       //   //fontWeight: FontWeight.w600,
       // ),
     ),
-
     colorScheme: ColorScheme.dark(
-      onPrimary: DarkGrey2,
-      primary: BackgroundGrey2,
+      onPrimary: darkGrey2,
+      primary: backgroundGrey2,
       primaryContainer: const Color.fromARGB(255, 236, 236, 236),
+    ),
+    textSelectionTheme: TextSelectionThemeData(
+      //cursorColor: Green,
+      selectionHandleColor: primaryGreen,
+      selectionColor: primaryGreen,
     ),
   );
 
   static final darkTheme = ThemeData.dark().copyWith(
-    primaryColor: Green,
+    primaryColor: primaryGreen,
     scaffoldBackgroundColor: const Color(0xff242124),
     colorScheme: ColorScheme.light(
-      onPrimary: BackgroundGrey1,
+      onPrimary: backgroundGrey1,
       primary: const Color(
         0xff242124,
       ),
@@ -86,7 +90,7 @@ class MyTheme {
       backgroundColor: const Color(0xff242124),
       selectedLabelStyle: GoogleFonts.poppins(
         fontSize: 12.sp,
-        color: DarkGrey2,
+        color: darkGrey2,
         //fontWeight: FontWeight.bold,
       ),
       // unselectedLabelStyle: GoogleFonts.poppins(

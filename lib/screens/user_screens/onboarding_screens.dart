@@ -1,9 +1,9 @@
 import 'package:docare/components/components_barrel.dart';
-import 'package:docare/navigation/app_router.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
-import 'package:docare/screens/login_screen.dart';
-import 'package:docare/screens/screens_state_manager.dart';
+import 'package:docare/screens/user_screens/role_screen.dart';
+import 'package:docare/screens/user_screens/screens_barrel.dart';
+import 'package:docare/shared_preferences/screens_state_manager.dart';
 
 //import '../components/primary_button.dart';
 
@@ -27,11 +27,10 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
 
   @override
   Widget build(BuildContext context) {
-
     // One method to set [pageOrderId] and open another screen
     appRouting() {
       ScreenStateManager.setPageOrderID(1);
-      getPage(context, const LoginScreen());
+      getPage(context, const RoleScreen());
     }
 
     onboardingInfo.forEach(((key, value) {
@@ -40,7 +39,7 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
     }));
 
     return Scaffold(
-      backgroundColor: Green,
+      backgroundColor: primaryGreen,
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
@@ -75,8 +74,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                   padding: EdgeInsets.symmetric(horizontal: 4.w),
                   child: CircleAvatar(
                     // if(index==selectdIndex){RETURN }ELSE{}
-                    backgroundColor:
-                        index == selectedIndex ? Colors.white : Green40Percent,
+                    backgroundColor: index == selectedIndex
+                        ? Colors.white
+                        : primaryGreen40Percent,
                     radius: 5.r,
                   ),
                 ),
@@ -114,12 +114,13 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
                         pageController.animateToPage(selectedIndex,
                             duration: const Duration(milliseconds: 800),
                             curve: Curves.easeInOut);
-                      } else {}
-                      appRouting();
+                      } else {
+                        appRouting();
+                      }
                       setState(() {});
                     },
                     label: 'NEXT',
-                    backgroundColor: Green70Percent,
+                    backgroundColor: primaryGreen70Percent,
                     size: Size(154.98.w, 55.h),
                   ),
                 ],

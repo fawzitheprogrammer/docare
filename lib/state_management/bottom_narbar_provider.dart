@@ -8,7 +8,7 @@ class BottomNavBar extends ChangeNotifier {
 
   PageController pageController = PageController();
 
-  PageController get pageAnimater => pageAnimater;
+  PageController get pageAnimater => pageController;
 
   void bottomNavIndex(int value) {
     index = value;

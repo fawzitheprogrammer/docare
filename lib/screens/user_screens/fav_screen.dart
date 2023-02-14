@@ -1,6 +1,6 @@
 import 'package:docare/public_packages.dart';
 
-import '../components/components_barrel.dart';
+import '../../components/components_barrel.dart';
 
 class FavScreen extends StatelessWidget {
   const FavScreen({super.key});
@@ -70,7 +70,7 @@ class FavScreen extends StatelessWidget {
                       folderName: 'icons',
                       fileName: 'heart_filled.svg',
                     ),
-                    color: Green,
+                    color: primaryGreen,
                   ),
                 ),
                 SizedBox(

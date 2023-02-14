@@ -1,25 +1,31 @@
+
 import 'package:docare/components/components_barrel.dart';
 
 import '../public_packages.dart';
 
-Widget textField(
-    {Function()? onTap,
-    Function(String)? onSubmitted,
-    required bool isActive,
-    String? hintText,
-    required BuildContext context}) {
+Widget textField({
+  required TextEditingController controller,
+  Function()? onTap,
+  Function(String)? onSubmitted,
+  required bool isActive,
+  String? hintText,
+  required BuildContext context,
+}) {
   return TextField(
+    //toolbarOptions:
+        //ToolbarOptions(copy: true, paste: true, cut: true, selectAll: true),
+    controller: controller,
     onTap: onTap,
     onSubmitted: onSubmitted,
     style: GoogleFonts.poppins(
       fontSize: 14.sp,
-      color: DarkGrey2,
+      color: darkGrey2,
       //fontWeight: FontWeight.w500,
     ),
     decoration: InputDecoration(
       filled: true,
       fillColor: isActive
-          ? BackgroundGrey2
+          ? backgroundGrey2
           : Theme.of(context).colorScheme.primaryContainer,
       border: OutlineInputBorder(
         borderSide: const BorderSide(width: 0.0, style: BorderStyle.none),
@@ -29,7 +35,7 @@ Widget textField(
         borderSide: BorderSide(
           width: 1.0,
           style: BorderStyle.solid,
-          color: Green,
+          color: primaryGreen,
         ),
         borderRadius: BorderRadius.circular(6.r),
       ),
@@ -40,6 +46,7 @@ Widget textField(
         //fontWeight: FontWeight.w500,
       ),
     ),
+    //selectionHeightStyle: BoxHeightStyle.,
     keyboardType: TextInputType.number,
     cursorColor: Theme.of(context).colorScheme.onPrimary,
   );

@@ -1,0 +1,142 @@
+# Details
+
+Date : 2023-02-13 16:11:45
+
+Directory g:\\Local Disk F\\Source Codes\\Flutter\\docare
+
+Total : 127 files,  8580 codes, 803 comments, 657 blanks, all 10040 lines
+
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
+
+## Files
+| filename | language | code | comment | blank | total |
+| :--- | :--- | ---: | ---: | ---: | ---: |
+| [README.md](/README.md) | Markdown | 10 | 0 | 7 | 17 |
+| [analysis_options.yaml](/analysis_options.yaml) | YAML | 3 | 23 | 4 | 30 |
+| [android/app/build.gradle](/android/app/build.gradle) | Groovy | 60 | 5 | 15 | 80 |
+| [android/app/google-services.json](/android/app/google-services.json) | JSON | 76 | 0 | 0 | 76 |
+| [android/app/src/debug/AndroidManifest.xml](/android/app/src/debug/AndroidManifest.xml) | XML | 4 | 4 | 1 | 9 |
+| [android/app/src/main/AndroidManifest.xml](/android/app/src/main/AndroidManifest.xml) | XML | 28 | 6 | 1 | 35 |
+| [android/app/src/main/res/drawable-v21/launch_background.xml](/android/app/src/main/res/drawable-v21/launch_background.xml) | XML | 4 | 7 | 2 | 13 |
+| [android/app/src/main/res/drawable/launch_background.xml](/android/app/src/main/res/drawable/launch_background.xml) | XML | 4 | 7 | 2 | 13 |
+| [android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml](/android/app/src/main/res/mipmap-anydpi-v26/ic_launcher.xml) | XML | 5 | 0 | 0 | 5 |
+| [android/app/src/main/res/values-night/styles.xml](/android/app/src/main/res/values-night/styles.xml) | XML | 9 | 9 | 1 | 19 |
+| [android/app/src/main/res/values/styles.xml](/android/app/src/main/res/values/styles.xml) | XML | 9 | 9 | 1 | 19 |
+| [android/app/src/profile/AndroidManifest.xml](/android/app/src/profile/AndroidManifest.xml) | XML | 4 | 4 | 1 | 9 |
+| [android/build.gradle](/android/build.gradle) | Groovy | 28 | 0 | 5 | 33 |
+| [android/gradle.properties](/android/gradle.properties) | Properties | 3 | 0 | 1 | 4 |
+| [android/gradle/wrapper/gradle-wrapper.properties](/android/gradle/wrapper/gradle-wrapper.properties) | Properties | 5 | 0 | 1 | 6 |
+| [android/settings.gradle](/android/settings.gradle) | Groovy | 8 | 0 | 4 | 12 |
+| [assets/category/cardiologists.svg](/assets/category/cardiologists.svg) | XML | 62 | 0 | 2 | 64 |
+| [assets/category/dentist.svg](/assets/category/dentist.svg) | XML | 46 | 0 | 2 | 48 |
+| [assets/category/dermatologist.svg](/assets/category/dermatologist.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/category/gastroenterologist.svg](/assets/category/gastroenterologist.svg) | XML | 49 | 0 | 2 | 51 |
+| [assets/category/histologist.svg](/assets/category/histologist.svg) | XML | 113 | 0 | 2 | 115 |
+| [assets/category/histopathology.svg](/assets/category/histopathology.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/category/nephrologist.svg](/assets/category/nephrologist.svg) | XML | 48 | 0 | 2 | 50 |
+| [assets/category/neurologist.svg](/assets/category/neurologist.svg) | XML | 83 | 0 | 2 | 85 |
+| [assets/category/ophthalmologists.svg](/assets/category/ophthalmologists.svg) | XML | 36 | 0 | 2 | 38 |
+| [assets/category/orthopedic.svg](/assets/category/orthopedic.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/algeria.svg](/assets/flags/algeria.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/canada.svg](/assets/flags/canada.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/egypt.svg](/assets/flags/egypt.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/iran.svg](/assets/flags/iran.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/iraq.svg](/assets/flags/iraq.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/morocco.svg](/assets/flags/morocco.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/syrian.svg](/assets/flags/syrian.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/flags/united.svg](/assets/flags/united.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/icons/arrow-left.svg](/assets/icons/arrow-left.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/badge-check.svg](/assets/icons/badge-check.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/bell.svg](/assets/icons/bell.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/calendar.svg](/assets/icons/calendar.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/calendar_filled.svg](/assets/icons/calendar_filled.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/clock-five.svg](/assets/icons/clock-five.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/edit.svg](/assets/icons/edit.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/heart.svg](/assets/icons/heart.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/heart_filled.svg](/assets/icons/heart_filled.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/home.svg](/assets/icons/home.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/home_filled.svg](/assets/icons/home_filled.svg) | XML | 10 | 1 | 16 | 27 |
+| [assets/icons/marker.svg](/assets/icons/marker.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/moon.svg](/assets/icons/moon.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/sign-out-alt.svg](/assets/icons/sign-out-alt.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/icons/user_filled.svg](/assets/icons/user_filled.svg) | XML | 7 | 1 | 16 | 24 |
+| [assets/icons/user_outlined.svg](/assets/icons/user_outlined.svg) | XML | 2 | 0 | 1 | 3 |
+| [assets/vectors/SVG/Asset 2.svg](/assets/vectors/SVG/Asset%202.svg) | XML | 105 | 0 | 0 | 105 |
+| [assets/vectors/background.svg](/assets/vectors/background.svg) | XML | 373 | 0 | 3 | 376 |
+| [assets/vectors/doctor.svg](/assets/vectors/doctor.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/vectors/onboarding_1.svg](/assets/vectors/onboarding_1.svg) | XML | 473 | 0 | 2 | 475 |
+| [assets/vectors/onboarding_2.svg](/assets/vectors/onboarding_2.svg) | XML | 1,135 | 0 | 2 | 1,137 |
+| [assets/vectors/onboarding_3.svg](/assets/vectors/onboarding_3.svg) | XML | 583 | 0 | 2 | 585 |
+| [assets/vectors/patient.svg](/assets/vectors/patient.svg) | XML | 1 | 0 | 0 | 1 |
+| [assets/vectors/waiting.svg](/assets/vectors/waiting.svg) | XML | 105 | 0 | 0 | 105 |
+| [ios/Runner/AppDelegate.swift](/ios/Runner/AppDelegate.swift) | Swift | 12 | 0 | 2 | 14 |
+| [ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json](/ios/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json) | JSON | 122 | 0 | 1 | 123 |
+| [ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json](/ios/Runner/Assets.xcassets/LaunchImage.imageset/Contents.json) | JSON | 23 | 0 | 1 | 24 |
+| [ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md](/ios/Runner/Assets.xcassets/LaunchImage.imageset/README.md) | Markdown | 3 | 0 | 2 | 5 |
+| [ios/Runner/Base.lproj/LaunchScreen.storyboard](/ios/Runner/Base.lproj/LaunchScreen.storyboard) | XML | 36 | 1 | 1 | 38 |
+| [ios/Runner/Base.lproj/Main.storyboard](/ios/Runner/Base.lproj/Main.storyboard) | XML | 25 | 1 | 1 | 27 |
+| [ios/Runner/Runner-Bridging-Header.h](/ios/Runner/Runner-Bridging-Header.h) | C++ | 1 | 0 | 1 | 2 |
+| [lib/components/assets_path.dart](/lib/components/assets_path.dart) | Dart | 14 | 3 | 6 | 23 |
+| [lib/components/colors.dart](/lib/components/colors.dart) | Dart | 37 | 0 | 16 | 53 |
+| [lib/components/components_barrel.dart](/lib/components/components_barrel.dart) | Dart | 8 | 1 | 2 | 11 |
+| [lib/components/pick_image.dart](/lib/components/pick_image.dart) | Dart | 17 | 0 | 5 | 22 |
+| [lib/components/primary_button.dart](/lib/components/primary_button.dart) | Dart | 44 | 0 | 2 | 46 |
+| [lib/components/secondary_button.dart](/lib/components/secondary_button.dart) | Dart | 14 | 1 | 2 | 17 |
+| [lib/components/snack_bar.dart](/lib/components/snack_bar.dart) | Dart | 8 | 0 | 3 | 11 |
+| [lib/components/text.dart](/lib/components/text.dart) | Dart | 21 | 0 | 3 | 24 |
+| [lib/components/textfield.dart](/lib/components/textfield.dart) | Dart | 45 | 5 | 4 | 54 |
+| [lib/main.dart](/lib/main.dart) | Dart | 158 | 5 | 13 | 176 |
+| [lib/models/date_time.dart](/lib/models/date_time.dart) | Dart | 0 | 15 | 4 | 19 |
+| [lib/models/doctor_model.dart](/lib/models/doctor_model.dart) | Dart | 55 | 2 | 5 | 62 |
+| [lib/models/user_model.dart](/lib/models/user_model.dart) | Dart | 32 | 2 | 4 | 38 |
+| [lib/navigation/navigator.dart](/lib/navigation/navigator.dart) | Dart | 7 | 0 | 2 | 9 |
+| [lib/public_packages.dart](/lib/public_packages.dart) | Dart | 6 | 1 | 2 | 9 |
+| [lib/screens/doctor_screens/appointment_screen.dart](/lib/screens/doctor_screens/appointment_screen.dart) | Dart | 68 | 0 | 7 | 75 |
+| [lib/screens/doctor_screens/doctor_information_screen.dart](/lib/screens/doctor_screens/doctor_information_screen.dart) | Dart | 439 | 41 | 25 | 505 |
+| [lib/screens/doctor_screens/doctor_profile_screen.dart](/lib/screens/doctor_screens/doctor_profile_screen.dart) | Dart | 205 | 24 | 8 | 237 |
+| [lib/screens/user_screens/appointment_screen.dart](/lib/screens/user_screens/appointment_screen.dart) | Dart | 190 | 5 | 5 | 200 |
+| [lib/screens/user_screens/doctor_info_screen.dart](/lib/screens/user_screens/doctor_info_screen.dart) | Dart | 433 | 66 | 39 | 538 |
+| [lib/screens/user_screens/fav_screen.dart](/lib/screens/user_screens/fav_screen.dart) | Dart | 81 | 2 | 4 | 87 |
+| [lib/screens/user_screens/home_screen.dart](/lib/screens/user_screens/home_screen.dart) | Dart | 336 | 137 | 22 | 495 |
+| [lib/screens/user_screens/login_screen.dart](/lib/screens/user_screens/login_screen.dart) | Dart | 306 | 19 | 17 | 342 |
+| [lib/screens/user_screens/onboarding_screens.dart](/lib/screens/user_screens/onboarding_screens.dart) | Dart | 148 | 8 | 11 | 167 |
+| [lib/screens/user_screens/otp_verification_screen.dart](/lib/screens/user_screens/otp_verification_screen.dart) | Dart | 230 | 23 | 16 | 269 |
+| [lib/screens/user_screens/profile_screen.dart](/lib/screens/user_screens/profile_screen.dart) | Dart | 196 | 24 | 9 | 229 |
+| [lib/screens/user_screens/role_screen.dart](/lib/screens/user_screens/role_screen.dart) | Dart | 132 | 1 | 11 | 144 |
+| [lib/screens/user_screens/screen_tobe_shown.dart](/lib/screens/user_screens/screen_tobe_shown.dart) | Dart | 19 | 9 | 5 | 33 |
+| [lib/screens/user_screens/screens_barrel.dart](/lib/screens/user_screens/screens_barrel.dart) | Dart | 6 | 0 | 0 | 6 |
+| [lib/screens/user_screens/user_information_screen.dart](/lib/screens/user_screens/user_information_screen.dart) | Dart | 168 | 33 | 12 | 213 |
+| [lib/shared_preferences/logged_in_role.dart](/lib/shared_preferences/logged_in_role.dart) | Dart | 14 | 5 | 7 | 26 |
+| [lib/shared_preferences/screens_state_manager.dart](/lib/shared_preferences/screens_state_manager.dart) | Dart | 13 | 4 | 6 | 23 |
+| [lib/shared_preferences/shared_pref_barrel.dart](/lib/shared_preferences/shared_pref_barrel.dart) | Dart | 3 | 0 | 1 | 4 |
+| [lib/shared_preferences/theme_shared_preferences.dart](/lib/shared_preferences/theme_shared_preferences.dart) | Dart | 12 | 0 | 4 | 16 |
+| [lib/state_management/auth_provider.dart](/lib/state_management/auth_provider.dart) | Dart | 228 | 39 | 27 | 294 |
+| [lib/state_management/bottom_narbar_provider.dart](/lib/state_management/bottom_narbar_provider.dart) | Dart | 19 | 0 | 8 | 27 |
+| [lib/state_management/providers_barrel.dart](/lib/state_management/providers_barrel.dart) | Dart | 3 | 0 | 2 | 5 |
+| [lib/state_management/theme_provider.dart](/lib/state_management/theme_provider.dart) | Dart | 18 | 0 | 4 | 22 |
+| [lib/theme/theme_style.dart](/lib/theme/theme_style.dart) | Dart | 37 | 63 | 4 | 104 |
+| [linux/flutter/generated_plugin_registrant.cc](/linux/flutter/generated_plugin_registrant.cc) | C++ | 3 | 4 | 5 | 12 |
+| [linux/flutter/generated_plugin_registrant.h](/linux/flutter/generated_plugin_registrant.h) | C++ | 5 | 5 | 6 | 16 |
+| [linux/main.cc](/linux/main.cc) | C++ | 5 | 0 | 2 | 7 |
+| [linux/my_application.cc](/linux/my_application.cc) | C++ | 74 | 11 | 20 | 105 |
+| [linux/my_application.h](/linux/my_application.h) | C++ | 7 | 7 | 5 | 19 |
+| [macos/Flutter/GeneratedPluginRegistrant.swift](/macos/Flutter/GeneratedPluginRegistrant.swift) | Swift | 16 | 3 | 4 | 23 |
+| [macos/Runner/AppDelegate.swift](/macos/Runner/AppDelegate.swift) | Swift | 8 | 0 | 2 | 10 |
+| [macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json](/macos/Runner/Assets.xcassets/AppIcon.appiconset/Contents.json) | JSON | 68 | 0 | 1 | 69 |
+| [macos/Runner/Base.lproj/MainMenu.xib](/macos/Runner/Base.lproj/MainMenu.xib) | XML | 343 | 0 | 1 | 344 |
+| [macos/Runner/MainFlutterWindow.swift](/macos/Runner/MainFlutterWindow.swift) | Swift | 12 | 0 | 4 | 16 |
+| [pubspec.yaml](/pubspec.yaml) | YAML | 42 | 61 | 18 | 121 |
+| [web/index.html](/web/index.html) | HTML | 37 | 16 | 6 | 59 |
+| [web/manifest.json](/web/manifest.json) | JSON | 35 | 0 | 1 | 36 |
+| [windows/flutter/generated_plugin_registrant.cc](/windows/flutter/generated_plugin_registrant.cc) | C++ | 3 | 4 | 5 | 12 |
+| [windows/flutter/generated_plugin_registrant.h](/windows/flutter/generated_plugin_registrant.h) | C++ | 5 | 5 | 6 | 16 |
+| [windows/runner/flutter_window.cpp](/windows/runner/flutter_window.cpp) | C++ | 45 | 4 | 13 | 62 |
+| [windows/runner/flutter_window.h](/windows/runner/flutter_window.h) | C++ | 20 | 5 | 9 | 34 |
+| [windows/runner/main.cpp](/windows/runner/main.cpp) | C++ | 30 | 4 | 10 | 44 |
+| [windows/runner/resource.h](/windows/runner/resource.h) | C++ | 9 | 6 | 2 | 17 |
+| [windows/runner/utils.cpp](/windows/runner/utils.cpp) | C++ | 53 | 2 | 10 | 65 |
+| [windows/runner/utils.h](/windows/runner/utils.h) | C++ | 8 | 6 | 6 | 20 |
+| [windows/runner/win32_window.cpp](/windows/runner/win32_window.cpp) | C++ | 183 | 15 | 48 | 246 |
+| [windows/runner/win32_window.h](/windows/runner/win32_window.h) | C++ | 48 | 29 | 22 | 99 |
+
+[Summary](results.md) / Details / [Diff Summary](diff.md) / [Diff Details](diff-details.md)
