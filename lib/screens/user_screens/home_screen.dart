@@ -2,6 +2,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/doctor_info_screen.dart';
+import 'package:docare/state_management/appointment_provider.dart';
 import '../../components/components_barrel.dart';
 import '../../state_management/providers_barrel.dart';
 
@@ -16,6 +17,22 @@ List<String> category = [
   'ophthalmologists.svg',
   'orthopedic.svg'
 ];
+
+List<String> categoryLabels = [
+  'Cardiologist',
+  'Dentist',
+  'Dermatologis',
+  'Gastroenterologis',
+  'Histologist',
+  'Histopathology',
+  'Nephrologist',
+  'Ophthalmologists',
+  'Orthopedic'
+];
+
+bool keyboardActive = false;
+
+int? categoryActiveIndex;
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -108,10 +125,6 @@ class _HomeScreenState extends State<HomeScreen> {
                   padding: EdgeInsets.all(16.w),
                   child: TextField(
                     controller: controller,
-                    onSubmitted: (value) {
-                      controller.text = value;
-                      setState(() {});
-                    },
                     decoration: InputDecoration(
                       prefixIcon: Icon(
                         Icons.search,
@@ -138,8 +151,23 @@ class _HomeScreenState extends State<HomeScreen> {
                         color: Theme.of(context).colorScheme.onPrimary,
                         //fontWeight: FontWeight.w500,
                       ),
+                      suffixIcon: IconButton(
+                        onPressed: () {
+                          controller.text = '';
+                          categoryActiveIndex = -1;
+                          setState(() {});
+                        },
+                        icon: Icon(
+                          Icons.clear,
+                          color: Theme.of(context).colorScheme.onPrimary,
+                        ),
+                      ),
                     ),
                     cursorColor: Theme.of(context).colorScheme.onPrimary,
+                    onSubmitted: (String value) {
+                      controller.text = value;
+                      setState(() {});
+                    },
                   ),
                 ),
               ),
@@ -173,23 +201,29 @@ class _HomeScreenState extends State<HomeScreen> {
                                 ),
                               ),
                               context: context,
-                              builder: (context) => Padding(
-                                padding: EdgeInsets.all(24.0.w),
-                                child: Container(
-                                  color: backgroundGrey2,
-                                  padding: EdgeInsets.symmetric(
-                                      horizontal: 24.w, vertical: 24.0.h),
-                                  height: 720.h,
-                                  width: double.infinity,
-                                  child: GridView(
-                                    scrollDirection: Axis.vertical,
-                                    gridDelegate:
-                                        const SliverGridDelegateWithFixedCrossAxisCount(
-                                            crossAxisCount: 3),
-                                    children: List.generate(
-                                      category.length,
-                                      (index) => Padding(
-                                        padding: const EdgeInsets.all(4.0),
+                              builder: (context) => Container(
+                                color: backgroundGrey2,
+                                padding: EdgeInsets.symmetric(
+                                    horizontal: 24.w, vertical: 24.0.h),
+                                height: 740.h,
+                                width: double.infinity,
+                                child: GridView(
+                                  scrollDirection: Axis.vertical,
+                                  gridDelegate:
+                                      const SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: 3),
+                                  children: List.generate(
+                                    category.length,
+                                    (index) => Padding(
+                                      padding: const EdgeInsets.all(4.0),
+                                      child: GestureDetector(
+                                        onTap: () {
+                                          categoryActiveIndex = index;
+                                          controller.text =
+                                              categoryLabels[index];
+                                          setState(() {});
+                                          Navigator.pop(context);
+                                        },
                                         child: Container(
                                           height: 50.h,
                                           width: 80.w,
@@ -285,18 +319,37 @@ class _HomeScreenState extends State<HomeScreen> {
           itemCount: category.length,
           itemBuilder: (context, index) => Padding(
             padding: const EdgeInsets.all(4.0),
-            child: Container(
-              height: 50.h,
-              width: 80.w,
-              decoration: BoxDecoration(
-                  color: Theme.of(context).colorScheme.primaryContainer,
-                  borderRadius: BorderRadius.circular(6.r)),
-              child: Center(
-                child: SvgPicture.asset(
-                  getImage(folderName: 'category', fileName: category[index]),
-                  height: 50.h,
-                  color: primaryGreen,
-                  fit: BoxFit.cover,
+            child: GestureDetector(
+              onTap: () {
+                categoryActiveIndex = index;
+                controller.text = categoryLabels[index];
+                setState(() {});
+              },
+              child: Container(
+                height: 50.h,
+                width: 80.w,
+                decoration: BoxDecoration(
+                  gradient: LinearGradient(
+                    colors: index == categoryActiveIndex
+                        ? [primaryGreen, const Color(0xff17cfb6)]
+                        : [
+                            Theme.of(context).colorScheme.primaryContainer,
+                            Theme.of(context).colorScheme.primaryContainer
+                          ],
+                    begin: Alignment.topLeft,
+                    end: Alignment.bottomRight,
+                  ),
+                  borderRadius: BorderRadius.circular(6.r),
+                ),
+                child: Center(
+                  child: SvgPicture.asset(
+                    getImage(folderName: 'category', fileName: category[index]),
+                    height: 50.h,
+                    color: index == categoryActiveIndex
+                        ? backgroundGrey1
+                        : primaryGreen,
+                    fit: BoxFit.cover,
+                  ),
                 ),
               ),
             ),
@@ -308,7 +361,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   buildListOfDoctor(BuildContext context) {
     final ap = Provider.of<AuthProvider>(context, listen: false);
-    final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
+    final FirebaseFirestore firebaseFirestore = FirebaseFirestore.instance;
 
     // List<String> docs = [
     //   'assets/doc.jpg',
@@ -320,10 +373,7 @@ class _HomeScreenState extends State<HomeScreen> {
     // ];
 
     return StreamBuilder(
-      stream: _firebaseFirestore
-          .collection("doctors")
-          .where('name', isEqualTo: controller.text)
-          .snapshots(),
+      stream: firebaseFirestore.collection("doctors").snapshots(),
       builder: ((context, snapshot) {
         if (snapshot.connectionState == ConnectionState.waiting) {
           return const CircularProgressIndicator();
@@ -357,74 +407,38 @@ class _HomeScreenState extends State<HomeScreen> {
         for (var item in data) {
           final fetchedData = item.data();
 
-          documentID.add(item.id);
-          profilePic.add(item.get('profilePic'));
+          // documentID.add(item.id);
+          // profilePic.add(item.get('profilePic'));
 
-          final doctorCardItem = Container(
-            margin: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.h),
-            padding: EdgeInsets.symmetric(vertical: 8.h),
-            height: 120.h,
-            width: 353.w,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(6.r),
-              color: Theme.of(context).colorScheme.primaryContainer,
-            ),
-            child: Row(
-              children: [
-                Container(
-                  height: 100,
-                  width: 80,
-                  margin: const EdgeInsets.all(8.0),
-                  child: ClipRRect(
-                    borderRadius: BorderRadius.circular(6.r),
-                    child: Hero(
-                      tag: fetchedData['profilePic'],
-                      child: Image.network(
-                        fetchedData['profilePic'],
-                        fit: BoxFit.fitHeight,
-                      ),
-                    ),
-                  ),
-                ),
-                Padding(
-                  padding: const EdgeInsets.all(8.0),
-                  child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.start,
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Text(
-                        fetchedData['name'],
-                        style: GoogleFonts.poppins(
-                            fontSize: 16.sp,
-                            color: Theme.of(context).colorScheme.onPrimary,
-                            fontWeight: FontWeight.w600
-                            //fontWeight: FontWeight.w500,
-                            ),
-                      ),
-                      Text(
-                        fetchedData['speciality'],
-                        style: GoogleFonts.poppins(
-                          fontSize: 14.sp,
-                          color: Theme.of(context).colorScheme.onPrimary,
-                          //fontWeight: FontWeight.w500,
-                        ),
-                      ),
-                    ],
-                  ),
-                ),
-              ],
-            ),
-          );
+          bool getFields(String field) {
+            return fetchedData[field]
+                .toString()
+                .toLowerCase()
+                .contains(controller.text.toLowerCase());
+          }
 
-          doctorCards.add(doctorCardItem);
+          if (controller.text.isEmpty) {
+            final doctorCardItem = doctorCard(fetchedData);
+            doctorCards.add(doctorCardItem);
+            documentID.add(item.id);
+            profilePic.add(item.get('profilePic'));
+          } else if (getFields('name') || getFields('speciality')) {
+            final doctorCardItem = doctorCard(fetchedData);
+            doctorCards.add(doctorCardItem);
+            documentID.add(item.id);
+            profilePic.add(item.get('profilePic'));
+          }
         }
 
         return data.isNotEmpty
             ? ListView.builder(
-                itemCount: doctorCards.length,
                 shrinkWrap: true,
+                itemCount: doctorCards.length,
+                primary: false,
+                physics: const NeverScrollableScrollPhysics(),
                 itemBuilder: (context, index) => GestureDetector(
                   onTap: () {
+                    AppointmentProvider.isSave = true;
                     getPage(
                         context,
                         DoctorInfo(
@@ -436,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               )
             : Center(
-                child: Container(
+                child: SizedBox(
                   //color: Colors.red,
                   height: 350.h,
                   child: Center(
@@ -445,6 +459,70 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               );
       }),
+    );
+  }
+
+  Widget doctorCard(Map<String, dynamic> fetchedData) {
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 12.0.w, vertical: 8.h),
+      padding: EdgeInsets.symmetric(vertical: 8.h),
+      height: 120.h,
+      width: 353.w,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(6.r),
+        color: Theme.of(context).colorScheme.primaryContainer,
+      ),
+      child: Row(
+        children: [
+          Container(
+            height: 100,
+            width: 80,
+            margin: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(6.r),
+              child: Hero(
+                tag: fetchedData['profilePic'],
+                child: fetchedData.isNotEmpty
+                    ? Image.network(
+                        fetchedData['profilePic'],
+                        fit: BoxFit.fitHeight,
+                      )
+                    : Center(
+                        child: CircularProgressIndicator(
+                          color: primaryGreen,
+                        ),
+                      ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.start,
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Text(
+                  fetchedData['name'],
+                  style: GoogleFonts.poppins(
+                      fontSize: 16.sp,
+                      color: Theme.of(context).colorScheme.onPrimary,
+                      fontWeight: FontWeight.w600
+                      //fontWeight: FontWeight.w500,
+                      ),
+                ),
+                Text(
+                  fetchedData['speciality'],
+                  style: GoogleFonts.poppins(
+                    fontSize: 14.sp,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    //fontWeight: FontWeight.w500,
+                  ),
+                ),
+              ],
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

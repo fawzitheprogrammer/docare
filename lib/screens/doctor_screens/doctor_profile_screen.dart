@@ -4,6 +4,7 @@ import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
 import 'package:docare/screens/user_screens/screens_barrel.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
+import 'package:docare/state_management/appointment_provider.dart';
 import '../../components/components_barrel.dart';
 import '../../state_management/providers_barrel.dart';
 
@@ -20,6 +21,9 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     final themeProvider = Provider.of<ThemeProvider>(context);
     final ap = Provider.of<AuthProvider>(context, listen: false);
     final bottomNavProvider = Provider.of<BottomNavBar>(context, listen: false);
+
+    AppointmentProvider.getToken();
+    print(AppointmentProvider.deviceToken);
 
     return Scaffold(
       body: SafeArea(

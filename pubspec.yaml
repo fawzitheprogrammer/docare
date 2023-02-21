@@ -52,6 +52,11 @@ dependencies:
   firebase_storage: ^11.0.10
   image_picker: ^0.8.6+1
   shimmer: ^2.0.0
+  rive: ^0.10.2
+  firebase_messaging: ^14.2.4
+  http: ^0.13.5
+  flutter_local_notifications: ^8.2.0
+  #flutter_local_notifications: ^8.2.0
   #google_maps_flutter: ^2.2.3
   #intl: ^0.18.0
   #fl_country_code_picker: ^0.0.4
@@ -92,6 +97,7 @@ flutter:
     - assets/flags/
     - assets/category/
     - assets/icons/
+    - assets/rive/
 
   # An image asset can refer to one or more resolution-specific "variants", see
   # https://flutter.dev/assets-and-images/#resolution-aware

@@ -1,5 +1,6 @@
 import 'dart:async';
 import 'package:docare/main.dart';
+import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/doctor_screens/doctor_information_screen.dart';
 import 'package:docare/screens/user_screens/screens_barrel.dart';
@@ -100,9 +101,22 @@ class _OTPVerificationState extends State<OTPVerification> {
               Text(
                 phoneNumberOnBoarding!,
                 style: GoogleFonts.poppins(
-                  fontSize: 14.sp,
+                  fontSize: 18.sp,
                   color: Theme.of(context).colorScheme.onPrimary,
                   fontWeight: FontWeight.bold,
+                ),
+              ),
+              GestureDetector(
+                onTap: () {
+                  getPage(context, const LoginScreen());
+                },
+                child: Text(
+                  'Wrong number?',
+                  style: GoogleFonts.poppins(
+                    fontSize: 14.sp,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontWeight: FontWeight.w600,
+                  ),
                 ),
               ),
               SizedBox(

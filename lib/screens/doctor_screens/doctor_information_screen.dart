@@ -300,8 +300,8 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
                             size: Size(
                                 MediaQuery.of(context).size.width * 0.90, 70.h),
                             onPressed: () {
-                             // print(_openTime!.format(context));
-                              
+                              // print(_openTime!.format(context));
+
                               if (_openTime != null && _closedTime != null) {
                                 if (_closedTime!.hour - _openTime!.hour > 1) {
                                   storeData();
@@ -441,17 +441,18 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
           userModel: userModel,
           profilePic: image!,
           onSuccess: () {
-            ap.saveUserDataToSP().then(
-                  (value) => ap.setSignIn().then(
-                        (value) => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AllScreens(),
-                          ),
-                          (route) => false,
-                        ),
+            ap.saveUserDataToSP().then((value) {
+              ScreenStateManager.setPageOrderID(3);
+              ap.setSignIn().then(
+                    (value) => Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AllScreens(),
                       ),
-                );
+                      (route) => false,
+                    ),
+                  );
+            });
           },
         );
       } else {
@@ -483,15 +484,16 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
           profilePic: image!,
           onSuccess: () {
             ap.saveDoctorDataToSP().then(
-                  (value) => ap.setSignIn().then(
-                        (value) => Navigator.pushAndRemoveUntil(
-                          context,
-                          MaterialPageRoute(
-                            builder: (context) => const AllScreens(),
-                          ),
-                          (route) => false,
-                        ),
+                  (value) => ap.setSignIn().then((value) {
+                    ScreenStateManager.setPageOrderID(3);
+                    Navigator.pushAndRemoveUntil(
+                      context,
+                      MaterialPageRoute(
+                        builder: (context) => const AllScreens(),
                       ),
+                      (route) => false,
+                    );
+                  }),
                 );
           },
         );

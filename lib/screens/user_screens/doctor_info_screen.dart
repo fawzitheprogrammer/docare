@@ -1,12 +1,26 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:docare/components/components_barrel.dart';
+import 'package:docare/components/time_format.dart';
+import 'package:docare/models/appointments.dart';
+import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/push_notification/push_notidication.dart';
+import 'package:docare/push_notification/send_push_notification.dart';
+import 'package:docare/screens/user_screens/appointment_booked.dart';
+import 'package:docare/state_management/appointment_provider.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
-
 import '../../state_management/providers_barrel.dart';
 
+DateTime dateTime = DateTime.now();
+int? appointmentHour;
+
 class DoctorInfo extends StatefulWidget {
-  DoctorInfo({super.key, required this.imageString, required this.uid});
+  DoctorInfo({
+    super.key,
+    required this.imageString,
+    required this.uid,
+  });
 
   final String imageString;
   final String uid;
@@ -20,7 +34,15 @@ class _DoctorInfoState extends State<DoctorInfo> {
 
   @override
   Widget build(BuildContext context) {
-    //final ap = Provider.of<AuthProvider>(context, listen: false);
+    final appointmentProvider =
+        Provider.of<AppointmentProvider>(context, listen: false);
+
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+
+    loadFCM();
+    listenFCM();
+
+    print('USER ID : ${AppointmentProvider.currentUser!.uid}');
 
     // A list for date
     //List<DateBox> dateBox = [];
@@ -195,7 +217,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
                                   ),
                                   textLabel(
                                       text:
-                                          '${item.get('openTime')}-${item.get('closedTime')}',
+                                          '${timeFormat(item.get('openTime'))} - ${timeFormat(item.get('closedTime'))}',
                                       fontSize: 14.sp,
                                       color: primaryGreen,
                                       fontWeight: FontWeight.w600)
@@ -327,7 +349,81 @@ class _DoctorInfoState extends State<DoctorInfo> {
                   size: Size(double.infinity, 70.h),
                   shadow: 2.0,
                   shadowColor: const Color(0xff17cfb6).withAlpha(60),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (dateTime.day == DateTime.now().day &&
+                        DateTime.now().hour > appointmentHour!) {
+                      showSnackBar(context, 'Invalid Time');
+                    } else {
+                     AppointmentProvider.getToken();
+                      print('THE TOKEN : ${AppointmentProvider.deviceToken}');
+                      // AppointmentProvider.sendNotification(
+                      //     token: AppointmentProvider.deviceToken,
+                      //     header: 'Appointment Approved',
+                      //     body: 'Your appointment was approved by the doctor');
+                      // ap.checkExistingUser().then((value) {
+                      //   if (value == true) {
+                      //     print(ap.userID);
+                      //   }
+                      // });
+
+                      final appointments = Appointments(
+                        doctorName: item.get('name'),
+                        doctorProfilePic: item.get('profilePic'),
+                        speciality: item.get('speciality'),
+                        experience: item.get('experience') + ' years',
+                        location: item.get('location'),
+                        patientName: ap.userModel.name,
+                        patienNumber: ap.userModel.phoneNumber,
+                        patientProfilePicl: ap.userModel.profilePic,
+                        appointmentDate: dateTime.toString(),
+                        appointmentHour: appointmentHour!,
+                        isApproved: false,
+                        doctorID: widget.uid,
+                        patientID: AppointmentProvider.currentUser!.uid,
+                        deviceToken: AppointmentProvider.deviceToken,
+                        doctorDocumentID:
+                            AppointmentProvider.appointmentDocumentID,
+                        patientDocumentID:
+                            AppointmentProvider.appointmentDocumentID,
+                      );
+
+                      appointmentProvider
+                          .checkAppointmentExisting()
+                          .then((value) {
+                        if (!value) {
+                          appointmentProvider.saveAppointmentDataToFirebase(
+                              context: context,
+                              appointments: appointments,
+                              doctorID: widget.uid,
+                              userID: AppointmentProvider.currentUser!.uid,
+                              onSuccess: () {
+                                AppointmentProvider.sendPushMessage(
+                                  'You have a new appointment request',
+                                  'New Appointment',
+                                  item.get('deviceToken'),
+                                );
+                                if (item.data()!.isNotEmpty &&
+                                    appointmentHour != null) {
+                                  appointmentProvider
+                                      .saveAppointmentDataToSP()
+                                      .then((value) {
+                                    getPageRemoveUntil(
+                                      context,
+                                      const AppointmentBooked(),
+                                    );
+                                  });
+                                } else {
+                                  showSnackBar(context,
+                                      'Something went wrong, please try again.');
+                                }
+                              });
+                        } else if (value) {
+                          showSnackBar(context,
+                              'Something went wrong, please try again.');
+                        }
+                      });
+                    }
+                  },
                 ),
               )
             ],
@@ -338,20 +434,18 @@ class _DoctorInfoState extends State<DoctorInfo> {
   }
 }
 
-class DateBox extends StatelessWidget {
+class DateBox extends StatefulWidget {
   DateBox({
     super.key,
   });
 
+  @override
+  State<DateBox> createState() => _DateBoxState();
+}
+
+class _DateBoxState extends State<DateBox> {
   // final DateTime dateTime;
-  // final bool isActive;
-
-  // Creating a dateTime object to get current date
-  DateTime dateTime = DateTime.now();
-
   num activeDateBox = 2;
-
-  List<DateTime> dateBox = [];
 
   String monthName() {
     String name = '';
@@ -363,14 +457,29 @@ class DateBox extends StatelessWidget {
     return name;
   }
 
-  String getWeekDayName() {
-    String day = ' ';
+  // List<String> getWeekDayName() {
+  //   List<String> day = [];
 
-    for (int i = 0; i < 3; i++) {
-      day += DateFormat('EEEE').format(dateTime)[i];
+  //   for (int i = 0; i < 6; i++) {
+  //     for (int j = 0; j < 3; j++) {
+  //       day.add(DateFormat('EEEE').format(dateBox[i].day.)[j]);
+  //     }
+  //   }
+
+  //   return day;
+  // }
+
+  List<DateTime> dateBox = [];
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    dateTime = DateTime.now().subtract(const Duration(days: 1));
+    for (int i = 0; i < 6; i++) {
+      dateTime = dateTime.add(const Duration(days: 1));
+      dateBox.add(dateTime);
     }
-
-    return day;
   }
 
   @override
@@ -378,82 +487,77 @@ class DateBox extends StatelessWidget {
     final scroller =
         Provider.of<DoctorScreenInfoProvider>(context, listen: false);
 
+    //print(dateBox);
+
     // Formatting current dateTime
     DateFormat('yyyy-MM-dd').format(dateTime);
 
-    // Looping and increasing current date day by one on each loop
-    for (int i = 0; i < 6; i++) {
-      // Adding date to the dateBox List
-      dateBox.add(dateTime);
-      // Increasing date day by one
-      dateTime = dateTime.add(const Duration(days: 1));
-    }
-
-    return StatefulBuilder(
-      builder: (context, setState) => Padding(
-        padding: EdgeInsets.symmetric(horizontal: 4.0.w),
-        child: ListView.builder(
-          itemCount: dateBox.length,
-          scrollDirection: Axis.horizontal,
-          controller: scroller.dateCardScrollController,
-          //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-          itemBuilder: ((context, index) {
-            return GestureDetector(
-              onTap: () {
-                activeDateBox = index;
-                scroller.goToDateCard(index);
-                setState(() {});
-              },
-              child: Padding(
-                padding: EdgeInsets.symmetric(horizontal: 8.0.w),
-                child: Container(
-                  width: 85.h,
-                  decoration: BoxDecoration(
-                    color:
-                        index == activeDateBox ? primaryGreen : backgroundGrey1,
-                    gradient: LinearGradient(
-                        colors: index == activeDateBox
-                            ? [primaryGreen, const Color(0xff17cfb6)]
-                            : [
-                                Theme.of(context).colorScheme.primaryContainer,
-                                Theme.of(context).colorScheme.primaryContainer
-                              ],
-                        begin: Alignment.topLeft,
-                        end: Alignment.bottomRight),
-                    borderRadius: BorderRadius.circular(6.r),
-                  ),
-                  child: Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      textLabel(
-                        text: monthName(),
-                        fontSize: 14.sp,
-                        color: index == activeDateBox
-                            ? backgroundGrey1
-                            : darkGrey2,
-                      ),
-                      textLabel(
-                        text: dateTime.day.toString(),
-                        fontSize: 22.sp,
-                        color: index == activeDateBox
-                            ? backgroundGrey1
-                            : primaryGreen,
-                        fontWeight: FontWeight.w800,
-                      ),
-                      textLabel(
-                        text: getWeekDayName(),
-                        fontSize: 14.sp,
-                        color: index == activeDateBox
-                            ? backgroundGrey1
-                            : darkGrey2,
-                      ),
-                    ],
-                  ),
+    return Padding(
+      padding: EdgeInsets.symmetric(horizontal: 4.0.w),
+      child: ListView.builder(
+        itemCount: dateBox.length,
+        scrollDirection: Axis.horizontal,
+        controller: scroller.dateCardScrollController,
+        //mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        itemBuilder: ((context, index) {
+          return GestureDetector(
+            onTap: () {
+              activeDateBox = index;
+              dateTime = dateBox[index];
+              print(dateTime);
+              scroller.goToDateCard(index);
+              setState(() {});
+            },
+            child: Padding(
+              padding: EdgeInsets.symmetric(horizontal: 8.0.w),
+              child: Container(
+                width: 85.h,
+                decoration: BoxDecoration(
+                  color:
+                      index == activeDateBox ? primaryGreen : backgroundGrey1,
+                  gradient: LinearGradient(
+                      colors: index == activeDateBox
+                          ? [primaryGreen, const Color(0xff17cfb6)]
+                          : [
+                              Theme.of(context).colorScheme.primaryContainer,
+                              Theme.of(context).colorScheme.primaryContainer
+                            ],
+                      begin: Alignment.topLeft,
+                      end: Alignment.bottomRight),
+                  borderRadius: BorderRadius.circular(6.r),
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    textLabel(
+                      text: monthName(),
+                      fontSize: 14.sp,
+                      color:
+                          index == activeDateBox ? backgroundGrey1 : darkGrey2,
+                    ),
+                    textLabel(
+                      text: dateBox[index].day.toString(),
+                      fontSize: 22.sp,
+                      color: index == activeDateBox
+                          ? backgroundGrey1
+                          : primaryGreen,
+                      fontWeight: FontWeight.w800,
+                    ),
+                    textLabel(
+                      text: DateFormat('EEEE')
+                          .format(dateBox[index])
+                          .toString()
+                          .substring(0, 3),
+                      fontSize: 14.sp,
+                      color:
+                          index == activeDateBox ? backgroundGrey1 : darkGrey2,
+                    ),
+                  ],
                 ),
               ),
-            );
-          }),
-        ),
+            ),
+          );
+        }),
       ),
     );
   }
@@ -497,6 +601,7 @@ class DateTimeBox extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    appointmentHour = openTime;
     num activeTimeBox = openTime;
 
     final scroller =
@@ -506,6 +611,7 @@ class DateTimeBox extends StatelessWidget {
       // Adding date to the dateBox List
 
       // debugPrint('I $i');
+
       dateTimeBox.add(i);
 
       // print('OUTER : $activeTimeBox');
@@ -529,6 +635,7 @@ class DateTimeBox extends StatelessWidget {
                       setState(() {
                         activeTimeBox = index + openTime;
                         isActive = !isActive;
+                        appointmentHour = index + openTime;
                         scroller.goToTimeCard(index);
                       });
                     },
@@ -537,26 +644,25 @@ class DateTimeBox extends StatelessWidget {
                       height: 60.h,
                       decoration: BoxDecoration(
                         gradient: LinearGradient(
-                            colors: index ==
-                                    dateTimeBox.indexOf(activeTimeBox as int)
-                                ? [primaryGreen, const Color(0xff17cfb6)]
-                                : [
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .primaryContainer,
-                                    Theme.of(context)
-                                        .colorScheme
-                                        .primaryContainer
-                                  ],
-                            begin: Alignment.topLeft,
-                            end: Alignment.bottomRight),
+                          colors: index ==
+                                  dateTimeBox.indexOf(activeTimeBox as int)
+                              ? [primaryGreen, const Color(0xff17cfb6)]
+                              : [
+                                  Theme.of(context)
+                                      .colorScheme
+                                      .primaryContainer,
+                                  Theme.of(context).colorScheme.primaryContainer
+                                ],
+                          begin: Alignment.topLeft,
+                          end: Alignment.bottomRight,
+                        ),
                         borderRadius: BorderRadius.circular(6.r),
                       ),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           textLabel(
-                            text: '${dateTimeBox[index]}:00',
+                            text: timeFormat(dateTimeBox[index]),
                             fontSize: 18.sp,
                             color: index ==
                                     dateTimeBox.indexOf(activeTimeBox as int)

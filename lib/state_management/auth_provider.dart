@@ -3,7 +3,9 @@ import 'dart:io';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:docare/components/colors.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
+import 'package:docare/state_management/appointment_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -17,6 +19,8 @@ class AuthProvider extends ChangeNotifier {
   //int get isSignedIn => _isSignedIn;
   bool _isLoading = false;
   bool get isLoading => _isLoading;
+
+  bool? isApproved = false;
   String? _uid;
   String get uid => _uid!;
   // The model to get set in user data
@@ -26,6 +30,9 @@ class AuthProvider extends ChangeNotifier {
   DoctorModel? _doctorModel;
   DoctorModel get doctorModel => _doctorModel!;
   Color errorBorder = backgroundGrey1;
+
+  String _userID = '';
+  String get userID => _userID;
   // bool _codeNotCorrect = false;
   // bool get codeNotCorrect => _codeNotCorrect;
 
@@ -115,14 +122,30 @@ class AuthProvider extends ChangeNotifier {
     // });
   }
 
+  Future<bool> isDoctorApproved() async {
+    DocumentSnapshot snapshot = await _firebaseFirestore
+        .collection("doctors")
+        .doc(AppointmentProvider.currentUser!.uid)
+        .get();
+
+    if (snapshot.get('isApproved')) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
   // DATABASE OPERTAIONS
   Future<bool> checkExistingUser() async {
     DocumentSnapshot snapshot = await _firebaseFirestore
         .collection(Role.getRole() ? "users" : "doctors")
         .doc(_uid)
         .get();
+    _userID = snapshot.id;
+
     if (snapshot.exists) {
       //print("USER EXISTS");
+
       return true;
     } else {
       //print("NEW USER");
@@ -130,6 +153,7 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+ 
   // Storing user data to firebase
   void saveUserDataToFirebase({
     required BuildContext context,

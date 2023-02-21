@@ -1,4 +1,3 @@
-import 'package:docare/public_packages.dart';
 
 class DoctorModel {
   String name;

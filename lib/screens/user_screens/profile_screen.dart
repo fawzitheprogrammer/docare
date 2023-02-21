@@ -1,4 +1,6 @@
 // ignore: unnecessary_import
+import 'dart:math';
+
 import 'package:docare/components/text.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
@@ -99,11 +101,16 @@ class _ProfileScreenState extends State<ProfileScreen> {
                         icon: 'moon.svg',
                         hasSwitch: true,
                       ),
-                      ProfileCard(
-                        provider: themeProvider,
-                        label: 'Notification',
-                        icon: 'bell.svg',
-                        hasSwitch: true,
+                      GestureDetector(
+                        onTap: () {
+                          
+                        },
+                        child: ProfileCard(
+                          provider: themeProvider,
+                          label: 'Notification',
+                          icon: 'bell.svg',
+                          hasSwitch: true,
+                        ),
                       ),
                       //
                       GestureDetector(

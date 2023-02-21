@@ -38,4 +38,15 @@ class DoctorScreenInfoProvider extends ChangeNotifier {
         curve: Curves.decelerate, duration: const Duration(milliseconds: 500));
     notifyListeners();
   }
+
+  final ScrollController _categoryCardscrollController = ScrollController();
+
+  ScrollController get categoryCardScrollController =>
+      _categoryCardscrollController;
+
+  goToCategoryCard(int index) {
+    _dateCardscrollController.animateTo(index * 56,
+        curve: Curves.decelerate, duration: const Duration(milliseconds: 500));
+    notifyListeners();
+  }
 }

@@ -1,14 +1,15 @@
+import 'package:docare/push_notification/push_notidication.dart';
 import 'package:docare/screens/doctor_screens/appointment_screen.dart';
 import 'package:docare/screens/doctor_screens/doctor_profile_screen.dart';
 import 'package:docare/screens/user_screens/screen_tobe_shown.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
+import 'package:docare/state_management/appointment_provider.dart';
 import 'package:docare/theme/theme_style.dart';
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/state_management/providers_barrel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'screens/user_screens/screens_barrel.dart';
-import 'state_management/doctor_info_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -22,6 +23,9 @@ void main() async {
 
   await ScreenStateManager.init();
   await Role.init();
+  requestPermission();
+  loadFCM();
+  listenFCM();
 
   runApp(MyApp());
 }
@@ -47,6 +51,9 @@ class MyApp extends StatelessWidget {
         ),
         ChangeNotifierProvider(
           create: (context) => DoctorScreenInfoProvider(),
+        ),
+        ChangeNotifierProvider(
+          create: (context) => AppointmentProvider(),
         ),
       ],
       child: ScreenUtilInit(
