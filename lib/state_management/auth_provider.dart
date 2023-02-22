@@ -135,6 +135,31 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
+  Future<bool> isPhoneRegistered(String phone) async {
+    String phoneNumber = '';
+    CollectionReference snapshot = await _firebaseFirestore
+        .collection("doctors")
+        .snapshots()
+        .forEach((element) {
+      for (var i in element.docs) {
+        phoneNumber = i.get('phoneNumber');
+      }
+    });
+
+    if (phoneNumber == phone) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  // checkIfNumber(String phone) async {
+  //   //List<String> listOfPhoneNumber = [];
+  //   bool? isFound;
+
+  //   //return isFound!;
+  // }
+
   // DATABASE OPERTAIONS
   Future<bool> checkExistingUser() async {
     DocumentSnapshot snapshot = await _firebaseFirestore
@@ -153,7 +178,6 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
- 
   // Storing user data to firebase
   void saveUserDataToFirebase({
     required BuildContext context,
@@ -245,17 +269,19 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _doctorModel = DoctorModel(
-          name: snapshot['name'] ?? '',
-          uid: snapshot['uid'] ?? '',
-          phoneNumber: snapshot['phoneNumber'] ?? '',
-          createdAt: snapshot['createdAt'] ?? '',
-          profilePic: snapshot['profilePic'] ?? '',
-          speciality: snapshot['speciality'] ?? '',
-          location: snapshot['location'] ?? '',
-          experience: snapshot['experience'] ?? '',
-          openTime: snapshot['openTime'] ?? '',
-          closedTime: snapshot['closedTime'] ?? '',
-          isApproved: snapshot['isApproved'] ?? '');
+        name: snapshot['name'] ?? '',
+        uid: snapshot['uid'] ?? '',
+        phoneNumber: snapshot['phoneNumber'] ?? '',
+        createdAt: snapshot['createdAt'] ?? '',
+        profilePic: snapshot['profilePic'] ?? '',
+        speciality: snapshot['speciality'] ?? '',
+        location: snapshot['location'] ?? '',
+        experience: snapshot['experience'] ?? '',
+        openTime: snapshot['openTime'] ?? '',
+        closedTime: snapshot['closedTime'] ?? '',
+        isApproved: snapshot['isApproved'] ?? '',
+        deviceToken: snapshot['deviceToken'] ?? '',
+      );
       _uid = doctorModel.uid;
     });
   }

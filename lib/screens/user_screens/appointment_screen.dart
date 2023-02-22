@@ -7,6 +7,8 @@ import 'package:docare/screens/user_screens/doctor_info_screen.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import 'package:intl/intl.dart';
 
+import '../../components/url_launcher.dart';
+
 class AppointmentScreen extends StatelessWidget {
   const AppointmentScreen({super.key});
 
@@ -59,7 +61,7 @@ class AppointmentScreen extends StatelessWidget {
             final appointmentCard = Padding(
               padding: EdgeInsets.all(8.0.w),
               child: Container(
-                height: 300.h,
+                height: 350.h,
                 width: 350.w,
                 decoration: BoxDecoration(
                     color: Theme.of(context).colorScheme.primaryContainer,
@@ -70,8 +72,8 @@ class AppointmentScreen extends StatelessWidget {
                     Row(
                       children: [
                         Container(
-                          height: 80,
-                          width: 80,
+                          height: 80.h,
+                          width: 80.w,
                           decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6.r),
                           ),
@@ -158,7 +160,7 @@ class AppointmentScreen extends StatelessWidget {
                     Padding(
                       padding: EdgeInsets.all(12.0.w),
                       child: Container(
-                        height: 80.h,
+                        height: 100.h,
                         width: double.infinity,
                         decoration: BoxDecoration(
                             borderRadius: BorderRadius.circular(6.r),
@@ -237,8 +239,52 @@ class AppointmentScreen extends StatelessWidget {
                                         color: primaryGreen,
                                         fontWeight: FontWeight.w600),
                                   ],
-                                )
+                                ),
                               ],
+                            ),
+                            Divider(
+                              indent: 10.w,
+                              thickness: 1,
+                              endIndent: 10.w,
+                              color: primaryGreen.withAlpha(40),
+                            ),
+                            SizedBox(
+                              height: 5.h,
+                            ),
+                            GestureDetector(
+                              onTap: () {
+                                launchUrls(
+                                    'https://www.google.com/maps/search/${item.get('location').toString().trim()}');
+                              },
+                              child: Padding(
+                                padding:
+                                    EdgeInsets.symmetric(horizontal: 6.0.w),
+                                child: Row(
+                                  mainAxisAlignment: MainAxisAlignment.center,
+                                  children: [
+                                    SvgPicture.asset(
+                                      getImage(
+                                        folderName: 'icons',
+                                        fileName: 'marker.svg',
+                                      ),
+                                      color: primaryGreen,
+                                      width: 15.w,
+                                    ),
+                                    SizedBox(
+                                      width: 6.w,
+                                    ),
+                                    Flexible(
+                                      child: textLabel(
+                                        text: item.get('location'),
+                                        fontSize: 12.sp,
+                                        color: primaryGreen,
+                                        fontWeight: FontWeight.w600,
+                                        letterSpacing: 1.0,
+                                      ),
+                                    )
+                                  ],
+                                ),
+                              ),
                             ),
                           ],
                         ),
@@ -257,17 +303,21 @@ class AppointmentScreen extends StatelessWidget {
                               shadowColor:
                                   const Color(0xff17cfb6).withAlpha(60),
                               onPressed: () {
-                                // AppointmentProvider.isSave = false;
+                                AppointmentProvider.isSave = false;
                                 // AppointmentProvider.appointmentDocumentID =
                                 //     item.id;
 
-                                // getPage(
-                                //     context,
-                                //     DoctorInfo(
-                                //       imageString:
-                                //           fetchedData['doctorProfilePic'],
-                                //       uid: fetchedData['adminID'],
-                                //     ));
+                                AppointmentProvider.appointmentDocumentID =
+                                    item.id;
+
+                                getPage(
+                                  context,
+                                  DoctorInfo(
+                                    imageString:
+                                        fetchedData['doctorProfilePic'],
+                                    uid: fetchedData['doctorID'],
+                                  ),
+                                );
                               },
                             ),
                           ),
@@ -284,8 +334,12 @@ class AppointmentScreen extends StatelessWidget {
                               //shadow: 2.0,
                               //shadowColor: Color(0xfff17cfb6).withAlpha(60),
                               onPressed: () {
+                                // print(item.id);
+                                // print(item.get('doctorID'));
                                 appointmentProvider.deleteAppointment(
-                                    item.id, item.get('doctorID'));
+                                    item.id,
+                                    item.get('doctorID'),
+                                    item.get('patientID'));
                               },
                               borderColor: primaryGreen.withAlpha(40),
                               borderWidth: 2,

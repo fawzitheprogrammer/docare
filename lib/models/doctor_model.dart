@@ -1,4 +1,3 @@
-
 class DoctorModel {
   String name;
   String profilePic;
@@ -10,6 +9,7 @@ class DoctorModel {
   int openTime;
   int closedTime;
   String uid;
+  String deviceToken;
   bool isApproved = false;
 
   DoctorModel(
@@ -23,6 +23,7 @@ class DoctorModel {
       required this.openTime,
       required this.closedTime,
       required this.uid,
+      required this.deviceToken,
       required this.isApproved});
 
   // from map
@@ -38,6 +39,7 @@ class DoctorModel {
         experience: map['experience'] ?? '',
         openTime: map['openTime'] ?? '',
         closedTime: map['closedTime'] ?? '',
+        deviceToken: map['deviceToken'] ?? '',
         isApproved: map['isApproved'] ?? '');
   }
 
@@ -54,7 +56,8 @@ class DoctorModel {
       "experience": experience,
       "openTime": openTime,
       "closedTime": closedTime,
-      "isApproved": isApproved
+      "isApproved": isApproved,
+      "deviceToken": deviceToken,
     };
   }
 }

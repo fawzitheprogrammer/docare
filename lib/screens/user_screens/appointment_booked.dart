@@ -5,6 +5,7 @@ import 'package:docare/public_packages.dart';
 import 'package:rive/rive.dart';
 
 import '../../state_management/appointment_provider.dart';
+import '../../state_management/bottom_narbar_provider.dart';
 
 class AppointmentBooked extends StatefulWidget {
   const AppointmentBooked({super.key});
@@ -16,8 +17,10 @@ class AppointmentBooked extends StatefulWidget {
 class _AppointmentBookedState extends State<AppointmentBooked> {
   @override
   Widget build(BuildContext context) {
-    final appointmentProvider =
-        Provider.of<AppointmentProvider>(context, listen: false);
+    // final appointmentProvider =
+    //     Provider.of<AppointmentProvider>(context, listen: false);
+
+    final provider = Provider.of<BottomNavBar>(context, listen: false);
 
     return Scaffold(
       body: Center(
@@ -50,6 +53,7 @@ class _AppointmentBookedState extends State<AppointmentBooked> {
               padding: EdgeInsets.symmetric(horizontal: 24.w, vertical: 24.0.h),
               child: primaryButton(
                 onPressed: () {
+                  provider.bottomNavIndex(0);
                   getPageRemoveUntil(
                     context,
                     const AllScreens(),

@@ -422,6 +422,7 @@ class _HomeScreenState extends State<HomeScreen> {
             doctorCards.add(doctorCardItem);
             documentID.add(item.id);
             profilePic.add(item.get('profilePic'));
+            
           } else if (getFields('name') || getFields('speciality')) {
             final doctorCardItem = doctorCard(fetchedData);
             doctorCards.add(doctorCardItem);

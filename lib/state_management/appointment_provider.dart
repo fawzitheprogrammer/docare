@@ -19,6 +19,7 @@ class AppointmentProvider extends ChangeNotifier {
   static String deviceToken = '';
 
   static String appointmentDocumentID = '';
+  // String get appointmentDocument => _appointmentDocumentID;
   //bool get isSave => _isLoading;
 
   static User? currentUser = FirebaseAuth.instance.currentUser;
@@ -118,27 +119,27 @@ class AppointmentProvider extends ChangeNotifier {
       //   userModel.uid = _firebaseAuth.currentUser!.phoneNumber!;
       // });
 
-      
-
       _appointments = appointments;
 
-      String ran = generateRandomString();
-      appointmentDocumentID = ran;
+      //_appointmentDocumentID = ran;
+
+      debugPrint(appointmentDocumentID);
 
       // uploading to database
       if (isSave) {
+        print(currentUser!.uid);
         await _firebaseFirestore
             .collection("doctors")
             .doc(doctorID)
             .collection("appointments")
-            .doc(ran)
+            .doc(appointmentDocumentID)
             .set(appointments.toMap())
             .then((value) async {
           await _firebaseFirestore
               .collection("users")
               .doc(currentUser!.uid)
               .collection("appointments")
-              .doc(ran)
+              .doc(appointmentDocumentID)
               .set(appointments.toMap())
               .then((value) {
             onSuccess();
@@ -150,19 +151,20 @@ class AppointmentProvider extends ChangeNotifier {
           // notifyListeners();
         });
       } else if (isSave == false) {
-        //print(appointmentDocumentID);
+        print(appointmentDocumentID);
+        // print(currentUser!.uid);
         await _firebaseFirestore
             .collection("doctors")
             .doc(doctorID)
             .collection("appointments")
-            .doc(ran)
+            .doc(appointmentDocumentID)
             .update(appointments.toMap())
             .then((value) async {
           await _firebaseFirestore
               .collection("users")
               .doc(currentUser!.uid)
               .collection("appointments")
-              .doc(ran)
+              .doc(appointmentDocumentID)
               .update(appointments.toMap())
               .then((value) {
             onSuccess();
@@ -198,7 +200,7 @@ class AppointmentProvider extends ChangeNotifier {
   Future getppointmentDataToFirebase() async {
     await _firebaseFirestore
         .collection("doctors")
-        .doc(_firebaseAuth.currentUser!.uid)
+        .doc(_firebaseAuth.currentUser!.phoneNumber)
         .collection('appointments')
         .doc()
         .get()
@@ -224,17 +226,17 @@ class AppointmentProvider extends ChangeNotifier {
     });
   }
 
-  Future deleteAppointment(String documentID, String userOrDoctorId) async {
+  Future deleteAppointment(String documentID, String doctorId,String userID) async {
     await _firebaseFirestore
         .collection('users')
-        .doc(currentUser!.uid)
+        .doc(userID)
         .collection('appointments')
         .doc(documentID)
         .delete()
         .then((_) async {
       await _firebaseFirestore
           .collection('doctors')
-          .doc(userOrDoctorId)
+          .doc(doctorId)
           .collection('appointments')
           .doc(documentID)
           .delete()

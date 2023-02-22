@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/state_management/appointment_provider.dart';
 import '../../main.dart';
 import '../../models/doctor_model.dart';
 import '../../models/user_model.dart';
@@ -459,6 +460,8 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
         showSnackBar(context, "Please upload your profile photo");
       }
     } else {
+      AppointmentProvider.getToken();
+
       DoctorModel doctorModel = DoctorModel(
         name: nameController.text.trim(),
         profilePic: "",
@@ -471,6 +474,7 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
         openTime: _openTime!.hour,
         closedTime: _closedTime!.hour,
         isApproved: false,
+        deviceToken:AppointmentProvider.deviceToken
       );
       if (image != null &&
           nameController.text.isNotEmpty &&

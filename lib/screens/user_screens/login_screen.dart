@@ -1,3 +1,4 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
 import 'package:docare/main.dart';
 import 'package:docare/navigation/navigator.dart';
@@ -25,8 +26,8 @@ class _LoginScreenState extends State<LoginScreen> {
   Color gradientTop = Colors.transparent;
   Color gradientBottom = Colors.transparent;
 
-  final RegExp phoneNumberRegex =
-      RegExp(r'^\+964(751|750|782|783|784|79[0-9]|77[0-9])[0-9]{7}$');
+  final RegExp phoneNumberRegexWithOutZeroLeading = RegExp(
+      r'^\+964(0?751|0?750|0?782|0?783|0?784|0?79[0-9]|0?77[0-9])[0-9]{7}$');
 
   // 7510000000
   String countryCode = '+964';
@@ -56,6 +57,9 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final ap = Provider.of<AuthProvider>(context, listen: false);
+    //debugPrint(phoneNumber.text);
+
     //debugPrint(Role.getRole().toString());
 
     return Scaffold(
@@ -261,8 +265,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context: context,
                                     isActive: isActive,
                                     onSubmitted: (value) {
-                                      if (phoneNumberRegex.hasMatch(
-                                          countryCode + phoneNumber.text)) {
+                                      if (phoneNumberRegexWithOutZeroLeading
+                                          .hasMatch(
+                                        countryCode + phoneNumber.text,
+                                      )) {
                                         sendOtpCode();
                                         isActive = false;
                                         checkBackgroundColor();
@@ -306,18 +312,23 @@ class _LoginScreenState extends State<LoginScreen> {
                         SizedBox(
                           width: 314.w,
                           child: primaryButton(
-                            onPressed: () {
-                              if (phoneNumberRegex
-                                  .hasMatch(countryCode + phoneNumber.text)) {
-                                sendOtpCode();
-                                isActive = false;
-                                isLoading = true;
-                              } else {
-                                errorMessage =
-                                    '*Phone number is not in a correct format';
-                              }
+                            onPressed: () async {
+                              ap
+                                  .isPhoneRegistered(
+                                    countryCode + phoneNumber.text,
+                                  )
+                                  .then((value) => print(value));
+                              //   countryCode + phoneNumber.text,
+                              // )) {
+                              //   sendOtpCode();
+                              //   isActive = false;
+                              //   isLoading = true;
+                              // } else {
+                              //   errorMessage =
+                              //       '*Phone number is not in a correct format';
+                              // }
 
-                              setState(() {});
+                              // setState(() {});
                             },
                             isLoading: isLoading,
                             label: 'LOGIN',
@@ -325,11 +336,11 @@ class _LoginScreenState extends State<LoginScreen> {
                             size: Size(62.48.w, 60.h),
                           ),
                         ),
-                        secondaryButton(
-                            label: 'Skip for now',
-                            onPressed: () {
-                              getPage(context, const AllScreens());
-                            }),
+                        // secondaryButton(
+                        //     label: 'Skip for now',
+                        //     onPressed: () {
+                        //       getPage(context, const AllScreens());
+                        //     }),
                       ],
                     ),
                   ),

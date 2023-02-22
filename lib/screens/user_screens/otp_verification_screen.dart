@@ -99,7 +99,8 @@ class _OTPVerificationState extends State<OTPVerification> {
                 ),
               ),
               Text(
-                phoneNumberOnBoarding!,
+                phoneNumberOnBoarding!.substring(4).replaceAllMapped(
+                    RegExp(r".{4}"), (match) => match.group(0)!),
                 style: GoogleFonts.poppins(
                   fontSize: 18.sp,
                   color: Theme.of(context).colorScheme.onPrimary,

@@ -5,11 +5,10 @@ import 'package:docare/models/appointments.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/push_notification/push_notidication.dart';
-import 'package:docare/push_notification/send_push_notification.dart';
 import 'package:docare/screens/user_screens/appointment_booked.dart';
 import 'package:docare/state_management/appointment_provider.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:intl/intl.dart';
+import '../../components/url_launcher.dart';
 import '../../state_management/providers_barrel.dart';
 
 DateTime dateTime = DateTime.now();
@@ -42,12 +41,14 @@ class _DoctorInfoState extends State<DoctorInfo> {
     loadFCM();
     listenFCM();
 
-    print('USER ID : ${AppointmentProvider.currentUser!.uid}');
+    // print('USER ID : ${AppointmentProvider.currentUser!.uid}');
 
     // A list for date
     //List<DateBox> dateBox = [];
 
     // A list for time
+
+    debugPrint(widget.uid);
 
     return Scaffold(
       body: SafeArea(
@@ -237,7 +238,10 @@ class _DoctorInfoState extends State<DoctorInfo> {
                         height: 5.h,
                       ),
                       GestureDetector(
-                        onTap: () {},
+                        onTap: () {
+                          launchUrls(
+                              'https://www.google.com/maps/search/${item.get('location').toString().trim()}');
+                        },
                         child: Padding(
                           padding: EdgeInsets.symmetric(horizontal: 6.0.w),
                           child: Row(
@@ -350,21 +354,15 @@ class _DoctorInfoState extends State<DoctorInfo> {
                   shadow: 2.0,
                   shadowColor: const Color(0xff17cfb6).withAlpha(60),
                   onPressed: () {
+                    AppointmentProvider.getToken();
                     if (dateTime.day == DateTime.now().day &&
                         DateTime.now().hour > appointmentHour!) {
                       showSnackBar(context, 'Invalid Time');
                     } else {
-                     AppointmentProvider.getToken();
-                      print('THE TOKEN : ${AppointmentProvider.deviceToken}');
-                      // AppointmentProvider.sendNotification(
-                      //     token: AppointmentProvider.deviceToken,
-                      //     header: 'Appointment Approved',
-                      //     body: 'Your appointment was approved by the doctor');
-                      // ap.checkExistingUser().then((value) {
-                      //   if (value == true) {
-                      //     print(ap.userID);
-                      //   }
-                      // });
+                      if (AppointmentProvider.isSave) {
+                        String ran = appointmentProvider.generateRandomString();
+                        AppointmentProvider.appointmentDocumentID = ran;
+                      } else {}
 
                       final appointments = Appointments(
                         doctorName: item.get('name'),
@@ -397,16 +395,16 @@ class _DoctorInfoState extends State<DoctorInfo> {
                               doctorID: widget.uid,
                               userID: AppointmentProvider.currentUser!.uid,
                               onSuccess: () {
-                                AppointmentProvider.sendPushMessage(
-                                  'You have a new appointment request',
-                                  'New Appointment',
-                                  item.get('deviceToken'),
-                                );
                                 if (item.data()!.isNotEmpty &&
                                     appointmentHour != null) {
                                   appointmentProvider
                                       .saveAppointmentDataToSP()
                                       .then((value) {
+                                    AppointmentProvider.sendPushMessage(
+                                      'You have a new appointment request',
+                                      'New Appointment',
+                                      item.get('deviceToken'),
+                                    );
                                     getPageRemoveUntil(
                                       context,
                                       const AppointmentBooked(),
@@ -445,17 +443,7 @@ class DateBox extends StatefulWidget {
 
 class _DateBoxState extends State<DateBox> {
   // final DateTime dateTime;
-  num activeDateBox = 2;
-
-  String monthName() {
-    String name = '';
-
-    for (int i = 0; i < 3; i++) {
-      name += DateFormat('MMMM').format(DateTime(0, dateTime.month))[i];
-    }
-
-    return name;
-  }
+  num activeDateBox = 0;
 
   // List<String> getWeekDayName() {
   //   List<String> day = [];
@@ -482,6 +470,23 @@ class _DateBoxState extends State<DateBox> {
     }
   }
 
+  String monthName(DateTime dateTime) {
+    String name = '';
+
+    // check if current date exceeds last day of month
+    if (dateTime.day > DateTime(dateTime.year, dateTime.month + 1, 0).day) {
+      dateTime = dateTime
+          .add(const Duration(days: 1)); // add one day to move to next month
+
+      name = DateFormat('MMMM').format(DateTime(dateTime.year, dateTime.month));
+    } else {
+      name = DateFormat('MMMM').format(DateTime(dateTime.year, dateTime.month));
+    }
+    // get name of current month
+
+    return name;
+  }
+
   @override
   Widget build(BuildContext context) {
     final scroller =
@@ -504,7 +509,7 @@ class _DateBoxState extends State<DateBox> {
             onTap: () {
               activeDateBox = index;
               dateTime = dateBox[index];
-              print(dateTime);
+              //print(dateTime);
               scroller.goToDateCard(index);
               setState(() {});
             },
@@ -530,7 +535,10 @@ class _DateBoxState extends State<DateBox> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     textLabel(
-                      text: monthName(),
+                      text: DateFormat('MMMM')
+                          .format(dateBox[index])
+                          .toString()
+                          .substring(0, 3),
                       fontSize: 14.sp,
                       color:
                           index == activeDateBox ? backgroundGrey1 : darkGrey2,
