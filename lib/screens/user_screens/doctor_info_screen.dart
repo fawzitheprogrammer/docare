@@ -42,7 +42,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
     loadFCM();
     listenFCM();
 
-    print('USER ID : ${AppointmentProvider.currentUser!.uid}');
+   // print('USER ID : ${AppointmentProvider.currentUser!.uid}');
 
     // A list for date
     //List<DateBox> dateBox = [];
@@ -354,8 +354,8 @@ class _DoctorInfoState extends State<DoctorInfo> {
                         DateTime.now().hour > appointmentHour!) {
                       showSnackBar(context, 'Invalid Time');
                     } else {
-                     AppointmentProvider.getToken();
-                      print('THE TOKEN : ${AppointmentProvider.deviceToken}');
+                      AppointmentProvider.getToken();
+                      print('THE TOKEN : ${widget.uid}');
                       // AppointmentProvider.sendNotification(
                       //     token: AppointmentProvider.deviceToken,
                       //     header: 'Appointment Approved',

@@ -118,8 +118,6 @@ class AppointmentProvider extends ChangeNotifier {
       //   userModel.uid = _firebaseAuth.currentUser!.phoneNumber!;
       // });
 
-      
-
       _appointments = appointments;
 
       String ran = generateRandomString();
@@ -139,7 +137,7 @@ class AppointmentProvider extends ChangeNotifier {
               .doc(currentUser!.uid)
               .collection("appointments")
               .doc(ran)
-              .set(appointments.toMap())
+              .set(appointments.toMap(), SetOptions(merge: true))
               .then((value) {
             onSuccess();
             _isLoading = false;

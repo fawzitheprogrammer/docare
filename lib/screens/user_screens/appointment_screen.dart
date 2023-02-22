@@ -257,17 +257,17 @@ class AppointmentScreen extends StatelessWidget {
                               shadowColor:
                                   const Color(0xff17cfb6).withAlpha(60),
                               onPressed: () {
-                                // AppointmentProvider.isSave = false;
+                                AppointmentProvider.isSave = false;
                                 // AppointmentProvider.appointmentDocumentID =
                                 //     item.id;
 
-                                // getPage(
-                                //     context,
-                                //     DoctorInfo(
-                                //       imageString:
-                                //           fetchedData['doctorProfilePic'],
-                                //       uid: fetchedData['adminID'],
-                                //     ));
+                                getPage(
+                                    context,
+                                    DoctorInfo(
+                                      imageString:
+                                          fetchedData['doctorProfilePic'],
+                                      uid: fetchedData['doctorID'],
+                                    ));
                               },
                             ),
                           ),

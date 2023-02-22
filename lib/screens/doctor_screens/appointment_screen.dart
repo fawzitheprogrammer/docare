@@ -7,6 +7,7 @@ import 'package:docare/state_management/appointment_provider.dart';
 import 'package:docare/state_management/providers_barrel.dart';
 import 'package:intl/intl.dart';
 
+import '../../models/appointments.dart';
 import '../../navigation/navigator.dart';
 import '../user_screens/doctor_info_screen.dart';
 
@@ -23,6 +24,8 @@ class DoctorAppointmentScreen extends StatelessWidget {
   Widget buildAppointmentList(BuildContext context) {
     final _firestore = FirebaseFirestore.instance;
     final ap = Provider.of<AuthProvider>(context, listen: false);
+    final appointmentProvider =
+        Provider.of<AppointmentProvider>(context, listen: false);
     requestPermission();
     loadFCM();
     listenFCM();
@@ -276,25 +279,129 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                 shadowColor:
                                     const Color(0xff17cfb6).withAlpha(60),
                                 onPressed: () async {
+                                  print(AppointmentProvider.deviceToken);
+
                                   AppointmentProvider.isSave = false;
+                                  final appointments = Appointments(
+                                    doctorName: fetchedData['doctorName'],
+                                    doctorProfilePic:
+                                        fetchedData['doctorProfilePic'],
+                                    speciality: fetchedData['speciality'],
+                                    experience:
+                                        fetchedData['experience'] + ' years',
+                                    location: fetchedData['location'],
+                                    patientName: fetchedData['patientName'],
+                                    patienNumber: fetchedData['patienNumber'],
+                                    patientProfilePicl:
+                                        fetchedData['patientProfilePicl'],
+                                    appointmentDate:
+                                        fetchedData['appointmentDate'],
+                                    appointmentHour:
+                                        fetchedData['appointmentHour'],
+                                    isApproved: true,
+                                    doctorID: fetchedData['doctorID'],
+                                    patientID: fetchedData['patientID'],
+                                    deviceToken: fetchedData['deviceToken'],
+                                    doctorDocumentID:
+                                        fetchedData['doctorDocumentID'],
+                                    patientDocumentID:
+                                        fetchedData['patientDocumentID'],
+                                  );
+
+                                  await _firestore
+                                      .collection("users")
+                                      .doc(
+                                        fetchedData[' patientID'],
+                                      )
+                                      .collection("appointments")
+                                      .doc(fetchedData['patientDocumentID'])
+                                      .update(appointments.toMap()Y)
+                                      .then((value) {
+                                    // onSuccess();
+                                    // _isLoading = false;
+                                    // notifyListeners();
+                                  });
+
+                                  // final documentReference = _firestore
+                                  //     .collection("users")
+                                  //     .doc(fetchedData['patientID'])
+                                  //     .collection('appointments')
+                                  //     .doc(fetchedData['patientDocumentID']);
+
+                                  // documentReference.update(
+                                  //     {'isApproved': false}).whenComplete(() {
+                                  //   AppointmentProvider.sendPushMessage(
+                                  //     '${fetchedData['doctorName']} accepted your appointment',
+                                  //     'Appointment Accepted',
+                                  //     fetchedData['deviceToken'],
+                                  //   );
+                                  // });
+
+                                  // appointmentProvider
+                                  //     .checkAppointmentExisting()
+                                  //     .then((value) {
+                                  //   appointmentProvider
+                                  //       .saveAppointmentDataToFirebase(
+                                  //           context: context,
+                                  //           appointments: appointments,
+                                  //           doctorID: fetchedData['doctorID'],
+                                  //           userID: fetchedData['patientID'],
+                                  //           onSuccess: () {
+                                  //             AppointmentProvider
+                                  //                 .sendPushMessage(
+                                  //               'You have a new appointment request',
+                                  //               'New Appointment',
+                                  //               fetchedData['deviceToken'],
+                                  //             );
+                                  //             if (fetchedData!.isNotEmpty &&
+                                  //                 appointmentHour != null) {
+                                  //               appointmentProvider
+                                  //                   .saveAppointmentDataToSP()
+                                  //                   .then((value) {
+                                  //                 AppointmentProvider
+                                  //                     .sendPushMessage(
+                                  //                   '${fetchedData['doctorName']} accepted your appointment',
+                                  //                   'Appointment Accepted',
+                                  //                   fetchedData['deviceToken'],
+                                  //                 );
+                                  //               });
+                                  //             } else {
+                                  //               showSnackBar(context,
+                                  //                   'Something went wrong, please try again.');
+                                  //             }
+                                  //           });
+                                  // });
                                   // AppointmentProvider.appointmentDocumentID =
                                   //     item.id;
                                   //AppointmentProvider.getToken();
 
-                                      await _firestore
-                                      .collection('users')
-                                      .doc(fetchedData['patientID'])
-                                      .collection('appointments')
-                                      .doc(fetchedData['patientDocumentID'])
-                                      .update({
-                                    'isApproved': true
-                                  }).whenComplete(() async {
-                                    AppointmentProvider.sendPushMessage(
-                                      '${fetchedData['doctorName']} accepted your appointment',
-                                      'New Message',
-                                      fetchedData['deviceToken'],
-                                    );
-                                  }).catchError((e) => print(e));
+                                  // final CollectionReference
+                                  //     collectionReference =
+                                  //     _firestore.collection("users");
+                                  // collectionReference
+                                  //     .doc(fetchedData['patientID'])
+                                  //     .collection('appointments')
+                                  //     .doc(fetchedData['patientDocumentID'])
+                                  //     .update({
+                                  //   "isApproved": true
+                                  // }).whenComplete(() async {
+                                  // AppointmentProvider.sendPushMessage(
+                                  //   '${fetchedData['doctorName']} accepted your appointment',
+                                  //   'Appointment Accepted',
+                                  //   fetchedData['deviceToken'],
+                                  // );
+                                  // }).catchError((e) => print(e));
+
+                                  // _firestore
+                                  //     .collection("users")
+                                  //     .doc(fetchedData['userID'])
+                                  //     .collection('appointments')
+                                  //     .doc(fetchedData['patientDocumentID'])
+                                  //     .update({
+                                  //   "isApproved": true
+                                  // }).whenComplete(() async {
+
+                                  // }).catchError((e) => print(e));
 
                                   // getPage(
                                   //     context,
