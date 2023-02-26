@@ -41,11 +41,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
     loadFCM();
     listenFCM();
 
-<<<<<<< HEAD
     // print('USER ID : ${AppointmentProvider.currentUser!.uid}');
-=======
-   // print('USER ID : ${AppointmentProvider.currentUser!.uid}');
->>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
 
     // A list for date
     //List<DateBox> dateBox = [];
@@ -363,24 +359,10 @@ class _DoctorInfoState extends State<DoctorInfo> {
                         DateTime.now().hour > appointmentHour!) {
                       showSnackBar(context, 'Invalid Time');
                     } else {
-<<<<<<< HEAD
                       if (AppointmentProvider.isSave) {
                         String ran = appointmentProvider.generateRandomString();
                         AppointmentProvider.appointmentDocumentID = ran;
                       } else {}
-=======
-                      AppointmentProvider.getToken();
-                      print('THE TOKEN : ${widget.uid}');
-                      // AppointmentProvider.sendNotification(
-                      //     token: AppointmentProvider.deviceToken,
-                      //     header: 'Appointment Approved',
-                      //     body: 'Your appointment was approved by the doctor');
-                      // ap.checkExistingUser().then((value) {
-                      //   if (value == true) {
-                      //     print(ap.userID);
-                      //   }
-                      // });
->>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
 
                       final appointments = Appointments(
                         doctorName: item.get('name'),

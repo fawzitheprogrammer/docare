@@ -7,13 +7,6 @@ import 'package:docare/state_management/providers_barrel.dart';
 import 'package:flutter/gestures.dart';
 import 'package:intl/intl.dart';
 
-<<<<<<< HEAD
-=======
-import '../../models/appointments.dart';
-import '../../navigation/navigator.dart';
-import '../user_screens/doctor_info_screen.dart';
-
->>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
 class DoctorAppointmentScreen extends StatelessWidget {
   const DoctorAppointmentScreen({super.key});
 
@@ -27,16 +20,10 @@ class DoctorAppointmentScreen extends StatelessWidget {
   Widget buildAppointmentList(BuildContext context) {
     final firestore = FirebaseFirestore.instance;
     final ap = Provider.of<AuthProvider>(context, listen: false);
-<<<<<<< HEAD
 
     final appointmentProvider =
         Provider.of<AppointmentProvider>(context, listen: false);
     //requestPermission();
-=======
-    final appointmentProvider =
-        Provider.of<AppointmentProvider>(context, listen: false);
-    requestPermission();
->>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
     loadFCM();
     listenFCM();
 
@@ -492,180 +479,6 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                   )
                                 ],
                               ),
-<<<<<<< HEAD
-=======
-                            ],
-                          ),
-                        ),
-                      ),
-                      Padding(
-                        padding: EdgeInsets.symmetric(horizontal: 12.0.w),
-                        child: Row(
-                          children: [
-                            Expanded(
-                              child: primaryButton(
-                                label: 'Accept',
-                                backgroundColor: primaryGreen,
-                                size: Size(0, 70.h),
-                                shadow: 2.0,
-                                shadowColor:
-                                    const Color(0xff17cfb6).withAlpha(60),
-                                onPressed: () async {
-                                  print(AppointmentProvider.deviceToken);
-
-                                  AppointmentProvider.isSave = false;
-                                  final appointments = Appointments(
-                                    doctorName: fetchedData['doctorName'],
-                                    doctorProfilePic:
-                                        fetchedData['doctorProfilePic'],
-                                    speciality: fetchedData['speciality'],
-                                    experience:
-                                        fetchedData['experience'] + ' years',
-                                    location: fetchedData['location'],
-                                    patientName: fetchedData['patientName'],
-                                    patienNumber: fetchedData['patienNumber'],
-                                    patientProfilePicl:
-                                        fetchedData['patientProfilePicl'],
-                                    appointmentDate:
-                                        fetchedData['appointmentDate'],
-                                    appointmentHour:
-                                        fetchedData['appointmentHour'],
-                                    isApproved: true,
-                                    doctorID: fetchedData['doctorID'],
-                                    patientID: fetchedData['patientID'],
-                                    deviceToken: fetchedData['deviceToken'],
-                                    doctorDocumentID:
-                                        fetchedData['doctorDocumentID'],
-                                    patientDocumentID:
-                                        fetchedData['patientDocumentID'],
-                                  );
-
-                                  await _firestore
-                                      .collection("users")
-                                      .doc(
-                                        fetchedData[' patientID'],
-                                      )
-                                      .collection("appointments")
-                                      .doc(fetchedData['patientDocumentID'])
-                                      .update(appointments.toMap()Y)
-                                      .then((value) {
-                                    // onSuccess();
-                                    // _isLoading = false;
-                                    // notifyListeners();
-                                  });
-
-                                  // final documentReference = _firestore
-                                  //     .collection("users")
-                                  //     .doc(fetchedData['patientID'])
-                                  //     .collection('appointments')
-                                  //     .doc(fetchedData['patientDocumentID']);
-
-                                  // documentReference.update(
-                                  //     {'isApproved': false}).whenComplete(() {
-                                  //   AppointmentProvider.sendPushMessage(
-                                  //     '${fetchedData['doctorName']} accepted your appointment',
-                                  //     'Appointment Accepted',
-                                  //     fetchedData['deviceToken'],
-                                  //   );
-                                  // });
-
-                                  // appointmentProvider
-                                  //     .checkAppointmentExisting()
-                                  //     .then((value) {
-                                  //   appointmentProvider
-                                  //       .saveAppointmentDataToFirebase(
-                                  //           context: context,
-                                  //           appointments: appointments,
-                                  //           doctorID: fetchedData['doctorID'],
-                                  //           userID: fetchedData['patientID'],
-                                  //           onSuccess: () {
-                                  //             AppointmentProvider
-                                  //                 .sendPushMessage(
-                                  //               'You have a new appointment request',
-                                  //               'New Appointment',
-                                  //               fetchedData['deviceToken'],
-                                  //             );
-                                  //             if (fetchedData!.isNotEmpty &&
-                                  //                 appointmentHour != null) {
-                                  //               appointmentProvider
-                                  //                   .saveAppointmentDataToSP()
-                                  //                   .then((value) {
-                                  //                 AppointmentProvider
-                                  //                     .sendPushMessage(
-                                  //                   '${fetchedData['doctorName']} accepted your appointment',
-                                  //                   'Appointment Accepted',
-                                  //                   fetchedData['deviceToken'],
-                                  //                 );
-                                  //               });
-                                  //             } else {
-                                  //               showSnackBar(context,
-                                  //                   'Something went wrong, please try again.');
-                                  //             }
-                                  //           });
-                                  // });
-                                  // AppointmentProvider.appointmentDocumentID =
-                                  //     item.id;
-                                  //AppointmentProvider.getToken();
-
-                                  // final CollectionReference
-                                  //     collectionReference =
-                                  //     _firestore.collection("users");
-                                  // collectionReference
-                                  //     .doc(fetchedData['patientID'])
-                                  //     .collection('appointments')
-                                  //     .doc(fetchedData['patientDocumentID'])
-                                  //     .update({
-                                  //   "isApproved": true
-                                  // }).whenComplete(() async {
-                                  // AppointmentProvider.sendPushMessage(
-                                  //   '${fetchedData['doctorName']} accepted your appointment',
-                                  //   'Appointment Accepted',
-                                  //   fetchedData['deviceToken'],
-                                  // );
-                                  // }).catchError((e) => print(e));
-
-                                  // _firestore
-                                  //     .collection("users")
-                                  //     .doc(fetchedData['userID'])
-                                  //     .collection('appointments')
-                                  //     .doc(fetchedData['patientDocumentID'])
-                                  //     .update({
-                                  //   "isApproved": true
-                                  // }).whenComplete(() async {
-
-                                  // }).catchError((e) => print(e));
-
-                                  // getPage(
-                                  //     context,
-                                  //     DoctorInfo(
-                                  //       imageString:
-                                  //           fetchedData['doctorProfilePic'],
-                                  //       uid: fetchedData['adminID'],
-                                  //     ));
-                                },
-                              ),
-                            ),
-                            SizedBox(
-                              width: 8.w,
-                            ),
-                            Expanded(
-                              child: primaryButton(
-                                label: 'Cancel',
-                                backgroundColor: Theme.of(context)
-                                    .colorScheme
-                                    .primaryContainer,
-                                size: Size(0, 70.h),
-                                //shadow: 2.0,
-                                //shadowColor: Color(0xfff17cfb6).withAlpha(60),
-                                onPressed: () {
-                                  // appointmentProvider.deleteAppointment(
-                                  //     item.id, item.get('adminID'));
-                                },
-                                borderColor: primaryGreen.withAlpha(40),
-                                borderWidth: 2,
-                                textColor: primaryGreen,
-                              ),
->>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
                             )
                           ],
                         ),

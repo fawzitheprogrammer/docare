@@ -139,13 +139,8 @@ class AppointmentProvider extends ChangeNotifier {
               .collection("users")
               .doc(currentUser!.uid)
               .collection("appointments")
-<<<<<<< HEAD
               .doc(appointmentDocumentID)
               .set(appointments.toMap())
-=======
-              .doc(ran)
-              .set(appointments.toMap(), SetOptions(merge: true))
->>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
               .then((value) {
             onSuccess();
             _isLoading = false;
@@ -231,7 +226,8 @@ class AppointmentProvider extends ChangeNotifier {
     });
   }
 
-  Future deleteAppointment(String documentID, String doctorId,String userID) async {
+  Future deleteAppointment(
+      String documentID, String doctorId, String userID) async {
     await _firebaseFirestore
         .collection('users')
         .doc(userID)
