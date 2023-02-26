@@ -307,6 +307,7 @@ class AppointmentScreen extends StatelessWidget {
                                 // AppointmentProvider.appointmentDocumentID =
                                 //     item.id;
 
+<<<<<<< HEAD
                                 AppointmentProvider.appointmentDocumentID =
                                     item.id;
 
@@ -318,6 +319,15 @@ class AppointmentScreen extends StatelessWidget {
                                     uid: fetchedData['doctorID'],
                                   ),
                                 );
+=======
+                                getPage(
+                                    context,
+                                    DoctorInfo(
+                                      imageString:
+                                          fetchedData['doctorProfilePic'],
+                                      uid: fetchedData['doctorID'],
+                                    ));
+>>>>>>> 3ceade7c0f95850d6be7a1b65a1c73a5424046e5
                               },
                             ),
                           ),
