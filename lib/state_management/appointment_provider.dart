@@ -122,8 +122,10 @@ class AppointmentProvider extends ChangeNotifier {
       _appointments = appointments;
 
       //_appointmentDocumentID = ran;
+      //
 
       debugPrint(appointmentDocumentID);
+      
 
       // uploading to database
       if (isSave) {
