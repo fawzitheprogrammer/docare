@@ -474,7 +474,8 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
         openTime: _openTime!.hour,
         closedTime: _closedTime!.hour,
         isApproved: false,
-        deviceToken:AppointmentProvider.deviceToken
+        deviceToken: AppointmentProvider.deviceToken,
+        isFav: false,
       );
       if (image != null &&
           nameController.text.isNotEmpty &&

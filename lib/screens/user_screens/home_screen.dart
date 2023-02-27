@@ -422,7 +422,6 @@ class _HomeScreenState extends State<HomeScreen> {
             doctorCards.add(doctorCardItem);
             documentID.add(item.id);
             profilePic.add(item.get('profilePic'));
-            
           } else if (getFields('name') || getFields('speciality')) {
             final doctorCardItem = doctorCard(fetchedData);
             doctorCards.add(doctorCardItem);
@@ -431,34 +430,37 @@ class _HomeScreenState extends State<HomeScreen> {
           }
         }
 
-        return data.isNotEmpty
-            ? ListView.builder(
-                shrinkWrap: true,
-                itemCount: doctorCards.length,
-                primary: false,
-                physics: const NeverScrollableScrollPhysics(),
-                itemBuilder: (context, index) => GestureDetector(
-                  onTap: () {
-                    AppointmentProvider.isSave = true;
-                    getPage(
-                        context,
-                        DoctorInfo(
-                          imageString: profilePic[index],
-                          uid: documentID[index],
-                        ));
-                  },
-                  child: doctorCards[index],
-                ),
-              )
-            : Center(
-                child: SizedBox(
-                  //color: Colors.red,
-                  height: 350.h,
-                  child: Center(
-                    child: textLabel(text: 'No results', color: midGrey1),
-                  ),
-                ),
-              );
+        if (doctorCards.isNotEmpty) {
+          return ListView.builder(
+            shrinkWrap: true,
+            itemCount: doctorCards.length,
+            primary: false,
+            physics: const NeverScrollableScrollPhysics(),
+            itemBuilder: (context, index) => GestureDetector(
+              onTap: () {
+                //documentID[index];
+                AppointmentProvider.isSave = true;
+                getPage(
+                    context,
+                    DoctorInfo(
+                      imageString: profilePic[index],
+                      uid: documentID[index],
+                    ));
+              },
+              child: doctorCards[index],
+            ),
+          );
+        } else {
+          return Center(
+            child: SizedBox(
+              //color: Colors.red,
+              height: 350.h,
+              child: Center(
+                child: textLabel(text: 'No results', color: midGrey1),
+              ),
+            ),
+          );
+        }
       }),
     );
   }

@@ -1,3 +1,4 @@
+import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
 
@@ -8,6 +9,7 @@ var channel;
 
 void requestPermission() async {
   //settings.authorizationStatus == AuthorizationStatus.authorized
+  Firebase.initializeApp();
   FirebaseMessaging messaging = FirebaseMessaging.instance;
   NotificationSettings settings = await messaging.requestPermission(
     alert: true,
@@ -20,16 +22,16 @@ void requestPermission() async {
   );
 
   if (settings.authorizationStatus == AuthorizationStatus.authorized) {
-    print('User granted permission');
+    //print('User granted permission');
   } else if (settings.authorizationStatus == AuthorizationStatus.provisional) {
-    print('User granted provisional permission');
+    //print('User granted provisional permission');
   } else {
-    print('User declined or has not accepted permission');
+    //print('User declined or has not accepted permission');
   }
 }
 
 void loadFCM() async {
-   channel = const AndroidNotificationChannel(
+  channel = const AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
     'docare_app',

@@ -11,6 +11,7 @@ class DoctorModel {
   String uid;
   String deviceToken;
   bool isApproved = false;
+  bool isFav = false;
 
   DoctorModel(
       {required this.name,
@@ -24,7 +25,8 @@ class DoctorModel {
       required this.closedTime,
       required this.uid,
       required this.deviceToken,
-      required this.isApproved});
+      required this.isApproved,
+      required this.isFav});
 
   // from map
   factory DoctorModel.fromMap(Map<String, dynamic> map) {
@@ -40,7 +42,8 @@ class DoctorModel {
         openTime: map['openTime'] ?? '',
         closedTime: map['closedTime'] ?? '',
         deviceToken: map['deviceToken'] ?? '',
-        isApproved: map['isApproved'] ?? '');
+        isApproved: map['isApproved'] ?? '',
+        isFav: map['isFav'] ?? '');
   }
 
   // to map
@@ -58,6 +61,7 @@ class DoctorModel {
       "closedTime": closedTime,
       "isApproved": isApproved,
       "deviceToken": deviceToken,
+      "isFav": isFav
     };
   }
 }

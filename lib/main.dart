@@ -4,6 +4,7 @@ import 'package:docare/screens/doctor_screens/doctor_profile_screen.dart';
 import 'package:docare/screens/user_screens/screen_tobe_shown.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
+import 'package:docare/splash_screen.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import 'package:docare/theme/theme_style.dart';
 import 'package:docare/components/components_barrel.dart';
@@ -13,7 +14,6 @@ import 'screens/user_screens/screens_barrel.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-
   Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(

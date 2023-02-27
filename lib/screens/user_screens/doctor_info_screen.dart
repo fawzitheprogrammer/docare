@@ -115,10 +115,20 @@ class _DoctorInfoState extends State<DoctorInfo> {
                             color: backgroundGrey3.withAlpha(60),
                           ),
                           child: GestureDetector(
+                            onTap: () {
+                              updateDocuemnt(
+                                firestore: firebaseFirestore,
+                                parentCollection: 'doctors',
+                                doctorDocumentID: widget.uid,
+                                isFav: item.get('isFav'),
+                              );
+                            },
                             child: SvgPicture.asset(
                               getImage(
                                 folderName: 'icons',
-                                fileName: 'heart.svg',
+                                fileName: !item.get('isFav')
+                                    ? 'heart.svg'
+                                    : 'heart_filled.svg',
                               ),
                               color: backgroundGrey1,
                             ),
@@ -689,4 +699,15 @@ class DateTimeBox extends StatelessWidget {
   // Widget card(BuildContext context, bool isActive, int hour) {
   //   return
   // }
+}
+
+Future<void> updateDocuemnt(
+    {required FirebaseFirestore firestore,
+    required String parentCollection,
+    required String doctorDocumentID,
+    required bool isFav}) {
+  final documentReference =
+      firestore.collection(parentCollection).doc(doctorDocumentID);
+
+  return documentReference.update({'isFav': isFav ? false : true});
 }

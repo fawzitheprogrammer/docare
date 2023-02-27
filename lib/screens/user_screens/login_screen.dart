@@ -4,6 +4,7 @@ import 'package:docare/main.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:keyboard_visibility_pro/keyboard_visibility_pro.dart';
 import 'package:docare/components/components_barrel.dart';
 import '../../shared_preferences/shared_pref_barrel.dart';
@@ -26,7 +27,7 @@ class _LoginScreenState extends State<LoginScreen> {
   Color gradientTop = Colors.transparent;
   Color gradientBottom = Colors.transparent;
 
-  final RegExp phoneNumberRegexWithOutZeroLeading = RegExp(
+  final RegExp phoneNumberRegex = RegExp(
       r'^\+964(0?751|0?750|0?782|0?783|0?784|0?79[0-9]|0?77[0-9])[0-9]{7}$');
 
   // 7510000000
@@ -57,7 +58,7 @@ class _LoginScreenState extends State<LoginScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
+    //final ap = Provider.of<AuthProvider>(context, listen: false);
     //debugPrint(phoneNumber.text);
 
     //debugPrint(Role.getRole().toString());
@@ -265,9 +266,10 @@ class _LoginScreenState extends State<LoginScreen> {
                                     context: context,
                                     isActive: isActive,
                                     onSubmitted: (value) {
-                                      if (phoneNumberRegexWithOutZeroLeading
-                                          .hasMatch(
-                                        countryCode + phoneNumber.text,
+                                      if (phoneNumberRegex.hasMatch(
+                                        countryCode +
+                                            phoneNumber.text
+                                                .replaceAll(' ', '').trim(),
                                       )) {
                                         sendOtpCode();
                                         isActive = false;
@@ -313,22 +315,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           width: 314.w,
                           child: primaryButton(
                             onPressed: () async {
-                              ap
-                                  .isPhoneRegistered(
-                                    countryCode + phoneNumber.text,
-                                  )
-                                  .then((value) => print(value));
-                              //   countryCode + phoneNumber.text,
-                              // )) {
-                              //   sendOtpCode();
-                              //   isActive = false;
-                              //   isLoading = true;
-                              // } else {
-                              //   errorMessage =
-                              //       '*Phone number is not in a correct format';
-                              // }
-
-                              // setState(() {});
+                              if (phoneNumberRegex.hasMatch(
+                                countryCode +
+                                    phoneNumber.text.replaceAll(' ', '').trim(),
+                              )) {
+                                sendOtpCode();
+                                isActive = false;
+                                checkBackgroundColor();
+                                isLoading = true;
+                                setState(() {});
+                              } else {
+                                errorMessage =
+                                    '*Phone number is not in a correct format';
+                              }
                             },
                             isLoading: isLoading,
                             label: 'LOGIN',

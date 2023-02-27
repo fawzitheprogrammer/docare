@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:math';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:docare/models/appointments.dart';
+import 'package:docare/models/doctor_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -11,6 +12,9 @@ import '../components/snack_bar.dart';
 import 'package:http/http.dart' as http;
 
 class AppointmentProvider extends ChangeNotifier {
+  DoctorModel? _doctorModel;
+  DoctorModel get doctorModel => _doctorModel!;
+
   bool _isLoading = false;
   bool get isLoading => _isLoading;
 
@@ -101,6 +105,44 @@ class AppointmentProvider extends ChangeNotifier {
   }
 
   // Storing user data to firebase
+  void saveFavDoctor({
+    required BuildContext context,
+    required DoctorModel doctorModel,
+    required Function onSuccess,
+  }) async {
+    _isLoading = true;
+    notifyListeners();
+    try {
+      // uploading image to firebase storage.
+      // await storeFileToStorage("profilePic/$_uid", profilePic).then((value) {
+      //   userModel.profilePic = value;
+      //   userModel.createdAt = DateTime.now().millisecondsSinceEpoch.toString();
+      //   userModel.phoneNumber = _firebaseAuth.currentUser!.phoneNumber!;
+      //   userModel.uid = _firebaseAuth.currentUser!.phoneNumber!;
+      // });
+
+      _doctorModel = doctorModel;
+
+      // uploading to database
+      await _firebaseFirestore
+          .collection("users")
+          .doc(currentUser!.uid)
+          .collection('fav')
+          .doc()
+          .set(doctorModel.toMap())
+          .then((value) {
+        onSuccess();
+        _isLoading = false;
+        notifyListeners();
+      });
+    } on FirebaseAuthException catch (e) {
+      showSnackBar(context, e.message.toString());
+      _isLoading = false;
+      notifyListeners();
+    }
+  }
+
+  // Storing user data to firebase
   void saveAppointmentDataToFirebase({
     required BuildContext context,
     required Appointments appointments,
@@ -125,7 +167,6 @@ class AppointmentProvider extends ChangeNotifier {
       //
 
       debugPrint(appointmentDocumentID);
-      
 
       // uploading to database
       if (isSave) {

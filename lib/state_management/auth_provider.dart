@@ -5,7 +5,6 @@ import 'package:docare/components/colors.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -135,24 +134,6 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  Future<bool> isPhoneRegistered(String phone) async {
-    String phoneNumber = '';
-    CollectionReference snapshot = await _firebaseFirestore
-        .collection("doctors")
-        .snapshots()
-        .forEach((element) {
-      for (var i in element.docs) {
-        phoneNumber = i.get('phoneNumber');
-      }
-    });
-
-    if (phoneNumber == phone) {
-      return true;
-    } else {
-      return false;
-    }
-  }
-
   // checkIfNumber(String phone) async {
   //   //List<String> listOfPhoneNumber = [];
   //   bool? isFound;
@@ -269,19 +250,19 @@ class AuthProvider extends ChangeNotifier {
         .get()
         .then((DocumentSnapshot snapshot) {
       _doctorModel = DoctorModel(
-        name: snapshot['name'] ?? '',
-        uid: snapshot['uid'] ?? '',
-        phoneNumber: snapshot['phoneNumber'] ?? '',
-        createdAt: snapshot['createdAt'] ?? '',
-        profilePic: snapshot['profilePic'] ?? '',
-        speciality: snapshot['speciality'] ?? '',
-        location: snapshot['location'] ?? '',
-        experience: snapshot['experience'] ?? '',
-        openTime: snapshot['openTime'] ?? '',
-        closedTime: snapshot['closedTime'] ?? '',
-        isApproved: snapshot['isApproved'] ?? '',
-        deviceToken: snapshot['deviceToken'] ?? '',
-      );
+          name: snapshot['name'] ?? '',
+          uid: snapshot['uid'] ?? '',
+          phoneNumber: snapshot['phoneNumber'] ?? '',
+          createdAt: snapshot['createdAt'] ?? '',
+          profilePic: snapshot['profilePic'] ?? '',
+          speciality: snapshot['speciality'] ?? '',
+          location: snapshot['location'] ?? '',
+          experience: snapshot['experience'] ?? '',
+          openTime: snapshot['openTime'] ?? '',
+          closedTime: snapshot['closedTime'] ?? '',
+          isApproved: snapshot['isApproved'] ?? '',
+          deviceToken: snapshot['deviceToken'] ?? '',
+          isFav: snapshot['isFav'] ?? '');
       _uid = doctorModel.uid;
     });
   }
