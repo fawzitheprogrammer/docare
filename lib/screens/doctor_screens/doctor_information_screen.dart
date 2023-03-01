@@ -307,11 +307,22 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
                                 if (_closedTime!.hour - _openTime!.hour > 1) {
                                   storeData();
                                 } else {
-                                  showSnackBar(context, 'Invalid time range');
+                                  showSnackBar(
+                                    bgColor: Colors.redAccent,
+                                    content:
+                                        'Working hours can\'t be that short!',
+                                    context: context,
+                                    textColor: Colors.white,
+                                  );
                                 }
                               } else {
-                                showSnackBar(context,
-                                    'Please fill all fields correctly.');
+                                showSnackBar(
+                                  bgColor: Colors.redAccent,
+                                  content:
+                                      "Please fill all fields correctly and try again.",
+                                  context: context,
+                                  textColor: Colors.white,
+                                );
                               }
                               //setState(() {});
                             },
@@ -457,7 +468,12 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
           },
         );
       } else {
-        showSnackBar(context, "Please upload your profile photo");
+        showSnackBar(
+          bgColor: Colors.redAccent,
+          content: 'Upload a photo please.',
+          context: context,
+          textColor: Colors.white,
+        );
       }
     } else {
       AppointmentProvider.getToken();
@@ -504,7 +520,11 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
         );
       } else {
         showSnackBar(
-            context, "Please fill all fields correctly and try again.");
+          bgColor: Colors.redAccent,
+          content: "Please fill all fields correctly and try again.",
+          context: context,
+          textColor: Colors.white,
+        );
       }
     }
   }

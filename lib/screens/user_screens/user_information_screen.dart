@@ -206,7 +206,12 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         },
       );
     } else {
-      showSnackBar(context, "Please upload your profile photo");
+      showSnackBar(
+        bgColor: Colors.redAccent,
+        content: 'Please upload your profile photo.',
+        context: context,
+        textColor: Colors.white,
+      );
     }
   }
 }

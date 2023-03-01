@@ -1,25 +1,22 @@
 # Diff Summary
 
-Date : 2023-02-15 17:35:04
+Date : 2023-03-01 09:53:44
 
 Directory g:\\Local Disk F\\Source Codes\\Flutter\\docare\\lib
 
-Total : 5 files,  92 codes, 0 comments, 7 blanks, all 99 lines
+Total : 1 files,  6 codes, 1 comments, 35 blanks, all 42 lines
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)
 
 ## Languages
 | language | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| Dart | 5 | 92 | 0 | 7 | 99 |
+| Dart | 1 | 6 | 1 | 35 | 42 |
 
 ## Directories
 | path | files | code | comment | blank | total |
 | :--- | ---: | ---: | ---: | ---: | ---: |
-| . | 5 | 92 | 0 | 7 | 99 |
-| screens | 4 | 84 | 0 | 4 | 88 |
-| screens\\doctor_screens | 1 | 2 | 0 | 0 | 2 |
-| screens\\user_screens | 3 | 82 | 0 | 4 | 86 |
-| state_management | 1 | 8 | 0 | 3 | 11 |
+| . | 1 | 6 | 1 | 35 | 42 |
+| state_management | 1 | 6 | 1 | 35 | 42 |
 
 [Summary](results.md) / [Details](details.md) / Diff Summary / [Diff Details](diff-details.md)

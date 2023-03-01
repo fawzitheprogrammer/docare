@@ -367,7 +367,12 @@ class _DoctorInfoState extends State<DoctorInfo> {
                     AppointmentProvider.getToken();
                     if (dateTime.day == DateTime.now().day &&
                         DateTime.now().hour > appointmentHour!) {
-                      showSnackBar(context, 'Invalid Time');
+                      showSnackBar(
+                        bgColor: Colors.redAccent,
+                        content: 'That time cannot be selected for today',
+                        context: context,
+                        textColor: Colors.white,
+                      );
                     } else {
                       if (AppointmentProvider.isSave) {
                         String ran = appointmentProvider.generateRandomString();
@@ -421,13 +426,22 @@ class _DoctorInfoState extends State<DoctorInfo> {
                                     );
                                   });
                                 } else {
-                                  showSnackBar(context,
-                                      'Something went wrong, please try again.');
+                                  showSnackBar(
+                                    bgColor: Colors.redAccent,
+                                    content:
+                                        'Something went wrong, please try again.',
+                                    context: context,
+                                    textColor: Colors.white,
+                                  );
                                 }
                               });
                         } else if (value) {
-                          showSnackBar(context,
-                              'Something went wrong, please try again.');
+                          showSnackBar(
+                            bgColor: Colors.redAccent,
+                            content: 'Something went wrong, please try again.',
+                            context: context,
+                            textColor: Colors.white,
+                          );
                         }
                       });
                     }

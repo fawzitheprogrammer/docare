@@ -72,8 +72,8 @@ class DoctorAppointmentScreen extends StatelessWidget {
             }
             final item = snapshot.data!.docs;
 
-            bool? isApproved;
-            ap.isDoctorApproved().then((value) => print(value));
+           // bool? isApproved;
+            //ap.isDoctorApproved().then((value) => print(value));
 
             ap.isDoctorApproved();
 

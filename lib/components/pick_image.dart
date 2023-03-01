@@ -1,4 +1,3 @@
-
 import 'dart:io';
 
 import 'package:docare/components/snack_bar.dart';
@@ -14,7 +13,12 @@ Future<File?> pickImage(BuildContext context) async {
       image = File(pickedImage.path);
     }
   } catch (e) {
-    showSnackBar(context, e.toString());
+    showSnackBar(
+      bgColor: Colors.redAccent,
+      content: e.toString(),
+      context: context,
+      textColor: Colors.white,
+    );
   }
 
   return image;

@@ -77,7 +77,12 @@ class AuthProvider extends ChangeNotifier {
           },
           codeAutoRetrievalTimeout: (verificationId) {});
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message.toString());
+      showSnackBar(
+        bgColor: Colors.redAccent,
+        content: e.message.toString(),
+        context: context,
+        textColor: Colors.white,
+      );
     }
   }
 
@@ -190,7 +195,12 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       });
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message.toString());
+      showSnackBar(
+        bgColor: Colors.redAccent,
+        content: e.message.toString(),
+        context: context,
+        textColor: Colors.white,
+      );
       _isLoading = false;
       notifyListeners();
     }
@@ -228,7 +238,12 @@ class AuthProvider extends ChangeNotifier {
         notifyListeners();
       });
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message.toString());
+      showSnackBar(
+        bgColor: Colors.redAccent,
+        content: e.message.toString(),
+        context: context,
+        textColor: Colors.white,
+      );
       _isLoading = false;
       notifyListeners();
     }

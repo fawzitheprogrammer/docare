@@ -136,7 +136,12 @@ class AppointmentProvider extends ChangeNotifier {
         notifyListeners();
       });
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message.toString());
+      showSnackBar(
+        bgColor: Colors.redAccent,
+        content: e.message.toString(),
+        context: context,
+        textColor: Colors.white,
+      );
       _isLoading = false;
       notifyListeners();
     }
@@ -220,7 +225,12 @@ class AppointmentProvider extends ChangeNotifier {
         });
       }
     } on FirebaseAuthException catch (e) {
-      showSnackBar(context, e.message.toString());
+      showSnackBar(
+        bgColor: Colors.redAccent,
+        content: e.message.toString(),
+        context: context,
+        textColor: Colors.white,
+      );
       _isLoading = false;
       notifyListeners();
     }

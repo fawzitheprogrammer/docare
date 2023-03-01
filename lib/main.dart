@@ -1,15 +1,18 @@
+import 'package:connectivity_wrapper/connectivity_wrapper.dart';
+import 'package:docare/no_network.dart';
 import 'package:docare/push_notification/push_notidication.dart';
 import 'package:docare/screens/doctor_screens/appointment_screen.dart';
 import 'package:docare/screens/doctor_screens/doctor_profile_screen.dart';
 import 'package:docare/screens/user_screens/screen_tobe_shown.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
-import 'package:docare/splash_screen.dart';
 import 'package:docare/state_management/appointment_provider.dart';
+import 'package:docare/state_management/network.dart';
 import 'package:docare/theme/theme_style.dart';
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/state_management/providers_barrel.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:rive/rive.dart';
 import 'screens/user_screens/screens_barrel.dart';
 
 void main() async {
@@ -28,6 +31,192 @@ void main() async {
   listenFCM();
 
   runApp(MyApp());
+}
+
+class SplashScreen extends StatefulWidget {
+  const SplashScreen({super.key});
+
+  @override
+  State<SplashScreen> createState() => _SplashScreenState();
+}
+
+class _SplashScreenState extends State<SplashScreen> {
+  bool isConnected = true;
+
+  List<Widget> noNet = [];
+
+  @override
+  void initState() {
+    super.initState();
+    load();
+  }
+
+  Future<void> load() async {
+    Future.delayed(const Duration(seconds: 5))
+        .then((value) => checkConnection().then((value) {
+              if (value) {
+                Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                        builder: (context) => AppRouter.getPage()));
+              } else {
+                Future.delayed(const Duration(seconds: 5));
+                noNet = [
+                  SvgPicture.asset(
+                    getImage(
+                      folderName: 'icons',
+                      fileName: 'wifi.svg',
+                    ),
+                    width: 82.w,
+                    color: primaryGreen,
+                  ),
+                  textLabel(
+                    text: 'No internet connection',
+                    fontWeight: FontWeight.bold,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                    fontSize: 20.sp,
+                  ),
+                  textLabel(
+                    text: 'Try these steps to get back online',
+                    fontSize: 18.sp,
+                    color: Theme.of(context).colorScheme.onPrimary,
+                  ),
+                  SizedBox(
+                    height: 14.h,
+                  ),
+                  Column(
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
+                      const InstructionBullet(
+                        content: 'Check your modem and router',
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                      ),
+                      const InstructionBullet(
+                        content: 'Check you mobile data',
+                      ),
+                      SizedBox(
+                        height: 6.h,
+                      ),
+                      const InstructionBullet(content: 'Connect to WIFI'),
+
+                      //Spacer(),
+                      SizedBox(height: 38.h),
+                      primaryButton(
+                        onPressed: () {
+                          if (mounted) {
+                            load();
+                          }
+                        },
+                        label: 'Reload',
+                        backgroundColor: primaryGreen,
+                        size: Size(120.w, 50.h),
+                      )
+                    ],
+                  )
+                ];
+                setState(() {});
+              }
+            }));
+  }
+
+  Future<bool> checkConnection() async {
+    if (await ConnectivityWrapper.instance.isConnected) {
+      return true;
+    } else {
+      return false;
+    }
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      body: Center(
+        child: RefreshIndicator(
+          onRefresh: checkConnection,
+          color: primaryGreen,
+          triggerMode: RefreshIndicatorTriggerMode.anywhere,
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: noNet.isEmpty
+                ? [
+                    const Spacer(),
+                    SizedBox(
+                      height: 180.h,
+                      width: 180.w,
+                      child: const RiveAnimation.asset(
+                          'assets/rive/logo_docare.riv'),
+                    ),
+                    const Spacer(),
+                    Padding(
+                      padding: EdgeInsets.only(bottom: 44.h),
+                      child: SizedBox(
+                        height: 20.h,
+                        width: 20.w,
+                        child: CircularProgressIndicator(
+                          color: primaryGreen,
+                        ),
+                      ),
+                    ),
+                    // : Container()
+                  ]
+                : noNet,
+          ),
+        ),
+      ),
+    );
+  }
+}
+
+class InstructionBullet extends StatelessWidget {
+  const InstructionBullet({
+    super.key,
+    required this.content,
+  });
+
+  final String content;
+
+  @override
+  Widget build(BuildContext context) {
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.end,
+      //crossAxisAlignment: CrossAxisAlignment.center,
+      children: [
+        //Spacer(),
+        SizedBox(
+          width: 60.w,
+        ),
+        CircleAvatar(
+          backgroundColor: primaryGreen,
+          radius: 10.r,
+          child: SvgPicture.asset(
+            getImage(
+              folderName: 'icons',
+              fileName: 'check.svg',
+            ),
+            width: 10.w,
+            color: backgroundGrey1,
+          ),
+        ),
+        SizedBox(
+          width: 8.w,
+        ),
+        textLabel(
+          text: content,
+          fontSize: 16.sp,
+          color: Theme.of(context).colorScheme.onPrimary,
+        ),
+        const Spacer(),
+      ],
+    );
+  }
 }
 
 //
@@ -55,6 +244,9 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AppointmentProvider(),
         ),
+         ChangeNotifierProvider(
+          create: (context) => Network(),
+        ),
       ],
       child: ScreenUtilInit(
         builder: (context, child) {
@@ -65,7 +257,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: AppRouter.getPage(),
+            home: const SplashScreen(),
           );
         },
         designSize: const Size(393, 851),
@@ -83,8 +275,13 @@ class AllScreens extends StatelessWidget {
     int currentIndex =
         Provider.of<BottomNavBar>(context, listen: true).currentIndex;
     final provider = Provider.of<BottomNavBar>(context, listen: false);
+        final netwotk = Provider.of<Network>(context, listen: false);
 
-    return Scaffold(
+
+    netwotk.checkConnection();
+    //print(netwotk.isConnected);
+
+    return netwotk.isConnected ? Scaffold(
       body: PageView(
         //: currentIndex,
         controller: provider.pageController,
@@ -153,7 +350,7 @@ class AllScreens extends StatelessWidget {
                 ),
               ],
       ),
-    );
+    ):const NoNetwork();
   }
 
   navBarItem({
