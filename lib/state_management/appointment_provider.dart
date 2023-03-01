@@ -30,7 +30,7 @@ class AppointmentProvider extends ChangeNotifier {
   Appointments? _appointments;
   Appointments get appointments => _appointments!;
 
-  final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
@@ -253,7 +253,7 @@ class AppointmentProvider extends ChangeNotifier {
   Future getppointmentDataToFirebase() async {
     await _firebaseFirestore
         .collection("doctors")
-        .doc(_firebaseAuth.currentUser!.phoneNumber)
+        .doc(currentUser!.uid)
         .collection('appointments')
         .doc()
         .get()

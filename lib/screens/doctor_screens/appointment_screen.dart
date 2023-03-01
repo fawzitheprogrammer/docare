@@ -59,7 +59,7 @@ class DoctorAppointmentScreen extends StatelessWidget {
         return StreamBuilder(
           stream: firestore
               .collection('doctors')
-              .doc(AppointmentProvider.currentUser!.uid)
+              .doc(ap.firebaseAuth.currentUser!.uid)
               .collection('appointments')
               .snapshots(),
           builder: ((context, snapshot) {
@@ -72,7 +72,7 @@ class DoctorAppointmentScreen extends StatelessWidget {
             }
             final item = snapshot.data!.docs;
 
-           // bool? isApproved;
+            // bool? isApproved;
             //ap.isDoctorApproved().then((value) => print(value));
 
             ap.isDoctorApproved();
@@ -471,7 +471,9 @@ class DoctorAppointmentScreen extends StatelessWidget {
 
               appointmentList.add(appointmentCard);
             }
-            print(appointmentList.length);
+
+            print(ap.firebaseAuth.currentUser!.uid);
+
             if (!isDoctorApproved) {
               return Center(
                 child: Padding(

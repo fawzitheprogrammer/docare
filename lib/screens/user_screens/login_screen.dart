@@ -30,6 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final RegExp phoneNumberRegex = RegExp(
       r'^\+964(0?751|0?750|0?782|0?783|0?784|0?79[0-9]|0?77[0-9])[0-9]{7}$');
 
+      /// +9647518070601
   // 7510000000
   String countryCode = '+964';
 

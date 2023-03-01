@@ -36,6 +36,7 @@ class AuthProvider extends ChangeNotifier {
   // bool get codeNotCorrect => _codeNotCorrect;
 
   final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
+  FirebaseAuth get firebaseAuth => _firebaseAuth;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
   final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
@@ -330,6 +331,7 @@ class AuthProvider extends ChangeNotifier {
 
   Future userSignOut() async {
     SharedPreferences s = await SharedPreferences.getInstance();
+
     await _firebaseAuth.signOut();
     ScreenStateManager.setPageOrderID(1);
     // BottomNavBar().index = 0;
