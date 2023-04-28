@@ -16,15 +16,18 @@ class UserInfromationScreen extends StatefulWidget {
 class _UserInfromationScreenState extends State<UserInfromationScreen> {
   File? image;
   final nameController = TextEditingController();
-  final emailController = TextEditingController();
-  final bioController = TextEditingController();
+  final ageController = TextEditingController();
+  //final bioController = TextEditingController();
+
+  bool isActive = true;
+  String gender = '';
 
   @override
   void dispose() {
     super.dispose();
     nameController.dispose();
-    emailController.dispose();
-    bioController.dispose();
+    ageController.dispose();
+    //bioController.dispose();
   }
 
   // for selecting image
@@ -84,6 +87,43 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                                 maxLines: 1,
                                 controller: nameController,
                               ),
+                              textFeld(
+                                hintText: "Your age",
+                                icon: Icons.account_circle,
+                                inputType: TextInputType.number,
+                                maxLines: 1,
+                                controller: ageController,
+                              ),
+                              Row(
+                                children: [
+                                  Expanded(
+                                    child: genderChip(
+                                      cardActive: isActive,
+                                      text: 'Male',
+                                      iconData: Icons.male,
+                                      onTap: () {
+                                        isActive = true;
+                                        gender = 'Male';
+                                        setState(() {});
+                                      },
+                                    ),
+                                  ),
+                                  SizedBox(
+                                    width: 8.w,
+                                  ),
+                                  Expanded(
+                                    child: genderChip(
+                                        cardActive: !isActive,
+                                        text: 'Female',
+                                        iconData: Icons.female,
+                                        onTap: () {
+                                          isActive = false;
+                                          gender = 'Female';
+                                          setState(() {});
+                                        }),
+                                  )
+                                ],
+                              )
 
                               // // email
                               // textFeld(
@@ -122,6 +162,40 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
                   ),
                 ),
               ),
+      ),
+    );
+  }
+
+  Widget genderChip(
+      {required String text,
+      required IconData iconData,
+      void Function()? onTap,
+      required bool cardActive}) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        height: 60.h,
+        // width: 30.w,
+
+        decoration: BoxDecoration(
+          color: cardActive ? primaryGreen : primaryGreen.withAlpha(80),
+          borderRadius: BorderRadius.circular(
+            8.r,
+          ),
+        ),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
+            Icon(
+              iconData,
+              color: backgroundGrey1,
+            ),
+            textLabel(
+              text: text,
+              color: backgroundGrey2,
+            ),
+          ],
+        ),
       ),
     );
   }
@@ -179,14 +253,18 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
   // store user data to database
   void storeData() async {
     final ap = Provider.of<AuthProvider>(context, listen: false);
+
     UserModel userModel = UserModel(
       name: nameController.text.trim(),
       profilePic: "",
       createdAt: "",
       phoneNumber: "",
       uid: "",
+      age: int.parse(ageController.text.trim()),
+      gender: gender,
     );
-    if (image != null) {
+
+    if (image != null && nameController.text.isNotEmpty) {
       ap.saveUserDataToFirebase(
         context: context,
         userModel: userModel,
@@ -211,6 +289,7 @@ class _UserInfromationScreenState extends State<UserInfromationScreen> {
         content: 'Please upload your profile photo.',
         context: context,
         textColor: Colors.white,
+        // isFalse: true
       );
     }
   }

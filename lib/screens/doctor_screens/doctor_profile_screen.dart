@@ -3,7 +3,6 @@ import 'package:docare/components/text.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
-import 'package:docare/state_management/appointment_provider.dart';
 import '../../components/components_barrel.dart';
 import '../../state_management/providers_barrel.dart';
 
@@ -22,7 +21,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
     final ap = Provider.of<AuthProvider>(context, listen: false);
     final bottomNavProvider = Provider.of<BottomNavBar>(context, listen: false);
 
-    AppointmentProvider.getToken();
+   // AppointmentProvider.getToken();
     //print(AppointmentProvider.deviceToken);
 
     return Scaffold(
@@ -33,9 +32,7 @@ class _DoctorProfileScreenState extends State<DoctorProfileScreen> {
           child: Padding(
             padding: EdgeInsets.all(12.0.w),
             child: FutureBuilder(
-              future: Role.getRole()
-                  ? ap.getUserDataFromFirestore()
-                  : ap.getDoctorDataFromFirestore(),
+              future: ap.getDoctorDataFromFirestore(),
               builder: (context, snapshot) {
                 if (snapshot.connectionState == ConnectionState.waiting) {
                   return Center(

@@ -11,7 +11,7 @@ class RoleScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final colorScheme = Theme.of(context).colorScheme;
 
-    Role role = Role();
+    //Role role = Role();
 
     goToPage(bool isUser) {
       Role.setIsUser(isUser: isUser).then(
@@ -48,6 +48,7 @@ class RoleScreen extends StatelessWidget {
                     RoleCard(
                       onTap: () {
                         goToPage(false);
+                        print('Doctor : ${Role.getRole()}');
                       },
                       header: 'As a Doctor',
                       subtitle: 'Recieve appointments from patients.',
@@ -57,6 +58,7 @@ class RoleScreen extends StatelessWidget {
                     RoleCard(
                       onTap: () {
                         goToPage(true);
+                        print('User : ${Role.getRole()}');
                       },
                       header: 'As a Patient',
                       subtitle: 'Find & hire doctors to consult with them.',

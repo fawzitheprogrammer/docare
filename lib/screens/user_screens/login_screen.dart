@@ -30,7 +30,7 @@ class _LoginScreenState extends State<LoginScreen> {
   final RegExp phoneNumberRegex = RegExp(
       r'^\+964(0?751|0?750|0?782|0?783|0?784|0?79[0-9]|0?77[0-9])[0-9]{7}$');
 
-      /// +9647518070601
+  /// +9647518070601
   // 7510000000
   String countryCode = '+964';
 
@@ -270,7 +270,8 @@ class _LoginScreenState extends State<LoginScreen> {
                                       if (phoneNumberRegex.hasMatch(
                                         countryCode +
                                             phoneNumber.text
-                                                .replaceAll(' ', '').trim(),
+                                                .replaceAll(' ', '')
+                                                .trim(),
                                       )) {
                                         sendOtpCode();
                                         isActive = false;
@@ -354,10 +355,20 @@ class _LoginScreenState extends State<LoginScreen> {
   }
 
   void sendOtpCode() {
+    print('The Value : ${Role.getRole()}');
     final ap = Provider.of<AuthProvider>(context, listen: false);
     String phoneNum = phoneNumber.text.trim();
-    //debugPrint(countryCode + phoneNum);
+    //+9647518070601
     phoneNumberOnBoarding = '$countryCode$phoneNum';
-    ap.signInWithPhone(context, "+$countryCode$phoneNum");
+    //print(phoneNumberOnBoarding);
+    ap.checkExistingPhone(phoneNumberOnBoarding!).then((value) {
+      if (value) {
+        errorMessage = 'This phone number is already registered.';
+        isLoading = false;
+        setState(() {});
+      } else {
+        ap.signInWithPhone(context, "+$countryCode$phoneNum");
+      }
+    });
   }
 }

@@ -6,8 +6,16 @@ import 'package:docare/state_management/appointment_provider.dart';
 import 'package:docare/state_management/providers_barrel.dart';
 import 'package:intl/intl.dart';
 
-class DoctorAppointmentScreen extends StatelessWidget {
+class DoctorAppointmentScreen extends StatefulWidget {
   const DoctorAppointmentScreen({super.key});
+
+  @override
+  State<DoctorAppointmentScreen> createState() =>
+      _DoctorAppointmentScreenState();
+}
+
+class _DoctorAppointmentScreenState extends State<DoctorAppointmentScreen> {
+  DateTime? dateTime;
 
   @override
   Widget build(BuildContext context) {
@@ -26,7 +34,38 @@ class DoctorAppointmentScreen extends StatelessWidget {
     loadFCM();
     listenFCM();
 
-    //debugPrint(AppointmentProvider.currentUser!.uid);
+    Future<DateTime> _showDateTimePicker(BuildContext context) async {
+      //TimeOfDay initialTime = const TimeOfDay(hour: 9, minute: 0);
+
+      DateTime? selectedTime = await showDatePicker(
+        context: context,
+        initialDate: DateTime.now(),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2099, 12, 31),
+        builder: (context, child) {
+          return Theme(
+            data: Theme.of(context).copyWith(
+              colorScheme: ColorScheme.light(
+                primary: primaryGreen, // <-- SEE HERE
+                onPrimary: backgroundGrey2, // <-- SEE HERE
+                onSurface: Colors.blueAccent, // <-- SEE HERE
+              ),
+              textButtonTheme: TextButtonThemeData(
+                style: TextButton.styleFrom(
+                  primary: Colors.black, // button text color
+                ),
+              ),
+            ),
+            child: child!,
+          );
+        },
+      );
+
+      //dateTime = selectedTime.toString();
+      //print(selectedTime);
+
+      return selectedTime!;
+    }
 
     return StreamBuilder(
       stream: firestore
@@ -41,14 +80,15 @@ class DoctorAppointmentScreen extends StatelessWidget {
         } else if (snapshot.hasData) {
           final item = snapshot.data;
           if (item!.get('deviceToken') == "") {
-            AppointmentProvider.getToken();
-            firestore
-                .collection('doctors')
-                .doc(
-                  AppointmentProvider.currentUser!.uid,
-                )
-                .update({'deviceToken': AppointmentProvider.deviceToken}).then(
-                    (value) {});
+            //AppointmentProvider.getToken();
+            appointmentProvider.getToken().then((value) {
+              firestore
+                  .collection('doctors')
+                  .doc(
+                    AppointmentProvider.currentUser!.uid,
+                  )
+                  .update({'deviceToken': value}).then((value) {});
+            });
           }
         }
 
@@ -132,7 +172,7 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                       ),
                                 ),
                                 Text(
-                                  'Phone s: ${fetchedData['patienNumber'].toString().substring(4)}',
+                                  'Phone : ${fetchedData['patienNumber'].toString().substring(4)}',
                                   style: GoogleFonts.poppins(
                                     fontSize: 14.sp,
                                     color:
@@ -140,15 +180,6 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                     //fontWeight: FontWeight.w500,
                                   ),
                                 ),
-                                // Text(
-                                //   'Experience :  ${fetchedData['experience']}',
-                                //   style: GoogleFonts.poppins(
-                                //     fontSize: 14.sp,
-                                //     color:
-                                //         Theme.of(context).colorScheme.onPrimary,
-                                //     //fontWeight: FontWeight.w500,
-                                //   ),
-                                // ),
                               ],
                             ),
                           ),
@@ -201,38 +232,49 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceEvenly,
                                 children: [
-                                  Row(
-                                    children: [
-                                      SvgPicture.asset(
-                                        getImage(
-                                          folderName: 'icons',
-                                          fileName: 'calendar_filled.svg',
+                                  GestureDetector(
+                                    onTap: () async {
+                                      dateTime =
+                                          await _showDateTimePicker(context);
+                                      print(dateTime);
+                                      setState(() {});
+                                    },
+                                    child: Row(
+                                      children: [
+                                        SvgPicture.asset(
+                                          getImage(
+                                            folderName: 'icons',
+                                            fileName: 'calendar_filled.svg',
+                                          ),
+                                          color: primaryGreen,
                                         ),
-                                        color: primaryGreen,
-                                      ),
-                                      SizedBox(
-                                        width: 6.w,
-                                      ),
-                                      textLabel(
-                                        text: DateFormat('yyyy-MM-dd')
-                                            .format(
-                                              DateTime.parse(
-                                                fetchedData['appointmentDate'],
-                                              ),
-                                            )
-                                            .toString(),
-                                        fontSize: 14.sp,
-                                        color: primaryGreen,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                      textLabel(
-                                        text:
-                                            ',${DateFormat('EEEE').format(DateTime.parse(fetchedData['appointmentDate'])).substring(0, 3)}',
-                                        fontSize: 14.sp,
-                                        color: primaryGreen,
-                                        fontWeight: FontWeight.w600,
-                                      ),
-                                    ],
+                                        SizedBox(
+                                          width: 6.w,
+                                        ),
+                                        textLabel(
+                                          text: DateFormat('yyyy-MM-dd')
+                                              .format(
+                                                DateTime.parse(
+                                                  dateTime == null
+                                                      ? fetchedData[
+                                                          'appointmentDate']
+                                                      : dateTime.toString(),
+                                                ),
+                                              )
+                                              .toString(),
+                                          fontSize: 14.sp,
+                                          color: primaryGreen,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                        textLabel(
+                                          text:
+                                              ',${DateFormat('EEEE').format(DateTime.parse(fetchedData['appointmentDate'])).substring(0, 3)}',
+                                          fontSize: 14.sp,
+                                          color: primaryGreen,
+                                          fontWeight: FontWeight.w600,
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                   Container(
                                     height: 30.h,
@@ -252,22 +294,23 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                         width: 6.w,
                                       ),
                                       textLabel(
-                                          text: DateFormat('h:mm a')
-                                              .format(
-                                                DateTime.tryParse(
-                                                  DateTime(
-                                                    DateTime.now().year,
-                                                    DateTime.now().month,
-                                                    DateTime.now().day,
-                                                    fetchedData[
-                                                        'appointmentHour'],
-                                                  ).toString(),
-                                                )!,
-                                              )
-                                              .toString(),
-                                          fontSize: 14.sp,
-                                          color: primaryGreen,
-                                          fontWeight: FontWeight.w600),
+                                        text: DateFormat('h:mm a')
+                                            .format(
+                                              DateTime.tryParse(
+                                                DateTime(
+                                                  DateTime.now().year,
+                                                  DateTime.now().month,
+                                                  DateTime.now().day,
+                                                  fetchedData[
+                                                      'appointmentHour'],
+                                                ).toString(),
+                                              )!,
+                                            )
+                                            .toString(),
+                                        fontSize: 14.sp,
+                                        color: primaryGreen,
+                                        fontWeight: FontWeight.w600,
+                                      ),
                                     ],
                                   )
                                 ],
@@ -290,33 +333,66 @@ class DoctorAppointmentScreen extends StatelessWidget {
                                       shadowColor:
                                           const Color(0xff17cfb6).withAlpha(60),
                                       onPressed: () async {
-                                        AppointmentProvider.getToken();
-                                        print(fetchedData['patientDocumentID']);
+                                        // AppointmentProvider.getToken();
+                                        // print(fetchedData['patientDocumentID']);
 
-                                        updateDocuemnt(
-                                          firestore: firestore,
-                                          parentCollection: 'users',
-                                          userDocumentID:
-                                              fetchedData['patientID'],
-                                          appointMentID:
-                                              fetchedData['patientDocumentID'],
-                                        ).then((value) {
+                                        if (dateTime != null) {
+                                          updateDocuemnt(
+                                                  firestore: firestore,
+                                                  parentCollection: 'users',
+                                                  userDocumentID:
+                                                      fetchedData['patientID'],
+                                                  appointMentID: fetchedData[
+                                                      'patientDocumentID'],
+                                                  date: dateTime.toString())
+                                              .then((value) {
+                                            updateDocuemnt(
+                                              firestore: firestore,
+                                              parentCollection: 'doctors',
+                                              userDocumentID:
+                                                  fetchedData['doctorID'],
+                                              appointMentID: fetchedData[
+                                                  'doctorDocumentID'],
+                                              date: dateTime.toString(),
+                                            ).then((value) {
+                                              AppointmentProvider
+                                                  .sendPushMessage(
+                                                '${fetchedData['doctorName']} accepted your appointment',
+                                                'Appointment Accepted',
+                                                fetchedData['deviceToken'],
+                                              );
+                                            });
+                                          });
+                                        } else {
                                           updateDocuemnt(
                                             firestore: firestore,
-                                            parentCollection: 'doctors',
+                                            parentCollection: 'users',
                                             userDocumentID:
-                                                fetchedData['doctorID'],
-                                            appointMentID:
-                                                fetchedData['doctorDocumentID'],
+                                                fetchedData['patientID'],
+                                            appointMentID: fetchedData[
+                                                'patientDocumentID'],
+                                            date:
+                                                fetchedData['appointmentDate'],
                                           ).then((value) {
-                                            AppointmentProvider.sendPushMessage(
-                                              '${fetchedData['doctorName']} accepted your appointment',
-                                              'Appointment Accepted',
-                                              fetchedData['deviceToken'],
-                                            );
+                                            updateDocuemnt(
+                                                    firestore: firestore,
+                                                    parentCollection: 'doctors',
+                                                    userDocumentID:
+                                                        fetchedData['doctorID'],
+                                                    appointMentID: fetchedData[
+                                                        'doctorDocumentID'],
+                                                    date: fetchedData[
+                                                        'appointmentDate'])
+                                                .then((value) {
+                                              AppointmentProvider
+                                                  .sendPushMessage(
+                                                '${fetchedData['doctorName']} accepted your appointment',
+                                                'Appointment Accepted',
+                                                fetchedData['deviceToken'],
+                                              );
+                                            });
                                           });
-                                        });
-
+                                        }
                                         // AppointmentProvider.isSave = false;
                                         // final appointments = Appointments(
                                         //   doctorName: fetchedData['doctorName'],
@@ -564,13 +640,15 @@ class DoctorAppointmentScreen extends StatelessWidget {
       {required FirebaseFirestore firestore,
       required String parentCollection,
       required String userDocumentID,
-      required String appointMentID}) {
+      required String appointMentID,
+      required String date}) {
     final documentReference = firestore
         .collection(parentCollection)
         .doc(userDocumentID)
         .collection('appointments')
         .doc(appointMentID);
 
-    return documentReference.update({'isApproved': true});
+    return documentReference
+        .update({'isApproved': true, 'appointmentDate': date});
   }
 }

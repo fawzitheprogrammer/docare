@@ -140,12 +140,31 @@ class AuthProvider extends ChangeNotifier {
     }
   }
 
-  // checkIfNumber(String phone) async {
-  //   //List<String> listOfPhoneNumber = [];
-  //   bool? isFound;
+  // DATABASE OPERTAIONS
+  Future<bool> checkExistingPhone(String phoneNumber) async {
+    bool isFound = false;
 
-  //   //return isFound!;
-  // }
+    print(Role.getRole());
+
+    QuerySnapshot querySnapshot;
+
+    if (Role.getRole() == false) {
+      querySnapshot = await _firebaseFirestore.collection("users").get();
+    } else {
+      querySnapshot = await _firebaseFirestore.collection("doctors").get();
+    }
+
+    for (var i in querySnapshot.docs) {
+      print(i.reference.parent.id);
+      if (phoneNumber == i.get('phoneNumber')) {
+        debugPrint(i.get('phoneNumber'));
+
+        isFound = true;
+      }
+    }
+
+    return isFound;
+  }
 
   // DATABASE OPERTAIONS
   Future<bool> checkExistingUser() async {
@@ -296,6 +315,8 @@ class AuthProvider extends ChangeNotifier {
         uid: snapshot['uid'],
         profilePic: snapshot['profilePic'],
         phoneNumber: snapshot['phoneNumber'],
+        age: snapshot['age'],
+        gender: snapshot['gender'],
       );
       _uid = userModel.uid;
     });

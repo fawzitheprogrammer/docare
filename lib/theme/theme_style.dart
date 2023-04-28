@@ -48,33 +48,34 @@ import 'package:docare/public_packages.dart';
 
 class MyTheme {
   static final lightTheme = ThemeData.light().copyWith(
-    // primaryColor: Colors.blue,
-    //primarySwatch: Green,
-    scaffoldBackgroundColor: backgroundGrey2,
-    bottomNavigationBarTheme: BottomNavigationBarThemeData(
-      backgroundColor: backgroundGrey2,
-      // selectedLabelStyle: GoogleFonts.poppins(
-      //   fontSize: 12.sp,
-      //   color: DarkGrey2,
-      //   //fontWeight: FontWeight.bold,
-      // ),
-      // unselectedLabelStyle: GoogleFonts.poppins(
-      //   fontSize: 12.sp,
-      //   color: DarkGrey2,
-      //   //fontWeight: FontWeight.w600,
-      // ),
-    ),
-    colorScheme: ColorScheme.dark(
-      onPrimary: darkGrey2,
-      primary: backgroundGrey2,
-      primaryContainer: const Color.fromARGB(255, 236, 236, 236),
-    ),
-    textSelectionTheme: TextSelectionThemeData(
-      //cursorColor: Green,
-      selectionHandleColor: primaryGreen,
-      selectionColor: primaryGreen,
-    ),
-  );
+      primaryColor: primaryGreen,
+      //primarySwatch: primaryGreen,
+      scaffoldBackgroundColor: backgroundGrey2,
+      bottomNavigationBarTheme: BottomNavigationBarThemeData(
+        backgroundColor: backgroundGrey2,
+        // selectedLabelStyle: GoogleFonts.poppins(
+        //   fontSize: 12.sp,
+        //   color: DarkGrey2,
+        //   //fontWeight: FontWeight.bold,
+        // ),
+        // unselectedLabelStyle: GoogleFonts.poppins(
+        //   fontSize: 12.sp,
+        //   color: DarkGrey2,
+        //   //fontWeight: FontWeight.w600,
+        // ),
+      ),
+      colorScheme: ColorScheme.dark(
+        //secondary: Colors.red,
+        onPrimary: darkGrey2,
+        primary: backgroundGrey2,
+        primaryContainer: const Color.fromARGB(255, 236, 236, 236),
+      ),
+      textSelectionTheme: TextSelectionThemeData(
+        cursorColor: primaryGreen,
+        selectionHandleColor: primaryGreen,
+        selectionColor: primaryGreen,
+      ),
+      tooltipTheme: TooltipThemeData(textStyle: TextStyle(color: Colors.red)));
 
   static final darkTheme = ThemeData.dark().copyWith(
     primaryColor: primaryGreen,

@@ -1,10 +1,10 @@
-import 'package:connectivity_wrapper/connectivity_wrapper.dart';
 import 'package:docare/no_network.dart';
 import 'package:docare/push_notification/push_notidication.dart';
 import 'package:docare/screens/doctor_screens/appointment_screen.dart';
 import 'package:docare/screens/doctor_screens/doctor_profile_screen.dart';
 import 'package:docare/screens/user_screens/screen_tobe_shown.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/screens/user_screens/user_information_screen.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import 'package:docare/state_management/network.dart';
@@ -14,6 +14,7 @@ import 'package:docare/state_management/providers_barrel.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:rive/rive.dart';
 import 'screens/user_screens/screens_barrel.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -41,7 +42,7 @@ class SplashScreen extends StatefulWidget {
 }
 
 class _SplashScreenState extends State<SplashScreen> {
-  bool isConnected = true;
+  //bool isConnected = true;
 
   List<Widget> noNet = [];
 
@@ -54,11 +55,14 @@ class _SplashScreenState extends State<SplashScreen> {
   Future<void> load() async {
     Future.delayed(const Duration(seconds: 5))
         .then((value) => checkConnection().then((value) {
+              print(value);
               if (value) {
                 Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AppRouter.getPage()));
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => AppRouter.getPage(),
+                  ),
+                );
               } else {
                 Future.delayed(const Duration(seconds: 5));
                 noNet = [
@@ -105,9 +109,7 @@ class _SplashScreenState extends State<SplashScreen> {
                       SizedBox(height: 38.h),
                       primaryButton(
                         onPressed: () {
-                          if (mounted) {
-                            load();
-                          }
+                          load();
                         },
                         label: 'Reload',
                         backgroundColor: primaryGreen,
@@ -122,11 +124,26 @@ class _SplashScreenState extends State<SplashScreen> {
   }
 
   Future<bool> checkConnection() async {
-    if (await ConnectivityWrapper.instance.isConnected) {
-      return true;
+    bool isConnected = true;
+
+    //
+    final connectivityResult = await (Connectivity().checkConnectivity());
+
+    if (connectivityResult == ConnectivityResult.mobile) {
+      isConnected = true;
+      //print(isConnected);
+      //notifyListeners();
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      isConnected = true;
+      //print(isConnected);
+      //notifyListeners();
     } else {
-      return false;
+      isConnected = false;
+      //print(isConnected);
+      //notifyListeners();
     }
+
+    return isConnected;
   }
 
   @override
@@ -244,7 +261,7 @@ class MyApp extends StatelessWidget {
         ChangeNotifierProvider(
           create: (context) => AppointmentProvider(),
         ),
-         ChangeNotifierProvider(
+        ChangeNotifierProvider(
           create: (context) => Network(),
         ),
       ],
@@ -257,7 +274,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: const SplashScreen(),
+            home: AppRouter.getPage(),
           );
         },
         designSize: const Size(393, 851),
@@ -275,82 +292,83 @@ class AllScreens extends StatelessWidget {
     int currentIndex =
         Provider.of<BottomNavBar>(context, listen: true).currentIndex;
     final provider = Provider.of<BottomNavBar>(context, listen: false);
-        final netwotk = Provider.of<Network>(context, listen: false);
-
+    final netwotk = Provider.of<Network>(context, listen: false);
 
     netwotk.checkConnection();
     //print(netwotk.isConnected);
 
-    return netwotk.isConnected ? Scaffold(
-      body: PageView(
-        //: currentIndex,
-        controller: provider.pageController,
-        physics: const NeverScrollableScrollPhysics(),
-        children: Role.getRole()
-            ? const [
-                HomeScreen(),
-                AppointmentScreen(),
-                FavScreen(),
-                ProfileScreen(),
-              ]
-            : const [DoctorAppointmentScreen(), DoctorProfileScreen()],
-      ),
-      bottomNavigationBar: BottomNavigationBar(
-        onTap: (value) {
-          provider.bottomNavIndex(value);
-          provider.animateToPage(provider.pageController);
-        },
-        currentIndex: currentIndex,
-        showSelectedLabels: true,
-        showUnselectedLabels: true,
-        selectedItemColor: primaryGreen,
-        unselectedItemColor: midGrey2,
-        selectedLabelStyle: GoogleFonts.poppins(
-          fontSize: 12.sp,
-          color: Theme.of(context).colorScheme.onPrimary,
-          //fontWeight: FontWeight.bold,
-        ),
-        unselectedLabelStyle: GoogleFonts.poppins(
-          fontSize: 12.sp,
-          color: Theme.of(context).colorScheme.onPrimary,
-          //fontWeight: FontWeight.w600,
-        ),
-        type: BottomNavigationBarType.fixed,
-        items: Role.getRole()
-            ? [
-                navBarItem(
-                  label: 'Home',
-                  activeIconName: 'home.svg',
-                  inActiveIconName: 'home_filled.svg',
-                ),
-                navBarItem(
-                    label: 'Booking',
-                    activeIconName: 'calendar.svg',
-                    inActiveIconName: 'calendar_filled.svg'),
-                navBarItem(
-                    label: 'Favourite',
-                    activeIconName: 'heart.svg',
-                    inActiveIconName: 'heart_filled.svg'),
-                navBarItem(
-                  label: 'Profile',
-                  activeIconName: 'user_outlined.svg',
-                  inActiveIconName: 'user_filled.svg',
-                ),
-              ]
-            : [
-                navBarItem(
-                  label: 'Appointments',
-                  activeIconName: 'calendar.svg',
-                  inActiveIconName: 'calendar_filled.svg',
-                ),
-                navBarItem(
-                  label: 'Profile',
-                  activeIconName: 'user_outlined.svg',
-                  inActiveIconName: 'user_filled.svg',
-                ),
-              ],
-      ),
-    ):const NoNetwork();
+    return netwotk.isConnected
+        ? Scaffold(
+            body: PageView(
+              //: currentIndex,
+              controller: provider.pageController,
+              physics: const NeverScrollableScrollPhysics(),
+              children: Role.getRole()
+                  ? const [
+                      HomeScreen(),
+                      AppointmentScreen(),
+                      FavScreen(),
+                      ProfileScreen(),
+                    ]
+                  :  const [DoctorAppointmentScreen(), DoctorProfileScreen()],
+            ),
+            bottomNavigationBar: BottomNavigationBar(
+              onTap: (value) {
+                provider.bottomNavIndex(value);
+                provider.animateToPage(provider.pageController);
+              },
+              currentIndex: currentIndex,
+              showSelectedLabels: true,
+              showUnselectedLabels: true,
+              selectedItemColor: primaryGreen,
+              unselectedItemColor: midGrey2,
+              selectedLabelStyle: GoogleFonts.poppins(
+                fontSize: 12.sp,
+                color: Theme.of(context).colorScheme.onPrimary,
+                //fontWeight: FontWeight.bold,
+              ),
+              unselectedLabelStyle: GoogleFonts.poppins(
+                fontSize: 12.sp,
+                color: Theme.of(context).colorScheme.onPrimary,
+                //fontWeight: FontWeight.w600,
+              ),
+              type: BottomNavigationBarType.fixed,
+              items: Role.getRole()
+                  ? [
+                      navBarItem(
+                        label: 'Home',
+                        activeIconName: 'home.svg',
+                        inActiveIconName: 'home_filled.svg',
+                      ),
+                      navBarItem(
+                          label: 'Booking',
+                          activeIconName: 'calendar.svg',
+                          inActiveIconName: 'calendar_filled.svg'),
+                      navBarItem(
+                          label: 'Favourite',
+                          activeIconName: 'heart.svg',
+                          inActiveIconName: 'heart_filled.svg'),
+                      navBarItem(
+                        label: 'Profile',
+                        activeIconName: 'user_outlined.svg',
+                        inActiveIconName: 'user_filled.svg',
+                      ),
+                    ]
+                  : [
+                      navBarItem(
+                        label: 'Appointments',
+                        activeIconName: 'calendar.svg',
+                        inActiveIconName: 'calendar_filled.svg',
+                      ),
+                      navBarItem(
+                        label: 'Profile',
+                        activeIconName: 'user_outlined.svg',
+                        inActiveIconName: 'user_filled.svg',
+                      ),
+                    ],
+            ),
+          )
+        : const NoNetwork();
   }
 
   navBarItem({

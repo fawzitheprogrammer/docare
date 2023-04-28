@@ -3,6 +3,8 @@ class UserModel {
   String profilePic;
   String createdAt;
   String phoneNumber;
+  int age;
+  String gender;
   String uid;
 
   UserModel({
@@ -10,6 +12,8 @@ class UserModel {
     required this.profilePic,
     required this.createdAt,
     required this.phoneNumber,
+    required this.age,
+    required this.gender,
     required this.uid,
   });
 
@@ -20,7 +24,9 @@ class UserModel {
       uid: map['uid'] ?? '',
       phoneNumber: map['phoneNumber'] ?? '',
       createdAt: map['createdAt'] ?? '',
+      gender: map['gender'] ?? '',
       profilePic: map['profilePic'] ?? '',
+      age: map['age'] ?? '',
     );
   }
 
@@ -32,6 +38,8 @@ class UserModel {
       "profilePic": profilePic,
       "phoneNumber": phoneNumber,
       "createdAt": createdAt,
+      "gender": gender,
+      "age": age
     };
   }
 }

@@ -5,7 +5,7 @@ import 'package:docare/models/appointments.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/push_notification/push_notidication.dart';
-import 'package:docare/screens/user_screens/appointment_booked.dart';
+import 'package:docare/screens/user_screens/success_screen.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import 'package:intl/intl.dart';
 import '../../components/url_launcher.dart';
@@ -34,9 +34,9 @@ class _DoctorInfoState extends State<DoctorInfo> {
   @override
   Widget build(BuildContext context) {
     final appointmentProvider =
-        Provider.of<AppointmentProvider>(context, listen: false);
+        Provider.of<AppointmentProvider>(context, listen: true);
 
-    final ap = Provider.of<AuthProvider>(context, listen: false);
+    final ap = Provider.of<AuthProvider>(context, listen: true);
 
     loadFCM();
     listenFCM();
@@ -348,8 +348,9 @@ class _DoctorInfoState extends State<DoctorInfo> {
                 child: Padding(
                   padding: EdgeInsets.symmetric(horizontal: 8.0.w),
                   child: DateTimeBox(
-                      openTime: item.get('openTime'),
-                      closeTime: item.get('closedTime')),
+                    openTime: item.get('openTime'),
+                    closeTime: item.get('closedTime'),
+                  ),
                 ),
               ),
               SizedBox(
@@ -364,47 +365,82 @@ class _DoctorInfoState extends State<DoctorInfo> {
                   shadow: 2.0,
                   shadowColor: const Color(0xff17cfb6).withAlpha(60),
                   onPressed: () {
-                    AppointmentProvider.getToken();
-                    if (dateTime.day == DateTime.now().day &&
-                        DateTime.now().hour > appointmentHour!) {
-                      showSnackBar(
-                        bgColor: Colors.redAccent,
-                        content: 'That time cannot be selected for today',
-                        context: context,
-                        textColor: Colors.white,
-                      );
-                    } else {
-                      if (AppointmentProvider.isSave) {
-                        String ran = appointmentProvider.generateRandomString();
-                        AppointmentProvider.appointmentDocumentID = ran;
-                      } else {}
+                    appointmentProvider.getToken().then((value) {
+                      // AppointmentProvider.getToken();
+                      if (dateTime.day == DateTime.now().day &&
+                          DateTime.now().hour > appointmentHour!) {
+                        showSnackBar(
+                          bgColor: Colors.redAccent,
+                          content: 'That time cannot be selected for today',
+                          context: context,
+                          textColor: Colors.white,
+                        );
+                      } else {
+                        if (AppointmentProvider.isSave) {
+                          String ran =
+                              appointmentProvider.generateRandomString();
+                          AppointmentProvider.appointmentDocumentID = ran;
+                        } else {}
 
-                      final appointments = Appointments(
-                        doctorName: item.get('name'),
-                        doctorProfilePic: item.get('profilePic'),
-                        speciality: item.get('speciality'),
-                        experience: item.get('experience') + ' years',
-                        location: item.get('location'),
-                        patientName: ap.userModel.name,
-                        patienNumber: ap.userModel.phoneNumber,
-                        patientProfilePicl: ap.userModel.profilePic,
-                        appointmentDate: dateTime.toString(),
-                        appointmentHour: appointmentHour!,
-                        isApproved: false,
-                        doctorID: widget.uid,
-                        patientID: AppointmentProvider.currentUser!.uid,
-                        deviceToken: AppointmentProvider.deviceToken,
-                        doctorDocumentID:
-                            AppointmentProvider.appointmentDocumentID,
-                        patientDocumentID:
-                            AppointmentProvider.appointmentDocumentID,
-                      );
+                        final appointments = Appointments(
+                          doctorName: item.get('name'),
+                          doctorProfilePic: item.get('profilePic'),
+                          speciality: item.get('speciality'),
+                          experience: item.get('experience') + ' years',
+                          location: item.get('location'),
+                          patientName: ap.userModel.name,
+                          patienNumber: ap.userModel.phoneNumber,
+                          patientProfilePicl: ap.userModel.profilePic,
+                          appointmentDate: dateTime.toString(),
+                          appointmentHour: appointmentHour!,
+                          isApproved: false,
+                          doctorID: widget.uid,
+                          patientID: AppointmentProvider.currentUser!.uid,
+                          deviceToken: value,
+                          doctorDocumentID:
+                              AppointmentProvider.appointmentDocumentID,
+                          patientDocumentID:
+                              AppointmentProvider.appointmentDocumentID,
+                        );
 
-                      appointmentProvider
-                          .checkAppointmentExisting()
-                          .then((value) {
-                        if (!value) {
-                          appointmentProvider.saveAppointmentDataToFirebase(
+                        appointmentProvider
+                            .checkAppointmentExisting(widget.uid,
+                                AppointmentProvider.currentUser!.uid)
+                            .then((value) {
+                          if (!value && AppointmentProvider.isSave) {
+                            appointmentProvider.saveAppointmentDataToFirebase(
+                                context: context,
+                                appointments: appointments,
+                                doctorID: widget.uid,
+                                userID: AppointmentProvider.currentUser!.uid,
+                                onSuccess: () {
+                                  if (item.data()!.isNotEmpty &&
+                                      appointmentHour != null) {
+                                    appointmentProvider
+                                        .saveAppointmentDataToSP()
+                                        .then((value) {
+                                      AppointmentProvider.sendPushMessage(
+                                        'You have a new appointment request',
+                                        'New Appointment',
+                                        item.get('deviceToken'),
+                                      );
+                                      getPageRemoveUntil(
+                                        context,
+                                        const AppointmentBooked(),
+                                      );
+                                    });
+                                  } else {
+                                    showSnackBar(
+                                      bgColor: Colors.redAccent,
+                                      content:
+                                          'Something went wrong, please try again.',
+                                      context: context,
+                                      textColor: Colors.white,
+                                    );
+                                  }
+                                });
+                          } else if (!AppointmentProvider.isSave) {
+                            appointmentProvider.saveAppointmentDataToFirebase(
                               context: context,
                               appointments: appointments,
                               doctorID: widget.uid,
@@ -418,7 +454,9 @@ class _DoctorInfoState extends State<DoctorInfo> {
                                     AppointmentProvider.sendPushMessage(
                                       'You have a new appointment request',
                                       'New Appointment',
-                                      item.get('deviceToken'),
+                                      item.get(
+                                        'deviceToken',
+                                      ),
                                     );
                                     getPageRemoveUntil(
                                       context,
@@ -434,17 +472,20 @@ class _DoctorInfoState extends State<DoctorInfo> {
                                     textColor: Colors.white,
                                   );
                                 }
-                              });
-                        } else if (value) {
-                          showSnackBar(
-                            bgColor: Colors.redAccent,
-                            content: 'Something went wrong, please try again.',
-                            context: context,
-                            textColor: Colors.white,
-                          );
-                        }
-                      });
-                    }
+                              },
+                            );
+                          } else if (value) {
+                            showSnackBar(
+                              bgColor: Colors.redAccent,
+                              content:
+                                  'You already have an appointment with this doctor, please be patient until they accept your request.',
+                              context: context,
+                              textColor: Colors.white,
+                            );
+                          }
+                        });
+                      }
+                    });
                   },
                 ),
               )

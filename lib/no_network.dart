@@ -1,6 +1,7 @@
 import 'package:docare/components/colors.dart';
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/public_packages.dart';
+import 'package:docare/state_management/network.dart';
 
 import 'network/connection.dart';
 import 'screens/user_screens/screen_tobe_shown.dart';
@@ -13,31 +14,33 @@ class NoNetwork extends StatefulWidget {
 }
 
 class _NoNetworkState extends State<NoNetwork> {
-  bool isConnected = true;
-
   List<Widget> noNet = [];
 
   @override
   void initState() {
     super.initState();
-    load();
+    // load();
   }
 
-  Future<void> load() async {
-    Future.delayed(const Duration(seconds: 5))
-        .then((value) => checkConnection().then((value) {
-              if (value) {
-                Navigator.pushReplacement(
-                    context,
-                    MaterialPageRoute(
-                        builder: (context) => AppRouter.getPage()));
-              }
-            }));
-  }
+  // Future<void> load() async {
+  //   Future.delayed(const Duration(seconds: 5))
+  //       .then((value) => checkConnection().then((value) {
+  //             if (value) {
+  //               Navigator.pushReplacement(
+  //                   context,
+  //                   MaterialPageRoute(
+  //                       builder: (context) => AppRouter.getPage()));
+  //             }
+  //           }));
+  // }
 
   @override
   Widget build(BuildContext context) {
-    // TODO: implement build
+    // bool isConnected = true;
+    final nw = Provider.of<Network>(context, listen: false);
+    nw.checkConnection();
+    print(nw.isConnected);
+
     return Scaffold(
       body: Column(
         mainAxisAlignment: MainAxisAlignment.center,
@@ -85,7 +88,7 @@ class _NoNetworkState extends State<NoNetwork> {
               SizedBox(height: 38.h),
               primaryButton(
                 onPressed: () {
-                  load();
+                  nw.checkConnection();
                 },
                 label: 'Reload',
                 backgroundColor: primaryGreen,

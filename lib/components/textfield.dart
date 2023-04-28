@@ -12,8 +12,8 @@ Widget textField({
   required BuildContext context,
 }) {
   return TextField(
-    //toolbarOptions:
-        //ToolbarOptions(copy: true, paste: true, cut: true, selectAll: true),
+    toolbarOptions:
+        const ToolbarOptions(copy: true, paste: true, cut: true, selectAll: true),
     controller: controller,
     onTap: onTap,
     onSubmitted: onSubmitted,

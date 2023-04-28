@@ -57,7 +57,11 @@ dependencies:
   http: ^0.13.5
   flutter_local_notifications: ^8.2.0
   url_launcher: ^6.1.10
-  connectivity_wrapper: ^1.1.1
+  connectivity_plus: ^3.0.3
+  animated_snack_bar: ^0.3.0
+
+  #animated_snack_bar: ^0.3.0
+  #connectivity_wrapper: ^1.1.1
 
   #flutter_local_notifications: ^8.2.0
   #google_maps_flutter: ^2.2.3

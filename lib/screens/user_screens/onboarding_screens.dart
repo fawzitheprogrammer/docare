@@ -38,6 +38,9 @@ class _OnboardingScreenState extends State<OnboardingScreen> {
       values.add(value);
     }));
 
+    final pageID = ScreenStateManager.getPageID();
+    print(pageID);
+
     return Scaffold(
       backgroundColor: primaryGreen,
       body: SafeArea(

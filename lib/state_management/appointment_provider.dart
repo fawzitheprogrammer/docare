@@ -20,7 +20,8 @@ class AppointmentProvider extends ChangeNotifier {
 
   static bool isSave = true;
 
-  static String deviceToken = '';
+  String _deviceToken = '';
+  String get deviceToken => _deviceToken;
 
   static String appointmentDocumentID = '';
   // String get appointmentDocument => _appointmentDocumentID;
@@ -32,7 +33,7 @@ class AppointmentProvider extends ChangeNotifier {
 
   //final FirebaseAuth _firebaseAuth = FirebaseAuth.instance;
   final FirebaseFirestore _firebaseFirestore = FirebaseFirestore.instance;
-  final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
+  //final FirebaseStorage _firebaseStorage = FirebaseStorage.instance;
 
   // String serverKey =
 //;
@@ -69,26 +70,33 @@ class AppointmentProvider extends ChangeNotifier {
   }
 
   // DATABASE OPERTAIONS
-  Future<bool> checkAppointmentExisting() async {
-    DocumentSnapshot snapshot = await _firebaseFirestore
-        .collection('doctors')
-        .doc(currentUser!.uid)
+  Future<bool> checkAppointmentExisting(String doctorID, String userID) async {
+    bool isFound = false;
+
+    QuerySnapshot querySnapshot = await _firebaseFirestore
+        .collection("users")
+        .doc(userID)
         .collection('appointments')
-        .doc()
         .get();
-    if (snapshot.exists) {
-      //print("Appointment EXISTS");
-      return true;
-    } else {
-      //print("Appointment NEW");
-      return false;
+
+    for (var i in querySnapshot.docs) {
+      if (doctorID == i.get('doctorID')) {
+        //debugPrint(i.get('doctorID'));
+
+        isFound = true;
+      }
     }
+
+    return isFound;
   }
 
-  static void getToken() async {
+  Future<String> getToken() async {
     await FirebaseMessaging.instance.getToken().then((token) {
-      deviceToken = token!;
+      _deviceToken = token!;
+      notifyListeners();
     });
+
+    return deviceToken;
   }
 
   String generateRandomString() {

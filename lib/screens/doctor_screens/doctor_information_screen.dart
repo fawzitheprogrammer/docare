@@ -62,6 +62,9 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
   Widget build(BuildContext context) {
     final isLoading =
         Provider.of<AuthProvider>(context, listen: true).isLoading;
+    final appointmentProvider =
+        Provider.of<AppointmentProvider>(context, listen: true);
+
     return Scaffold(
       body: SafeArea(
         child: isLoading == true
@@ -305,7 +308,7 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
 
                               if (_openTime != null && _closedTime != null) {
                                 if (_closedTime!.hour - _openTime!.hour > 1) {
-                                  storeData();
+                                  storeData(appointmentProvider);
                                 } else {
                                   showSnackBar(
                                     bgColor: Colors.redAccent,
@@ -437,46 +440,10 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
   }
 
   // store user data to database
-  void storeData() async {
-    final ap = Provider.of<AuthProvider>(context, listen: false);
-    if (Role.getRole() == true) {
-      UserModel userModel = UserModel(
-        name: nameController.text.trim(),
-        profilePic: "",
-        createdAt: "",
-        phoneNumber: "",
-        uid: "",
-      );
-      if (image != null) {
-        ap.saveUserDataToFirebase(
-          context: context,
-          userModel: userModel,
-          profilePic: image!,
-          onSuccess: () {
-            ap.saveUserDataToSP().then((value) {
-              ScreenStateManager.setPageOrderID(3);
-              ap.setSignIn().then(
-                    (value) => Navigator.pushAndRemoveUntil(
-                      context,
-                      MaterialPageRoute(
-                        builder: (context) => const AllScreens(),
-                      ),
-                      (route) => false,
-                    ),
-                  );
-            });
-          },
-        );
-      } else {
-        showSnackBar(
-          bgColor: Colors.redAccent,
-          content: 'Upload a photo please.',
-          context: context,
-          textColor: Colors.white,
-        );
-      }
-    } else {
-      AppointmentProvider.getToken();
+  void storeData(AppointmentProvider appointment) async {
+    appointment.getToken().then((value) {
+      final ap = Provider.of<AuthProvider>(context, listen: false);
+      // AppointmentProvider.getToken();
 
       DoctorModel doctorModel = DoctorModel(
         name: nameController.text.trim(),
@@ -490,7 +457,7 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
         openTime: _openTime!.hour,
         closedTime: _closedTime!.hour,
         isApproved: false,
-        deviceToken: AppointmentProvider.deviceToken,
+        deviceToken: value,
         isFav: false,
       );
       if (image != null &&
@@ -526,6 +493,6 @@ class _DoctorInfromationScreenState extends State<DoctorInfromationScreen> {
           textColor: Colors.white,
         );
       }
-    }
+    });
   }
 }

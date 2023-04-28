@@ -1,58 +1,23 @@
-import 'package:connectivity_wrapper/connectivity_wrapper.dart';
+import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:docare/public_packages.dart';
-
-bool im = true;
 
 class Network extends ChangeNotifier {
   bool isConnected = true;
 
   Future<void> checkConnection() async {
-    if (await ConnectivityWrapper.instance.isConnected) {
+    final connectivityResult = await (Connectivity().checkConnectivity());
+    if (connectivityResult == ConnectivityResult.mobile) {
       isConnected = true;
+      //print(isConnected);
+      notifyListeners();
+    } else if (connectivityResult == ConnectivityResult.wifi) {
+      isConnected = true;
+      //print(isConnected);
       notifyListeners();
     } else {
       isConnected = false;
+      //print(isConnected);
       notifyListeners();
     }
   }
 }
-
-
-
-
-
-// void me() {
-
-//   bool sleepy = true;
-
-//   //if (im == sleepy) sleep(); 
-
-//   if (im != sleepy) code();
-
-// }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-code() {}

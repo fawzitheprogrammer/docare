@@ -1,0 +1,38 @@
+Date : 2023-03-03 15:24:18
+Directory : g:\Local Disk F\Source Codes\Flutter\docare\lib
+Total : 8 files,  -10 codes, 28 comments, -31 blanks, all -13 lines
+
+Languages
++----------+------------+------------+------------+------------+------------+
+| language | files      | code       | comment    | blank      | total      |
++----------+------------+------------+------------+------------+------------+
+| Dart     |          8 |        -10 |         28 |        -31 |        -13 |
++----------+------------+------------+------------+------------+------------+
+
+Directories
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| path                                                                                           | files      | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+| .                                                                                              |          8 |        -10 |         28 |        -31 |        -13 |
+| . (Files)                                                                                      |          2 |         -3 |         19 |          1 |         17 |
+| network                                                                                        |          1 |         -8 |          8 |          0 |          0 |
+| screens                                                                                        |          2 |          0 |          1 |          2 |          3 |
+| screens\doctor_screens                                                                         |          1 |          0 |          0 |          2 |          2 |
+| screens\user_screens                                                                           |          1 |          0 |          1 |          0 |          1 |
+| state_management                                                                               |          3 |          1 |          0 |        -34 |        -33 |
++------------------------------------------------------------------------------------------------+------------+------------+------------+------------+------------+
+
+Files
++------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| filename                                                                                       | language | code       | comment    | blank      | total      |
++------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\main.dart                                      | Dart     |          6 |          7 |          1 |         14 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\network\connection.dart                        | Dart     |         -8 |          8 |          0 |          0 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\no_network.dart                                | Dart     |         -9 |         12 |          0 |          3 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\doctor_screens\appointment_screen.dart | Dart     |          0 |          0 |          2 |          2 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\user_screens\login_screen.dart         | Dart     |          0 |          1 |          0 |          1 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\appointment_provider.dart     | Dart     |         -1 |          1 |          0 |          0 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\auth_provider.dart            | Dart     |          1 |          0 |          1 |          2 |
+| g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\network.dart                  | Dart     |          1 |         -1 |        -35 |        -35 |
+| Total                                                                                          |          |        -10 |         28 |        -31 |        -13 |
++------------------------------------------------------------------------------------------------+----------+------------+------------+------------+------------+
