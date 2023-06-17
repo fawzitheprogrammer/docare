@@ -5,7 +5,6 @@ import 'package:docare/models/appointments.dart';
 import 'package:docare/models/doctor_model.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import '../components/snack_bar.dart';

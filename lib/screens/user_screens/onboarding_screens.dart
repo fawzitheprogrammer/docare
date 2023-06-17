@@ -2,7 +2,6 @@ import 'package:docare/components/components_barrel.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
-import 'package:docare/screens/user_screens/screens_barrel.dart';
 import 'package:docare/shared_preferences/screens_state_manager.dart';
 
 //import '../components/primary_button.dart';

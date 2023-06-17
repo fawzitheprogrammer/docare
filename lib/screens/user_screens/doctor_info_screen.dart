@@ -15,7 +15,7 @@ DateTime dateTime = DateTime.now();
 int? appointmentHour;
 
 class DoctorInfo extends StatefulWidget {
-  DoctorInfo({
+  const DoctorInfo({
     super.key,
     required this.imageString,
     required this.uid,
@@ -330,7 +330,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
               // )
               SizedBox(
                 height: 80.h,
-                child: DateBox(),
+                child: const DateBox(),
               ),
               SizedBox(
                 height: 10.h,
@@ -498,7 +498,7 @@ class _DoctorInfoState extends State<DoctorInfo> {
 }
 
 class DateBox extends StatefulWidget {
-  DateBox({
+  const DateBox({
     super.key,
   });
 

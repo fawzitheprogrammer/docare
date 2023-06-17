@@ -1,0 +1,17 @@
+"filename", "language", "Dart", "comment", "blank", "total"
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\components\textfield.dart", "Dart", 2, -2, 0, 0
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\main.dart", "Dart", 14, 0, 0, 14
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\models\user_model.dart", "Dart", 8, 0, 0, 8
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\doctor_screens\appointment_screen.dart", "Dart", 78, -4, 4, 78
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\doctor_screens\doctor_information_screen.dart", "Dart", -35, 1, 1, -33
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\doctor_screens\doctor_profile_screen.dart", "Dart", -4, 1, 0, -3
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\user_screens\appointment_booked.dart", "Dart", -67, -2, -7, -76
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\user_screens\doctor_info_screen.dart", "Dart", 6, 1, 0, 7
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\user_screens\role_screen.dart", "Dart", 1, 1, 0, 2
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\user_screens\success_screen.dart", "Dart", 67, 2, 7, 76
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\screens\user_screens\user_information_screen.dart", "Dart", 70, 3, 3, 76
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\appointment_provider.dart", "Dart", 6, 0, 1, 7
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\auth_provider.dart", "Dart", 7, 0, 2, 9
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\state_management\network.dart", "Dart", -3, 3, 0, 0
+"g:\Local Disk F\Source Codes\Flutter\docare\lib\theme\theme_style.dart", "Dart", 2, -1, 0, 1
+"Total", "-", 152, 3, 11, 166

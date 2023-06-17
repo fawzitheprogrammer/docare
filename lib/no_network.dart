@@ -1,10 +1,7 @@
-import 'package:docare/components/colors.dart';
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/state_management/network.dart';
 
-import 'network/connection.dart';
-import 'screens/user_screens/screen_tobe_shown.dart';
 
 class NoNetwork extends StatefulWidget {
   const NoNetwork({super.key});

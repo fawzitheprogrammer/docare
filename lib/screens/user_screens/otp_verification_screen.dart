@@ -4,7 +4,6 @@ import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/doctor_screens/doctor_information_screen.dart';
 import 'package:docare/screens/user_screens/screens_barrel.dart';
-import 'package:docare/shared_preferences/screens_state_manager.dart';
 import 'package:docare/screens/user_screens/user_information_screen.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
 import 'package:flutter_otp_text_field/flutter_otp_text_field.dart';

@@ -4,7 +4,6 @@ import 'package:docare/screens/doctor_screens/appointment_screen.dart';
 import 'package:docare/screens/doctor_screens/doctor_profile_screen.dart';
 import 'package:docare/screens/user_screens/screen_tobe_shown.dart';
 import 'package:docare/public_packages.dart';
-import 'package:docare/screens/user_screens/user_information_screen.dart';
 import 'package:docare/shared_preferences/shared_pref_barrel.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import 'package:docare/state_management/network.dart';
@@ -18,7 +17,7 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  Firebase.initializeApp();
+  await Firebase.initializeApp();
 
   SystemChrome.setSystemUIOverlayStyle(
     SystemUiOverlayStyle(
@@ -274,7 +273,7 @@ class MyApp extends StatelessWidget {
             debugShowCheckedModeBanner: false,
             theme: MyTheme.lightTheme,
             darkTheme: MyTheme.darkTheme,
-            home: AppRouter.getPage(),
+            home: const SplashScreen(),
           );
         },
         designSize: const Size(393, 851),
@@ -310,7 +309,7 @@ class AllScreens extends StatelessWidget {
                       FavScreen(),
                       ProfileScreen(),
                     ]
-                  :  const [DoctorAppointmentScreen(), DoctorProfileScreen()],
+                  : const [DoctorAppointmentScreen(), DoctorProfileScreen()],
             ),
             bottomNavigationBar: BottomNavigationBar(
               onTap: (value) {

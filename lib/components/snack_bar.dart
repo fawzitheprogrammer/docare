@@ -1,6 +1,5 @@
 import 'package:docare/components/components_barrel.dart';
 import 'package:docare/public_packages.dart';
-import 'package:flutter/material.dart';
 
 void showSnackBar(
     {required BuildContext context,

@@ -5,7 +5,6 @@ import 'package:docare/public_packages.dart';
 import 'package:docare/state_management/appointment_provider.dart';
 import '../../main.dart';
 import '../../models/doctor_model.dart';
-import '../../models/user_model.dart';
 import '../../shared_preferences/shared_pref_barrel.dart';
 import '../../state_management/providers_barrel.dart';
 import '../user_screens/home_screen.dart';

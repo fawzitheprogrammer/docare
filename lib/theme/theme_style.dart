@@ -75,7 +75,7 @@ class MyTheme {
         selectionHandleColor: primaryGreen,
         selectionColor: primaryGreen,
       ),
-      tooltipTheme: TooltipThemeData(textStyle: TextStyle(color: Colors.red)));
+      tooltipTheme: const TooltipThemeData(textStyle: TextStyle(color: Colors.red)));
 
   static final darkTheme = ThemeData.dark().copyWith(
     primaryColor: primaryGreen,

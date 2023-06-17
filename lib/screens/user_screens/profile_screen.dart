@@ -1,10 +1,7 @@
 // ignore: unnecessary_import
-import 'dart:math';
 
-import 'package:docare/components/text.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
-import 'package:docare/screens/user_screens/screens_barrel.dart';
 import 'package:docare/shared_preferences/screens_state_manager.dart';
 import '../../components/components_barrel.dart';
 import '../../state_management/providers_barrel.dart';

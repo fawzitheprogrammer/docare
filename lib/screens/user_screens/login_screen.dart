@@ -1,10 +1,7 @@
-import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:country_code_picker/country_code_picker.dart';
-import 'package:docare/main.dart';
 import 'package:docare/navigation/navigator.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/role_screen.dart';
-import 'package:firebase_storage/firebase_storage.dart';
 import 'package:keyboard_visibility_pro/keyboard_visibility_pro.dart';
 import 'package:docare/components/components_barrel.dart';
 import '../../shared_preferences/shared_pref_barrel.dart';

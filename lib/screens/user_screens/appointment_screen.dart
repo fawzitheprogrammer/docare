@@ -123,7 +123,7 @@ class AppointmentScreen extends StatelessWidget {
                             ],
                           ),
                         ),
-                        Spacer(),
+                        const Spacer(),
                         Column(
                           children: [
                             SvgPicture.asset(

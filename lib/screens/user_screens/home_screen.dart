@@ -1,6 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:docare/navigation/navigator.dart';
-import 'package:docare/no_network.dart';
 import 'package:docare/public_packages.dart';
 import 'package:docare/screens/user_screens/doctor_info_screen.dart';
 import 'package:docare/state_management/appointment_provider.dart';
